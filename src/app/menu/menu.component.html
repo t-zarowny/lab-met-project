@@ -1,6 +1,13 @@
 	<div class="p-0">
-		<nav class="nav-left d-inline-flex p-3 pt-5  navbar-dark">
-      
+      <div class="logo pt-3 pl-5">
+      <svg class="bi bi-bar-chart-fill positon-relative" width="1.8em" height="1.8em" viewBox="0 0 16 16" fill="#17a2b8" xmlns="http://www.w3.org/2000/svg">
+        <rect width="4" height="5" x="1" y="10" rx="1"/>
+        <rect width="4" height="9" x="6" y="6" rx="1"/>
+        <rect width="4" height="14" x="11" y="1" rx="1"/>
+      </svg><h2 class="d-inline">LM</h2>
+      </div>
+		<nav class="nav-left d-inline-flex p-3 pt-0  navbar-dark ">
+
 			<ul class="navbar-nav">
             <!--
                 <li class="navbar-brand ">Kategoria</li>
@@ -15,8 +22,8 @@
                     </li>
                     
                     <li *ngFor="let mitem of m.item let i = index"class="nav-item mb-2 mt-2">
-                        <svg class="bi bi-circle" width="0.6em" height="0.6em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/>
+                        <svg class="bi bi-dot" width="1em" height="1em" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"/>
                         </svg>
                         <a class="nav-link d-inline ml-2" routerLink="/{{m.item[i].alias}}/">{{m.item[i].name}}</a>
                     </li>
