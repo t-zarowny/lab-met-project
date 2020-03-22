@@ -1,0 +1,8 @@
+.right-content{
+    left: 190px;
+    width: calc(100% - 190px);
+}
+.left-content{
+    width: 190px;
+    z-index: 100;
+}
