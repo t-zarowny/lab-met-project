@@ -13,7 +13,8 @@ export class MenuComponent implements OnInit {
  
 
   constructor(private db: DbService) {
-    this.menu.push(this.db.menuOb);
+    //this.menu.push(this.db.menuOb);
+    this.menu = this.db.menu;
    }
 
   ngOnInit(): void {

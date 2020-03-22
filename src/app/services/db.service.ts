@@ -18,21 +18,34 @@ export interface Menu {
 })
 export class DbService implements OnInit{
 
-  menuOb:Menu;
+  //menuOb:Menu;
+  menu = new Array<Menu>();
 
   constructor() {
-    let jsonmenu0 ='{ "id": 0,'
-                  +'  "catName":"Przyrządy", '
+    let jsonmenu ='{ "id": 0,'
+                  +'  "catName":"System", '
                   +'  "item": ['
-                  +'           {"name":"Dodaj przyrząd", '
-                  +'            "alias":"dodajprzyrzad", '
+                  +'           {"name":"Pulpit", '
+                  +'            "alias":"desktop", '
                   +'            "access":0},'
-                  +'           {"name":"Wyświetl", '
-                  +'            "alias":"wyswietl", '
+                  +'           {"name":"Użytkownicy", '
+                  +'            "alias":"users", '
                   +'            "access":0}'                  
                   +'          ]'
                   +'}';
-    this.menuOb = JSON.parse(jsonmenu0);
+    this.menu.push(JSON.parse(jsonmenu));
+    jsonmenu ='{ "id": 1,'
+                  +'  "catName":"Przyrządy", '
+                  +'  "item": ['
+                  +'           {"name":"Dodaj przyrząd", '
+                  +'            "alias":"addinstrument", '
+                  +'            "access":0},'
+                  +'           {"name":"Lista przyrządów", '
+                  +'            "alias":"listinstrument", '
+                  +'            "access":0}'                  
+                  +'          ]'
+                  +'}';
+    this.menu.push(JSON.parse(jsonmenu));
     //console.log(this.menuOb);
    }
 
