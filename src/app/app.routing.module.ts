@@ -9,7 +9,7 @@ import {AddGroupComponent} from './add-group/add-group.component';
 
 const appRoutes: Routes = [
   {
-    path: '',
+    path: 'desktop',
     component: DesktopComponent
   },
   {
@@ -31,7 +31,12 @@ const appRoutes: Routes = [
     {
     path: 'addgroup',
     component: AddGroupComponent
-  }
+  },
+  {
+    path: '',
+    redirectTo: '/desktop',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
