@@ -26,7 +26,7 @@ export class DbService implements OnInit{
                   +'  "catName":"System", '
                   +'  "item": ['
                   +'           {"name":"Pulpit", '
-                  +'            "alias":"desktop", '
+                  +'            "alias":"", '
                   +'            "access":0},'
                   +'           {"name":"Użytkownicy", '
                   +'            "alias":"listusers", '
