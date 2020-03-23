@@ -28,19 +28,18 @@ export class DbService implements OnInit{
   menu = new Array<Menu>();
 
   constructor() {
-    let jsonmenu ='{ "id": 0,'
+    let jsonmenu ='[{ "id": 0,'
                   +'  "catName":"System", '
                   +'  "item": ['
                   +'           {"name":"Pulpit", '
-                  +'            "alias":"", '
+                  +'            "alias":"desktop", '
                   +'            "access":0},'
                   +'           {"name":"Użytkownicy", '
                   +'            "alias":"listusers", '
                   +'            "access":0}'                  
                   +'          ]'
-                  +'}';
-    this.menu.push(JSON.parse(jsonmenu));
-    jsonmenu ='{ "id": 1,'
+                  +'},'
+                  +'{ "id": 1,'
                   +'  "catName":"Przyrządy", '
                   +'  "item": ['
                   +'           {"name":"Dodaj grupę", '
@@ -56,9 +55,9 @@ export class DbService implements OnInit{
                   +'            "alias":"listinstrument", '
                   +'            "access":0}'                  
                   +'          ]'
-                  +'}';
-    this.menu.push(JSON.parse(jsonmenu));
-    //console.log(this.menuOb);
+                  +'}]';
+    this.menu = JSON.parse(jsonmenu);
+    //console.log(this.menu);
    }
 
    ngOnInit(){
