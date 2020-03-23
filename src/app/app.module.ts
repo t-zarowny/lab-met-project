@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { ListusersComponent } from './listusers/listusers.component';
 import { GroupinstrumentsComponent } from './groupinstruments/groupinstruments.component';
 import { AddGroupComponent } from './add-group/add-group.component';
+import {MatDialogModule} from '@angular/material';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -29,9 +30,11 @@ registerLocaleData(localePl);
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule
   ],
   providers: [DbService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddGroupComponent]
 })
 export class AppModule { }
