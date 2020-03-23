@@ -29,7 +29,7 @@ export class DbService implements OnInit{
                   +'            "alias":"desktop", '
                   +'            "access":0},'
                   +'           {"name":"Użytkownicy", '
-                  +'            "alias":"users", '
+                  +'            "alias":"listusers", '
                   +'            "access":0}'                  
                   +'          ]'
                   +'}';
@@ -37,6 +37,9 @@ export class DbService implements OnInit{
     jsonmenu ='{ "id": 1,'
                   +'  "catName":"Przyrządy", '
                   +'  "item": ['
+                  +'           {"name":"Grupy przyrządów", '
+                  +'            "alias":"listgroup", '
+                  +'            "access":0},'   
                   +'           {"name":"Dodaj przyrząd", '
                   +'            "alias":"addinstrument", '
                   +'            "access":0},'

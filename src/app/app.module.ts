@@ -10,6 +10,8 @@ import { AddinstrumentComponent } from './addinstrument/addinstrument.component'
 import { ListinstrumentComponent } from './listinstrument/listinstrument.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { AppRoutingModule } from './app.routing.module';
+import { ListusersComponent } from './listusers/listusers.component';
+import { GroupinstrumentsComponent } from './groupinstruments/groupinstruments.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -19,7 +21,9 @@ registerLocaleData(localePl);
     BarComponent,
     AddinstrumentComponent,
     ListinstrumentComponent,
-    DesktopComponent
+    DesktopComponent,
+    ListusersComponent,
+    GroupinstrumentsComponent
   ],
   imports: [
     BrowserModule,
