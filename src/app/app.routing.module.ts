@@ -5,6 +5,7 @@ import {AddinstrumentComponent} from './addinstrument/addinstrument.component';
 import {ListinstrumentComponent} from './listinstrument/listinstrument.component';
 import {ListusersComponent} from './listusers/listusers.component';
 import {GroupinstrumentsComponent} from './groupinstruments/groupinstruments.component';
+import {AddGroupComponent} from './add-group/add-group.component';
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,10 @@ const appRoutes: Routes = [
     {
     path: 'listgroup',
     component: GroupinstrumentsComponent
+  },
+    {
+    path: 'addgroup',
+    component: AddGroupComponent
   }
 ];
 

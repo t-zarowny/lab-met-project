@@ -12,6 +12,12 @@ export interface Menu {
   item?: MenuItems[] | null;
 }
 
+export interface GroupInstrument {
+  id: number;
+  name: string;
+  controlMethod: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +43,9 @@ export class DbService implements OnInit{
     jsonmenu ='{ "id": 1,'
                   +'  "catName":"Przyrządy", '
                   +'  "item": ['
+                  +'           {"name":"Dodaj grupę", '
+                  +'            "alias":"addgroup", '
+                  +'            "access":0},' 
                   +'           {"name":"Grupy przyrządów", '
                   +'            "alias":"listgroup", '
                   +'            "access":0},'   

@@ -12,6 +12,7 @@ import { DesktopComponent } from './desktop/desktop.component';
 import { AppRoutingModule } from './app.routing.module';
 import { ListusersComponent } from './listusers/listusers.component';
 import { GroupinstrumentsComponent } from './groupinstruments/groupinstruments.component';
+import { AddGroupComponent } from './add-group/add-group.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -23,7 +24,8 @@ registerLocaleData(localePl);
     ListinstrumentComponent,
     DesktopComponent,
     ListusersComponent,
-    GroupinstrumentsComponent
+    GroupinstrumentsComponent,
+    AddGroupComponent
   ],
   imports: [
     BrowserModule,
