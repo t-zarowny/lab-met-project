@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogConfig} from "@angular/material";
-import {AddGroupComponent} from './add-group/add-group.component';
+import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA  } from '@angular/material/dialog';
+import { AddGroupComponent } from './add-group/add-group.component';
+
 
 @Component({
   selector: 'app-root',
@@ -9,22 +10,26 @@ import {AddGroupComponent} from './add-group/add-group.component';
 })
 export class AppComponent implements OnInit {
   title = 'lab-app';
+  email: string;
 
-  constructor(private dialog: MatDialog){
-
-  }
+  constructor(public dialog: MatDialog){}
 
   ngOnInit(){
 
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddGroupComponent, {
+      width: '500px',
+      position: {
+        top: '100px',
+      },
+      hasBackdrop: true,
+      disableClose: true,
+      data: {}
+    });
 
-  openDialog() {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    this.dialog.open(AddGroupComponent, dialogConfig);
-}
+    dialogRef.afterClosed().subscribe(result => {
+      this.email = result;
+    });
+  }
 }

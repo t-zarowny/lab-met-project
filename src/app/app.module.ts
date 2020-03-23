@@ -12,8 +12,16 @@ import { DesktopComponent } from './desktop/desktop.component';
 import { AppRoutingModule } from './app.routing.module';
 import { ListusersComponent } from './listusers/listusers.component';
 import { GroupinstrumentsComponent } from './groupinstruments/groupinstruments.component';
-import { AddGroupComponent } from './add-group/add-group.component';
-import {MatDialogModule} from '@angular/material';
+import { AddGroupComponent} from './add-group/add-group.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule} from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 registerLocaleData(localePl);
 @NgModule({
@@ -30,11 +38,15 @@ registerLocaleData(localePl);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
     AppRoutingModule,
     MatDialogModule
   ],
+  exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
   providers: [DbService],
   bootstrap: [AppComponent],
-  entryComponents: [AddGroupComponent]
+  entryComponents: [AddGroupComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
