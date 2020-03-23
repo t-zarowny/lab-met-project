@@ -8,7 +8,7 @@ import {GroupinstrumentsComponent} from './groupinstruments/groupinstruments.com
 
 const appRoutes: Routes = [
   {
-    path: 'desktop',
+    path: '',
     component: DesktopComponent
   },
   {
