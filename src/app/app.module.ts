@@ -20,12 +20,8 @@ import { MatInputModule } from '@angular/material/input';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-<<<<<<< HEAD
-import { MatSliderModule } from '@angular/material/slider';
-=======
 import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
->>>>>>> b68aab38d61ffc108d3b27296a8e6940cd519f01
 
 
 
@@ -48,11 +44,7 @@ registerLocaleData(localePl);
     FormsModule,
     AppRoutingModule,
     MatDialogModule,
-<<<<<<< HEAD
-    MatSliderModule
-=======
     MatButtonModule
->>>>>>> b68aab38d61ffc108d3b27296a8e6940cd519f01
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
   providers: [DbService,     
