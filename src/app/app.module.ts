@@ -13,13 +13,15 @@ import { AppRoutingModule } from './app.routing.module';
 import { ListusersComponent } from './listusers/listusers.component';
 import { GroupinstrumentsComponent } from './groupinstruments/groupinstruments.component';
 import { AddGroupComponent} from './add-group/add-group.component';
-import {MatDialogModule} from '@angular/material/dialog';
+//import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule} from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 
 
 
@@ -41,10 +43,20 @@ registerLocaleData(localePl);
     BrowserAnimationsModule,
     FormsModule,
     AppRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
-  providers: [DbService],
+  providers: [DbService,     
+      {
+        provide: MatDialogRef,
+        useValue: {}
+      },
+      {
+        provide:MAT_DIALOG_DATA,
+        useValue:{}
+      }
+     ],
   bootstrap: [AppComponent],
   entryComponents: [AddGroupComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
