@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DbService, Menu } from '../services/db.service';
+import { DbService} from '../services/db.service';
+import {Menu} from '../interfaces/menu';
 
 
 @Component({

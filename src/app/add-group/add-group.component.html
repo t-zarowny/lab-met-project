@@ -3,11 +3,12 @@
 <div mat-dialog-content  >
   <p>Dodawanie nowej grupy dla przyrządów</p>
   <mat-form-field>
-    <input matInput cdkFocusInitial [(ngModel)]="data.email">
+    <input matInput cdkFocusInitial [(ngModel)]="data.name">
+    <input matInput  [(ngModel)]="data.controlMethod">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button  (click)="onNoClick()">No</button>
-  <button mat-raised-button  [mat-dialog-close]="data.email" >Yes</button>
+  <button mat-raised-button  [mat-dialog-close]="data" >Yes</button>
 </div>
 </div>

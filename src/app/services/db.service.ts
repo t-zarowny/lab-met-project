@@ -1,23 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
-
-interface MenuItems {
-  name: string;
-  alias: string;
-  access: number;
-}
-
-export interface Menu {
-  id: number;
-  catName: string;
-  item?: MenuItems[] | null;
-}
-
-export interface GroupInstrument {
-  id: number;
-  name: string;
-  controlMethod: string;
-}
-
+import {Menu} from '../interfaces/menu';
+import {GroupInstrument} from '../interfaces/groupInstrument';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +9,7 @@ export class DbService implements OnInit{
 
   //menuOb:Menu;
   menu = new Array<Menu>();
+  groupInstrumentArray = new Array <GroupInstrument>();
 
   constructor() {
     let jsonmenu ='[{ "id": 0,'

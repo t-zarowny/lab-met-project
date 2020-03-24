@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormGroup, FormBuilder,Validators} from '@angular/forms';
+import {GroupInstrument} from '../interfaces/groupInstrument';
+import { from } from 'rxjs';
 
 interface DialogData {
   email: string;
@@ -15,7 +17,7 @@ export class AddGroupComponent  implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddGroupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: GroupInstrument) {}
 
 
   onNoClick(): void {
