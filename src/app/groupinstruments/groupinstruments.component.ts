@@ -38,6 +38,5 @@ export class GroupinstrumentsComponent implements OnInit {
       this.db.groupInstrumentArray.push(result);
       console.log(this.db.groupInstrumentArray);
     });
-
   }
 }
