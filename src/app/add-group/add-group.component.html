@@ -1,11 +1,13 @@
-<h1 mat-dialog-title>Want to receive our emails?</h1>
-<div mat-dialog-content>
-  <p>What's your email?</p>
+<div>
+<h1 mat-dialog-title>Dodawanie nowej grupy dla przyrządów</h1>
+<div mat-dialog-content  >
+  <p>Dodawanie nowej grupy dla przyrządów</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.email">
+    <input matInput cdkFocusInitial [(ngModel)]="data.email">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No</button>
-  <button mat-button [mat-dialog-close]="data.email" cdkFocusInitial>Yes</button>
+  <button mat-raised-button  (click)="onNoClick()">No</button>
+  <button mat-raised-button  [mat-dialog-close]="data.email" >Yes</button>
+</div>
 </div>

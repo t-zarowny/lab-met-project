@@ -28,10 +28,6 @@ const appRoutes: Routes = [
     path: 'listgroup',
     component: GroupinstrumentsComponent
   },
-    {
-    path: 'addgroup',
-    component: AddGroupComponent
-  },
   {
     path: '',
     redirectTo: '/desktop',
