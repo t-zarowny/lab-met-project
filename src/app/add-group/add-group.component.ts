@@ -23,6 +23,7 @@ export class AddGroupComponent  implements OnInit {
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
+    Validators.minLength(2),
   ]);
   
   matcher = new MyErrorStateMatcher();
