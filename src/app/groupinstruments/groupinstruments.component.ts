@@ -22,8 +22,8 @@ export class GroupinstrumentsComponent implements OnInit {
   }
   openDialogAddGroup(): void {
     const dialogRef = this.dialog.open(AddGroupComponent, {
-      width: '800px',
-      height: '800px',
+      width: '550px',
+      height: '600px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',
