@@ -41,6 +41,10 @@ export class DbService implements OnInit{
     //console.log(this.menu);
    }
 
+   addNewGroup(g:GroupInstrument){
+    this.groupInstrumentArray.push(g);
+   }
+
    ngOnInit(){
 
    }

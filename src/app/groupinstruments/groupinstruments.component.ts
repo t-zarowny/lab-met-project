@@ -11,6 +11,7 @@ import {GroupInstrument} from '../interfaces/groupInstrument';
   styleUrls: ['./groupinstruments.component.css']
 })
 export class GroupinstrumentsComponent implements OnInit {
+    
     name: string;
     controlMethod: string;
     loadGroupInstrument: GroupInstrument;
@@ -23,7 +24,7 @@ export class GroupinstrumentsComponent implements OnInit {
   openDialogAddGroup(): void {
     const dialogRef = this.dialog.open(AddGroupComponent, {
       width: '550px',
-      height: '600px',
+      height: '400px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',
@@ -35,8 +36,9 @@ export class GroupinstrumentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //this.email = result;
-      this.db.groupInstrumentArray.push(result);
-      console.log(this.db.groupInstrumentArray);
+      console.log(result);
+      //this.db.groupInstrumentArray.push(result);
+      //console.log(this.db.groupInstrumentArray);
     });
   }
 }
