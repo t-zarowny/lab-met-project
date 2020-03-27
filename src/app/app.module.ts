@@ -21,8 +21,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
-
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 registerLocaleData(localePl);
@@ -48,7 +47,8 @@ registerLocaleData(localePl);
     MatInputModule,
     FormsModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CKEditorModule
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
   providers: [DbService,     

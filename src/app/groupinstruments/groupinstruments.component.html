@@ -3,3 +3,15 @@
     <button mat-raised-button color="primary" (click)="openDialogAddGroup()" class="m-1">Dodaj grupę</button>
   </div>
 </mat-toolbar>
+
+<div class="document-editor">
+    <div class="document-editor__toolbar"></div>
+    <div class="document-editor__editable-container">
+        <div class="document-editor__editable">
+        <ckeditor [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)"></ckeditor>
+            
+        </div>
+    </div>
+</div>
+
+

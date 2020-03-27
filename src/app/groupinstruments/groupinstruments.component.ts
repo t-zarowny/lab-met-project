@@ -4,6 +4,9 @@ import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA  } from '@angular/material/
 import { AddGroupComponent } from '../add-group/add-group.component';
 import { DbService} from '../services/db.service';
 import {GroupInstrument} from '../interfaces/groupInstrument';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+
 
 @Component({
   selector: 'app-groupinstruments',
@@ -15,6 +18,11 @@ export class GroupinstrumentsComponent implements OnInit {
     name: string;
     controlMethod: string;
     loadGroupInstrument: GroupInstrument;
+    //public Editor = ClassicEditor;
+    public Editor = DecoupledEditor;
+    public model = {
+      editorData: '<p>Hello, world!</p>'
+  };
 
   constructor(public dialog: MatDialog, private db: DbService) { }
 
@@ -33,6 +41,7 @@ export class GroupinstrumentsComponent implements OnInit {
       disableClose: true,
       data: {}
     });
+    
 
     dialogRef.afterClosed().subscribe(result => {
       //this.email = result;
@@ -41,4 +50,12 @@ export class GroupinstrumentsComponent implements OnInit {
       //console.log(this.db.groupInstrumentArray);
     });
   }
+
+  public onReady( editor ) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+    );
+}
+
 }
