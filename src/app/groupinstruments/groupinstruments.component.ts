@@ -14,11 +14,11 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
   styleUrls: ['./groupinstruments.component.css']
 })
 export class GroupinstrumentsComponent implements OnInit {
-    
+
     name: string;
     controlMethod: string;
     loadGroupInstrument: GroupInstrument;
-    //public Editor = ClassicEditor;
+    // public Editor = ClassicEditor;
     public Editor = DecoupledEditor;
     public model = {
       editorData: '<p>Hello, world!</p>'
@@ -41,13 +41,11 @@ export class GroupinstrumentsComponent implements OnInit {
       disableClose: true,
       data: {}
     });
-    
-
     dialogRef.afterClosed().subscribe(result => {
-      //this.email = result;
+      // this.email1 = result;
       console.log(result);
-      //this.db.groupInstrumentArray.push(result);
-      //console.log(this.db.groupInstrumentArray);
+      // this.db.groupInstrumentArray.push(result);
+      // console.log(this.db.groupInstrumentArray);
     });
   }
 
@@ -57,5 +55,4 @@ export class GroupinstrumentsComponent implements OnInit {
         editor.ui.getEditableElement()
     );
 }
-
 }
