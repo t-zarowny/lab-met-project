@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DbService} from '../services/db.service';
-import {Menu} from '../interfaces/menu';
+import {Menu} from '../assistant/interfaces';
 
 
 @Component({
@@ -11,7 +11,7 @@ import {Menu} from '../interfaces/menu';
 export class MenuComponent implements OnInit {
 
   menu = new Array<Menu>();
- 
+
 
   constructor(private db: DbService) {
     //this.menu.push(this.db.menuOb);

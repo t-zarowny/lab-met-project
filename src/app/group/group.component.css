@@ -1,0 +1,26 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 300px;
+}
+
+td, th {
+  width: 25%;
+}
+.nag_comp{
+  background-color: #eef1ef!important;
+  text-align: center ;
+}
+.nag_comp h4 {
+  padding: 6px;
+  border-bottom: 1px solid #dadada;
+  width: 97%;
+  margin: auto;
+  color: #868686;
+}
+.mat-header-cell{
+  font-size: 16px;
+}

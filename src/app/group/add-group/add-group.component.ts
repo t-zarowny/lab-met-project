@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup} from '@angular/forms';
-import {GroupInstrument} from '../interfaces/groupInstrument';
+import {GroupInstrument} from '../../assistant/interfaces';
 import {ErrorStateMatcher} from '@angular/material/core';
-import { DbService } from '../services/db.service';
-import { GroupinstrumentsComponent } from '../groupinstruments/groupinstruments.component';
+import { DbService } from '../../services/db.service';
+import { GroupinstrumentsComponent } from '../group.component';
 
 
 
@@ -26,22 +26,22 @@ export class AddGroupComponent  implements OnInit {
 
   addgroupform: FormGroup;
 
-  g:GroupInstrument;
-  
-  //matcher = new MyErrorStateMatcher();
-  
+  g: GroupInstrument;
+
+  // matcher = new MyErrorStateMatcher();
+
   ngOnInit() {
     this.addgroupform = new FormGroup({
 
-      'name': new FormControl('', [
+      name: new FormControl('', [
         Validators.required,
         Validators.minLength(3)
       ]),
-      'controlMethod': new FormControl('', [
+      controlMethod: new FormControl('', [
         Validators.required,
         Validators.minLength(3)
       ]),
-  
+
     });
   }
   constructor(
@@ -53,14 +53,14 @@ export class AddGroupComponent  implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  onSubmit(){
+  onSubmit() {
     console.log(this.addgroupform.value);
-    this.g = { id:0, name:this.addgroupform.value.name, controlMethod:this.addgroupform.value.controlMethod};
+    this.g = { id: 0, name: this.addgroupform.value.name, controlMethod: this.addgroupform.value.controlMethod};
     this.db.addNewGroup(this.g);
     console.log('Odczyt db:');
     console.log(this.db.groupInstrumentArray);
     this.dialogRef.close();
-  } 
+  }
 
   get name() { return this.addgroupform.get('name'); }
   get controlMethod() { return this.addgroupform.get('controlMethod'); }

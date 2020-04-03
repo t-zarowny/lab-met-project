@@ -3,17 +3,16 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { DbService } from './services/db.service';
 import { MenuComponent } from './menu/menu.component';
-import { BarComponent } from './bar/bar.component';
+import { BarComponent } from './menu/bar/bar.component';
 import localePl from '@angular/common/locales/pl';
 import { registerLocaleData } from '@angular/common';
-import { AddinstrumentComponent } from './addinstrument/addinstrument.component';
-import { ListinstrumentComponent } from './listinstrument/listinstrument.component';
+import { AddinstrumentComponent } from './instrument/add-instrument/add-instrument.component';
+import { ListInstrumentComponent } from './instrument/list-instrument.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { AppRoutingModule } from './app.routing.module';
-import { ListusersComponent } from './listusers/listusers.component';
-import { GroupinstrumentsComponent } from './groupinstruments/groupinstruments.component';
-import { AddGroupComponent} from './add-group/add-group.component';
-//import { MatDialogModule } from '@angular/material/dialog';
+import { ListusersComponent } from './users/listusers.component';
+import { GroupinstrumentsComponent } from './group/group.component';
+import { AddGroupComponent} from './group/add-group/add-group.component';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule} from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -21,17 +20,23 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSortModule} from '@angular/material/sort';
+
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 registerLocaleData(localePl);
 @NgModule({
+
   declarations: [
     AppComponent,
     MenuComponent,
     BarComponent,
     AddinstrumentComponent,
-    ListinstrumentComponent,
+    ListInstrumentComponent,
     DesktopComponent,
     ListusersComponent,
     GroupinstrumentsComponent,
@@ -48,17 +53,18 @@ registerLocaleData(localePl);
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    CKEditorModule
+    CKEditorModule,
+    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
-  providers: [DbService,     
+  providers: [DbService,
       {
         provide: MatDialogRef,
         useValue: {}
       },
       {
-        provide:MAT_DIALOG_DATA,
-        useValue:{}
+        provide: MAT_DIALOG_DATA,
+        useValue: {}
       }
      ],
   bootstrap: [AppComponent],

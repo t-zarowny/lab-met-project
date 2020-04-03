@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-addinstrument',
-  templateUrl: './addinstrument.component.html',
-  styleUrls: ['./addinstrument.component.css']
+  templateUrl: './add-instrument.component.html',
+  styleUrls: ['./add-instrument.component.css']
 })
 export class AddinstrumentComponent implements OnInit {
 
