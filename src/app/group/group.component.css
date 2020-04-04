@@ -7,9 +7,7 @@ table {
   width: 300px;
 }
 
-td, th {
-  width: 25%;
-}
+
 .nag_comp{
   background-color: #eef1ef!important;
   text-align: center ;
@@ -23,4 +21,13 @@ td, th {
 }
 .mat-header-cell{
   font-size: 16px;
+}
+.matSelectColumn{
+  max-width: 50px;
+}
+.matSelectRow{
+  background-color: #e5e8ff;
+}
+.matSelectRowMouse{
+  background-color: gray;
 }

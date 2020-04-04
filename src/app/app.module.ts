@@ -19,11 +19,12 @@ import { MatInputModule } from '@angular/material/input';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import { MatTableModule} from '@angular/material/table';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatSortModule} from '@angular/material/sort';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
@@ -54,7 +55,7 @@ registerLocaleData(localePl);
     MatFormFieldModule,
     ReactiveFormsModule,
     CKEditorModule,
-    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule
+    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
   providers: [DbService,

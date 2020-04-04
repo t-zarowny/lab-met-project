@@ -17,7 +17,7 @@ export interface GroupInstrument {
   measurementCardTemplateId?: number;
 }
 
-export interface MeasurementCardTemplate{
+export interface MeasurementCardTemplate {
   id?: number;
   title: string;
   name: string;

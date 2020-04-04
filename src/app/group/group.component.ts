@@ -9,6 +9,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {SelectionModel} from '@angular/cdk/collections';
+
 
 export interface UserData {
   id: string;
@@ -44,8 +46,10 @@ export class GroupinstrumentsComponent implements OnInit {
       editorData: '<p>Hello, world!</p>'
   };
 
-  displayedColumns: string[] = ['id', 'progress', 'name',  'color'];
-  dataSource: MatTableDataSource<UserData>;
+  displayedColumns: string[] = ['select', 'id', 'name', 'controlMethod',  'measurementCardTemplateId'];
+  dataSource: MatTableDataSource<GroupInstrument>;
+  selection = new SelectionModel<GroupInstrument>();
+  selectedRowIndex = -1;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -53,13 +57,19 @@ export class GroupinstrumentsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private db: DbService) {
         // Create 100 users
-        const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
+        // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+        this.dataSource = new MatTableDataSource(db.groupInstrumentArray);
         // Assign the data to the data source for the table to render
-        this.dataSource = new MatTableDataSource(users);
+        // this.dataSource = new MatTableDataSource(users);
+        // this.dataSource = new MatTableDataSource(db.groupInstrumentArray);
+        // this.dataSource = new MatTableDataSource(this.dataGroup);
+
    }
 
   ngOnInit() {
+    this.db.getListGroup().subscribe(groups =>{
+      this.dataSource.data = groups;
+    });
     this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
     this.paginator._intl.nextPageLabel = 'Następna strona';
     this.paginator._intl.previousPageLabel = 'Poprzednia strona';
@@ -80,6 +90,20 @@ export class GroupinstrumentsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: GroupInstrument): string {
+      if (!row) {
+
+      }
+      return null;
+    }
+
+
+    highlight(row: any){
+      this.selectedRowIndex = row.id;
+      // console.log(this.selection.selected.length);
+    }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -119,17 +143,4 @@ export class GroupinstrumentsComponent implements OnInit {
     );
   }
 
-
-}
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name: string = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
 }

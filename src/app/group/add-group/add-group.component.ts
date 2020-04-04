@@ -54,8 +54,9 @@ export class AddGroupComponent  implements OnInit {
     this.dialogRef.close();
   }
   onSubmit() {
-    console.log(this.addgroupform.value);
-    this.g = { id: 0, name: this.addgroupform.value.name, controlMethod: this.addgroupform.value.controlMethod};
+    //console.log(this.addgroupform.value);
+    // tslint:disable-next-line: max-line-length
+    this.g = { id: this.db.groupInstrumentArray.length, name: this.addgroupform.value.name, controlMethod: this.addgroupform.value.controlMethod, measurementCardTemplateId: 0};
     this.db.addNewGroup(this.g);
     console.log('Odczyt db:');
     console.log(this.db.groupInstrumentArray);

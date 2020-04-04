@@ -1,50 +1,61 @@
 import { Injectable, OnInit } from '@angular/core';
 import {GroupInstrument, Menu} from '../assistant/interfaces';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DbService implements OnInit{
+export class DbService implements OnInit {
 
-  //menuOb:Menu;
+  // menuOb:Menu;
   menu = new Array<Menu>();
   groupInstrumentArray = new Array <GroupInstrument>();
 
+  private groupInstrumentArrayObs = new Subject<GroupInstrument[]>();
+
+
   constructor() {
-    let jsonmenu ='[{ "id": 0,'
-                  +'  "catName":"System", '
-                  +'  "item": ['
-                  +'           {"name":"Pulpit", '
-                  +'            "alias":"desktop", '
-                  +'            "access":0},'
-                  +'           {"name":"Użytkownicy", '
-                  +'            "alias":"listusers", '
-                  +'            "access":0}'
-                  +'          ]'
-                  +'},'
-                  +'{ "id": 1,'
-                  +'  "catName":"Przyrządy", '
-                  +'  "item": ['
-                  +'           {"name":"Grupy przyrządów", '
-                  +'            "alias":"listgroup", '
-                  +'            "access":0},'
-                  +'           {"name":"Dodaj przyrząd", '
-                  +'            "alias":"addinstrument", '
-                  +'            "access":0},'
-                  +'           {"name":"Lista przyrządów", '
-                  +'            "alias":"listinstrument", '
-                  +'            "access":0}'
-                  +'          ]'
-                  +'}]';
+    const jsonmenu = '[{ "id": 0,'
+                  + '  "catName":"System", '
+                  + '  "item": ['
+                  + '           {"name":"Pulpit", '
+                  + '            "alias":"desktop", '
+                  + '            "access":0},'
+                  + '           {"name":"Użytkownicy", '
+                  + '            "alias":"listusers", '
+                  + '            "access":0}'
+                  + '          ]'
+                  + '},'
+                  + '{ "id": 1,'
+                  + '  "catName":"Przyrządy", '
+                  + '  "item": ['
+                  + '           {"name":"Grupy przyrządów", '
+                  + '            "alias":"listgroup", '
+                  + '            "access":0},'
+                  + '           {"name":"Dodaj przyrząd", '
+                  + '            "alias":"addinstrument", '
+                  + '            "access":0},'
+                  + '           {"name":"Lista przyrządów", '
+                  + '            "alias":"listinstrument", '
+                  + '            "access":0}'
+                  + '          ]'
+                  + '}]';
     this.menu = JSON.parse(jsonmenu);
-    //console.log(this.menu);
+    // console.log(this.menu);
+    this.addNewGroup({id: 0, name: 'Grupa testowa 1', controlMethod: 'IK-0-0-0', measurementCardTemplateId: 1});
+    this.addNewGroup({id: 1, name: 'Grupa testowa 2', controlMethod: 'IK-0-0-1', measurementCardTemplateId: 2});
    }
 
-   addNewGroup(g:GroupInstrument){
+   addNewGroup(g: GroupInstrument) {
     this.groupInstrumentArray.push(g);
+    this.groupInstrumentArrayObs.next(this.groupInstrumentArray);
+   }
+   getListGroup(): Observable<GroupInstrument[]> {
+      return this.groupInstrumentArrayObs.asObservable();
    }
 
-   ngOnInit(){
+   // tslint:disable-next-line: contextual-lifecycle
+   ngOnInit() {
 
    }
 }
