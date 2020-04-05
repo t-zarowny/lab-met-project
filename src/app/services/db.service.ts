@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import {GroupInstrument, Menu} from '../assistant/interfaces';
 import { Subject, Observable } from 'rxjs';
+import { isUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,21 @@ export class DbService implements OnInit {
    }
 
    addNewGroup(g: GroupInstrument) {
-    this.groupInstrumentArray.push(g);
+
+    if (g.id === undefined) {
+      const gn: GroupInstrument = { id: this.groupInstrumentArray.length,
+                                  name: g.name,
+                                  controlMethod: g.controlMethod,
+                                  measurementCardTemplateId: g.measurementCardTemplateId
+                                };
+      this.groupInstrumentArray.push(gn);
+    } else {
+      const index = this.groupInstrumentArray.findIndex
+      (
+       x => x.id === g.id
+      );
+      index !== -1 ? this.groupInstrumentArray.splice(index, 1, g) : this.groupInstrumentArray.push(g);
+    }
     this.groupInstrumentArrayObs.next(this.groupInstrumentArray);
    }
    getListGroup(): Observable<GroupInstrument[]> {
@@ -55,9 +70,7 @@ export class DbService implements OnInit {
    }
 
    // tslint:disable-next-line: contextual-lifecycle
-   ngOnInit() {
-
-   }
+   ngOnInit() {}
 }
 
 

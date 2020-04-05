@@ -67,7 +67,7 @@ export class GroupinstrumentsComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.db.getListGroup().subscribe(groups =>{
+    this.db.getListGroup().subscribe(groups => {
       this.dataSource.data = groups;
     });
     this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
@@ -92,18 +92,18 @@ export class GroupinstrumentsComponent implements OnInit {
   }
 
     /** The label for the checkbox on the passed row */
-    checkboxLabel(row?: GroupInstrument): string {
+  checkboxLabel(row?: GroupInstrument): string {
       if (!row) {
 
       }
       return null;
-    }
+  }
 
 
-    highlight(row: any){
-      this.selectedRowIndex = row.id;
-      // console.log(this.selection.selected.length);
-    }
+  highlight(row: any) {
+    this.selectedRowIndex = row.id;
+    // console.log(this.selection.selected);
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -114,7 +114,7 @@ export class GroupinstrumentsComponent implements OnInit {
     }
   }
 
-  openDialogAddGroup(): void {
+  openDialogAddGroup(g?: GroupInstrument): void {
     const dialogRef = this.dialog.open(AddGroupComponent, {
       width: '550px',
       height: '400px',
@@ -124,12 +124,17 @@ export class GroupinstrumentsComponent implements OnInit {
       },
       hasBackdrop: true,
       disableClose: true,
-      data: {}
+      data: { id: g?.id,
+              name: g?.name,
+              controlMethod: g?.controlMethod,
+              measurementCardTemplateId: g?.measurementCardTemplateId
+            }
     });
-
     dialogRef.afterClosed().subscribe(result => {
+      this.selection.clear();
+      this.highlight(-1);
       // this.email1 = result;
-      console.log(result);
+      // console.log(result);
       // this.db.groupInstrumentArray.push(result);
       // console.log(this.db.groupInstrumentArray);
     });

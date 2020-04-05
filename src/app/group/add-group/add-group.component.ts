@@ -33,11 +33,11 @@ export class AddGroupComponent  implements OnInit {
   ngOnInit() {
     this.addgroupform = new FormGroup({
 
-      name: new FormControl('', [
+      name: new FormControl(this.data.name, [
         Validators.required,
         Validators.minLength(3)
       ]),
-      controlMethod: new FormControl('', [
+      controlMethod: new FormControl(this.data.controlMethod, [
         Validators.required,
         Validators.minLength(3)
       ]),
@@ -54,12 +54,15 @@ export class AddGroupComponent  implements OnInit {
     this.dialogRef.close();
   }
   onSubmit() {
-    //console.log(this.addgroupform.value);
-    // tslint:disable-next-line: max-line-length
-    this.g = { id: this.db.groupInstrumentArray.length, name: this.addgroupform.value.name, controlMethod: this.addgroupform.value.controlMethod, measurementCardTemplateId: 0};
+    this.g = {  id: this.data.id,
+                name: this.addgroupform.value.name,
+                controlMethod: this.addgroupform.value.controlMethod,
+                measurementCardTemplateId: this.data.measurementCardTemplateId};
     this.db.addNewGroup(this.g);
-    console.log('Odczyt db:');
-    console.log(this.db.groupInstrumentArray);
+    // console.log('Wysłanie:');
+    // console.log(this.g);
+    // console.log('Odczyt db:');
+    // console.log(this.db.groupInstrumentArray);
     this.dialogRef.close();
   }
 

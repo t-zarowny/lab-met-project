@@ -9,12 +9,12 @@
     <input matInput cdkFocusInitial [(ngModel)]="data.name">
     <input matInput  [(ngModel)]="data.controlMethod">
   </mat-form-field>
-</div>  
+</div>
 -->
 
 
 	<h1 mat-dialog-title class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">Dodaj nową grupę przyrządów</h1>
-	
+
   <mat-form-field  class="w-100 p-2">
 		<mat-label>Nazwa grupy</mat-label>
 		<input matInput formControlName="name" cdkFocusInitial >
@@ -39,7 +39,7 @@
 
   </div>
 	<div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
-		<button mat-raised-button class="btn btn-secondary" (click)="onNoClick()" >Anuluj</button>
+		<button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()" >Anuluj</button>
 		<button mat-raised-button class="btn btn-success" type="submit" [disabled]="!addgroupform.valid" >Zapisz</button>
   </div>
 </form>

@@ -3,7 +3,7 @@
 <mat-toolbar class="p-1 d-flex justify-content-between">
   <mat-toolbar-row>
     <button mat-raised-button  (click)="openDialogAddGroup()" class="m-1">Dodaj grupę</button>
-    <button mat-raised-button  (click)="openDialogAddGroup()" [disabled]="selection.selected.length==0" class="m-1">Edytuj zaznaczoną grupę</button>
+    <button mat-raised-button  (click)="openDialogAddGroup(selection.selected[0])" [disabled]="selection.selected.length==0" class="m-1">Edytuj zaznaczoną grupę</button>
   </mat-toolbar-row>
   <mat-form-field style="margin-bottom: -10px;">
     <mat-label>Szukaj grupy</mat-label>
