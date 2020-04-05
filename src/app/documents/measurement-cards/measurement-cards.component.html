@@ -1,0 +1,65 @@
+<div class="nag_comp">
+  <h4>Karty pomiarów</h4>
+  <mat-toolbar class="p-1 d-flex justify-content-between">
+    <mat-toolbar-row>
+      <button mat-raised-button  (click)="openDialogAddGroup()" class="m-1">Dodaj kartę pomiarów</button>
+      <button mat-raised-button  (click)="openDialogAddGroup(selection.selected[0])" [disabled]="selection.selected.length==0" class="m-1">Edytuj zaznaczoną pozycję</button>
+    </mat-toolbar-row>
+    <mat-form-field style="margin-bottom: -10px;">
+      <mat-label>Szukaj karty</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Wpisz czego szukasz?" >
+    </mat-form-field>
+  </mat-toolbar>
+  </div>
+  <div class="mat-elevation-z8 mr-1 ml-1">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Checkbox Column -->
+    <ng-container matColumnDef="select" >
+      <th mat-header-cell *matHeaderCellDef class="matSelectColumn" fxFlex="100px">
+
+      </th>
+      <td mat-cell *matCellDef="let row" class="matSelectColumn" fxFlex="100px"  [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> ID </th>
+        <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+            [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.id}} </td>
+      </ng-container>
+
+      <!-- documentNo Column -->
+      <ng-container matColumnDef="documentNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nr dokumentu </th>
+        <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.documentNo}} </td>
+      </ng-container>
+
+      <!-- title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Tytuł </th>
+        <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.title}} </td>
+      </ng-container>
+
+      <!-- template Column -->
+      <ng-container matColumnDef="template">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Szablon</th>
+        <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.template}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10]" [hidePageSize]="true"></mat-paginator>
+  </div>
