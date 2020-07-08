@@ -25,8 +25,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MeasurementCardsComponent } from './documents/measurement-cards/measurement-cards.component';
+import { MeasurementCardsDialogComponent } from './documents/measurement-cards-dialog/measurement-cards-dialog.component';
 
 
 registerLocaleData(localePl);
@@ -41,7 +42,9 @@ registerLocaleData(localePl);
     DesktopComponent,
     ListusersComponent,
     GroupinstrumentsComponent,
-    AddGroupComponent
+    AddGroupComponent,
+    MeasurementCardsComponent,
+    MeasurementCardsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,7 @@ registerLocaleData(localePl);
       }
      ],
   bootstrap: [AppComponent],
-  entryComponents: [AddGroupComponent],
+  entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

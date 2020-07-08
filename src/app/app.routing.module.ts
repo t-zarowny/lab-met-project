@@ -5,6 +5,7 @@ import {AddinstrumentComponent} from './instrument/add-instrument/add-instrument
 import {ListInstrumentComponent} from './instrument/list-instrument.component';
 import {ListusersComponent} from './users/listusers.component';
 import {GroupinstrumentsComponent} from './group/group.component';
+import {MeasurementCardsComponent} from './documents/measurement-cards/measurement-cards.component';
 import {AddGroupComponent} from './group/add-group/add-group.component';
 
 const appRoutes: Routes = [
@@ -27,6 +28,10 @@ const appRoutes: Routes = [
     {
     path: 'listgroup',
     component: GroupinstrumentsComponent
+  },
+  {
+    path: 'measurementcards',
+    component: MeasurementCardsComponent
   },
   {
     path: '',

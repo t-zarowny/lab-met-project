@@ -18,7 +18,8 @@ export interface GroupInstrument {
 }
 
 export interface MeasurementCardTemplate {
-  id?: number;
+  id: number;
+  documentNo: string;
   title: string;
-  name: string;
+  template?: string;
 }
