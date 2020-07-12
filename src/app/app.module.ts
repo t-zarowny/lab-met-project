@@ -28,6 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MeasurementCardsComponent } from './documents/measurement-cards/measurement-cards.component';
 import { MeasurementCardsDialogComponent } from './documents/measurement-cards-dialog/measurement-cards-dialog.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 registerLocaleData(localePl);
@@ -58,7 +59,8 @@ registerLocaleData(localePl);
     MatFormFieldModule,
     ReactiveFormsModule,
     CKEditorModule,
-    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule
+    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule,
+    PdfViewerModule
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
   providers: [DbService,
