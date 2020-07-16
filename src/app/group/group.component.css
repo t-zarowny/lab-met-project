@@ -14,10 +14,9 @@ table {
 }
 .nag_comp h4 {
   padding: 6px;
-  border-bottom: 1px solid #dadada;
-  width: 97%;
-  margin: auto;
-  color: #868686;
+  position: fixed;
+  top: 7px;
+  color: whitesmoke;
 }
 .mat-header-cell{
   font-size: 16px;

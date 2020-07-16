@@ -1,7 +1,9 @@
-<div class="nag_comp">
-<h4>Grupy przyrządów</h4>
+<div class="nag_comp d-inline-block w-100">
+
 <mat-toolbar class="p-1 d-flex justify-content-between">
+
   <mat-toolbar-row>
+    <h4 class="text-capitalize ">Grupy przyrządów</h4>
     <button mat-raised-button  (click)="openDialogAddGroup()" class="m-1">Dodaj grupę</button>
     <button mat-raised-button  (click)="openDialogAddGroup(selection.selected[0])" [disabled]="selection.selected.length==0" class="m-1">Edytuj zaznaczoną grupę</button>
   </mat-toolbar-row>
@@ -10,7 +12,7 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Wpisz czego szukasz?" >
   </mat-form-field>
 </mat-toolbar>
-</div>
+
 <!--
 <div class="document-editor">
   <div class="document-editor__toolbar"></div>
@@ -34,7 +36,7 @@
 -->
 
 
-<div class="mat-elevation-z8 mr-1 ml-1">
+<div class="mat-elevation-z8 mr-2 ml-2 mb-2">
   <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- Checkbox Column -->
@@ -88,3 +90,4 @@
 </div>
 
 
+</div>

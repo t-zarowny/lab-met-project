@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { DbService } from './services/db.service';
 import { MenuComponent } from './menu/menu.component';
 import { BarComponent } from './menu/bar/bar.component';
-import localePl from '@angular/common/locales/global/pl';
+import localePl from '@angular/common/locales/pl';
 import { registerLocaleData } from '@angular/common';
 import { AddinstrumentComponent } from './instrument/add-instrument/add-instrument.component';
 import { ListInstrumentComponent } from './instrument/list-instrument.component';
@@ -28,7 +28,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MeasurementCardsComponent } from './documents/measurement-cards/measurement-cards.component';
 import { MeasurementCardsDialogComponent } from './documents/measurement-cards-dialog/measurement-cards-dialog.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 registerLocaleData(localePl);
@@ -59,8 +58,7 @@ registerLocaleData(localePl);
     MatFormFieldModule,
     ReactiveFormsModule,
     CKEditorModule,
-    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule,
-    PdfViewerModule
+    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
   providers: [DbService,
