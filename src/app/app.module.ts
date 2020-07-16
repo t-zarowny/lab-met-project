@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { DbService } from './services/db.service';
 import { MenuComponent } from './menu/menu.component';
 import { BarComponent } from './menu/bar/bar.component';
-import localePl from '@angular/common/locales/pl';
+import localePl from '@angular/common/locales/global/pl';
 import { registerLocaleData } from '@angular/common';
 import { AddinstrumentComponent } from './instrument/add-instrument/add-instrument.component';
 import { ListInstrumentComponent } from './instrument/list-instrument.component';
