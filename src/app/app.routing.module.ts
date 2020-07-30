@@ -8,6 +8,7 @@ import {GroupinstrumentsComponent} from './group/group.component';
 import {MeasurementCardsComponent} from './documents/measurement-cards/measurement-cards.component';
 import {AddGroupComponent} from './group/add-group/add-group.component';
 
+
 const appRoutes: Routes = [
   {
     path: 'desktop',

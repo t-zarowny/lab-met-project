@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DbService} from '../services/db.service';
+import { DbService} from '../_services/db.service';
 import {Menu} from '../assistant/interfaces';
 
 
@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
 
 
   constructor(private db: DbService) {
-    //this.menu.push(this.db.menuOb);
+    // this.menu.push(this.db.menuOb);
     this.menu = this.db.menu;
    }
 

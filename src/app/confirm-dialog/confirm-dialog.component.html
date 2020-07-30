@@ -1,0 +1,12 @@
+<h1 mat-dialog-title class="p-1 w-100 text-center text-capitalize border-bottom bg-danger text-white shadow  rounded">
+  {{title}}
+</h1>
+
+<div mat-dialog-content>
+  <p>{{message}}</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onDismiss()">Nie</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Tak</button>
+</div>

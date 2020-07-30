@@ -30,3 +30,6 @@ table {
 .matSelectRowMouse{
   background-color: gray;
 }
+.mat-cell{
+  text-align: left;
+}

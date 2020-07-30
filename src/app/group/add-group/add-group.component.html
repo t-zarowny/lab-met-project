@@ -12,31 +12,72 @@
 </div>
 -->
 
-
 	<h1 mat-dialog-title class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">Dodaj nową grupę przyrządów</h1>
 
   <mat-form-field  class="w-100 p-2">
 		<mat-label>Nazwa grupy</mat-label>
-		<input matInput formControlName="name" cdkFocusInitial >
-		<mat-error *ngIf="name.errors?.minlength &&! name.errors?.required">
+		<input matInput formControlName="nazwa" cdkFocusInitial >
+		<mat-error *ngIf="nazwa.errors?.minlength &&! nazwa.errors?.required">
 			Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
 		</mat-error>
-		<mat-error *ngIf="name.errors?.required">
+		<mat-error *ngIf="nazwa.errors?.required">
 			To pole jest <strong>wymagane</strong>
 		</mat-error>
 	</mat-form-field>
 
   <mat-form-field  class="w-100 p-2">
 		<mat-label>Instrukcja kontroli</mat-label>
-		<input matInput formControlName="controlMethod" >
-		<mat-error *ngIf="controlMethod.errors?.minlength &&! controlMethod.errors?.required">
+		<input matInput formControlName="metodaKontroli" >
+		<mat-error *ngIf="metodaKontroli.errors?.minlength &&! metodaKontroli.errors?.required">
 			Prosze wprowadzić opis składający się z przynajmniej 3 znaków
 		</mat-error>
-		<mat-error *ngIf="controlMethod.errors?.required">
+		<mat-error *ngIf="metodaKontroli.errors?.required">
 			To pole jest <strong>wymagane</strong>
 		</mat-error>
-	</mat-form-field>
+  </mat-form-field>
 
+  <mat-form-field  class="w-100 " appearance="outline">
+		<mat-label>Karta pomiarów</mat-label>
+    <input matInput formControlName="kartaPomiarowNazwa" placeholder="Nie wybrano pliku" >
+    <input type="file" #fileInput hidden
+           id="inputGroupFile01"
+           name="fileInput"
+           formControlName="kartaPomiarowPlik"
+           (change)="handleFileInput($event)"
+           class="custom-file-input"
+           aria-describedby="inputGroupFileAddon01">
+      <mat-icon matSuffix class="d-flex" style="cursor:pointer;" svgIcon="attach_file" (click)="fileInput.click()" matTooltip="Kliknij, aby wybrać plik."
+      matTooltipPosition="left"></mat-icon>
+  </mat-form-field>
+<!--
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroupFileAddon01">Instrukcja kontroli</span>
+    </div>
+    <div class="custom-file">
+
+      <input type="file"
+           id="inputGroupFile01"
+           name="measurementCardTemplateId"
+           (change)="handleFileInput($event)"
+           class="custom-file-input"
+           aria-describedby="inputGroupFileAddon01">
+      <label class="custom-file-label" for="inputGroupFile01" >{{fileLabel}}</label>
+    </div>
+  </div>
+
+<mat-form-field class="columns">
+  <mat-label *ngIf="fileLabel.length>0; else newFile">{{fileLabel}}</mat-label>
+  <ng-template #newFile>
+      <mat-label>Choosee file</mat-label>
+  </ng-template>
+  <input matInput disabled>
+  <button mat-icon-button matSuffix (click)="fileInput0.click()">
+      <mat-icon svgIcon="attach_file"></mat-icon>
+  </button>
+  <input hidden (change)="handleFileInput($event)" #fileInput0 type="file" id="file">
+</mat-form-field>
+-->
   </div>
 	<div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
 		<button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()" >Anuluj</button>

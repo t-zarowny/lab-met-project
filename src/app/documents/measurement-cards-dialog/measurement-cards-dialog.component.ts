@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MeasurementCardTemplate } from 'src/app/assistant/interfaces';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DbService } from 'src/app/services/db.service';
+import { DbService } from 'src/app/_services/db.service';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({

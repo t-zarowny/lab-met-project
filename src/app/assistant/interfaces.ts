@@ -12,9 +12,10 @@ export interface Menu {
 
 export interface GroupInstrument {
   id?: number;
-  name: string;
-  controlMethod: string;
-  measurementCardTemplateId?: number;
+  nazwa: string;
+  metodaKontroli: string;
+  kartaPomiarowNazwa?: string;
+  kartaPomiarowPlik?: File;
 }
 
 export interface MeasurementCardTemplate {

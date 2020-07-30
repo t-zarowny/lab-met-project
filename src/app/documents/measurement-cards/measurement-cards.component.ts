@@ -5,7 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { DbService } from 'src/app/services/db.service';
+import { DbService } from 'src/app/_services/db.service';
 import { AddGroupComponent } from 'src/app/group/add-group/add-group.component';
 import { MeasurementCardsDialogComponent } from '../measurement-cards-dialog/measurement-cards-dialog.component';
 

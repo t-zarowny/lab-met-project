@@ -6,6 +6,7 @@
     <h4 class="text-capitalize ">Grupy przyrządów</h4>
     <button mat-raised-button  (click)="openDialogAddGroup()" class="m-1">Dodaj grupę</button>
     <button mat-raised-button  (click)="openDialogAddGroup(selection.selected[0])" [disabled]="selection.selected.length==0" class="m-1">Edytuj zaznaczoną grupę</button>
+    <button mat-raised-button  (click)="deleteSelectedGroup(selection.selected[0])" [disabled]="selection.selected.length==0" class="m-1">Usuń zaznaczoną grupę</button>
   </mat-toolbar-row>
   <mat-form-field style="margin-bottom: -10px;">
     <mat-label>Szukaj grupy</mat-label>
@@ -61,24 +62,41 @@
     </ng-container>
 
     <!-- Progress Column -->
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="nazwa">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nazwa </th>
       <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-      [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.name}} </td>
+      [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nazwa}} </td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="controlMethod">
+    <ng-container matColumnDef="metodaKontroli">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Instrukcja kontroli </th>
       <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-      [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.controlMethod}} </td>
+      [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.metodaKontroli}} </td>
     </ng-container>
 
     <!-- Color Column -->
-    <ng-container matColumnDef="measurementCardTemplateId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Instrukcja sprawdzenia</th>
-      <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-      [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.measurementCardTemplateId}} </td>
+    <ng-container matColumnDef="kartaPomiarowNazwa">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Karta pomiarów</th>
+      <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null;
+          selection.isSelected(row) ? highlight(row) : highlight(-1);"
+          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}" >
+          <div *ngIf="row.kartaPomiarowPlik; then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+           <a mat-button #thenBlock href="{{row.kartaPomiarowPlik}}" target="_blank" matTooltip="Kliknij, aby wyświetlić" matTooltipPosition="left">
+            <mat-icon svgIcon="attach_file" matSuffix class="d-inline-flex" style="cursor:pointer;"></mat-icon>
+            {{row.kartaPomiarowNazwa}}
+          </a>
+          </ng-template>
+          <ng-template #elseBlock >
+            <div class="alert alert-light m-0" role="alert">
+              Brak załączonej karty
+            </div>
+
+          </ng-template>
+
+
+    </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

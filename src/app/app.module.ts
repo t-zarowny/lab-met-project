@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
-import { DbService } from './services/db.service';
+import { DbService } from './_services/db.service';
 import { MenuComponent } from './menu/menu.component';
 import { BarComponent } from './menu/bar/bar.component';
 import localePl from '@angular/common/locales/pl';
@@ -28,7 +28,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MeasurementCardsComponent } from './documents/measurement-cards/measurement-cards.component';
 import { MeasurementCardsDialogComponent } from './documents/measurement-cards-dialog/measurement-cards-dialog.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -44,12 +47,14 @@ registerLocaleData(localePl);
     GroupinstrumentsComponent,
     AddGroupComponent,
     MeasurementCardsComponent,
-    MeasurementCardsDialogComponent
+    MeasurementCardsDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule,
     MatDialogModule,
     MatButtonModule,
@@ -57,11 +62,15 @@ registerLocaleData(localePl);
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    CKEditorModule,
+    CKEditorModule, MatIconModule, MatTooltipModule,
     MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule
   ],
   exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
   providers: [DbService,
+      {
+        provide: LOCALE_ID,
+        useValue: 'pl-PL'
+      },
       {
         provide: MatDialogRef,
         useValue: {}
@@ -72,7 +81,7 @@ registerLocaleData(localePl);
       }
      ],
   bootstrap: [AppComponent],
-  entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent],
+  entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent, ConfirmDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
