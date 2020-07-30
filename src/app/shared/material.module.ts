@@ -1,18 +1,43 @@
-// Material Module example.
-// All other Angular Material component imports here
-// but the important ones are...
 import { NgModule } from '@angular/core';
-import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import {MatIconModule, MatIconRegistry, MatIcon} from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule} from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 @NgModule({
     declarations: [],
     imports: [
-    // Other material imports removed for brevity,
-    MatIconModule],
+    CommonModule,
+    ],
     exports: [
-    // Other material exports removed for brevity,
+      MatDialogModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule,
+      MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule,
+      MatDialogModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatIconModule,
+      MatInputModule,
+      MatTooltipModule,
     ],
     entryComponents: [],
-    providers: [MatIconRegistry]
+    providers: [
+      {
+        provide: MatDialogRef,
+        useValue: {}
+      },
+      {
+        provide: MAT_DIALOG_DATA,
+        useValue: {}
+      }
+    ]
 })
-export  class  MaterialModule  {}
+export class AppMaterialModule {}

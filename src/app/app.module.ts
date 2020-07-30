@@ -13,24 +13,13 @@ import { AppRoutingModule } from './app.routing.module';
 import { ListusersComponent } from './users/listusers.component';
 import { GroupinstrumentsComponent } from './group/group.component';
 import { AddGroupComponent} from './group/add-group/add-group.component';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { MatButtonModule} from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatPaginatorModule} from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatSortModule } from '@angular/material/sort';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MeasurementCardsComponent } from './documents/measurement-cards/measurement-cards.component';
 import { MeasurementCardsDialogComponent } from './documents/measurement-cards-dialog/measurement-cards-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { AppMaterialModule } from './shared/material.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 registerLocaleData(localePl);
@@ -55,30 +44,17 @@ registerLocaleData(localePl);
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    FormsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    CKEditorModule, MatIconModule, MatTooltipModule,
-    MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule
+    AppRoutingModule, FormsModule,
+    AppMaterialModule,
+    ReactiveFormsModule
   ],
-  exports: [FormsModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule],
+  exports: [FormsModule],
   providers: [DbService,
       {
         provide: LOCALE_ID,
         useValue: 'pl-PL'
       },
-      {
-        provide: MatDialogRef,
-        useValue: {}
-      },
-      {
-        provide: MAT_DIALOG_DATA,
-        useValue: {}
-      }
+
      ],
   bootstrap: [AppComponent],
   entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent, ConfirmDialogComponent],
