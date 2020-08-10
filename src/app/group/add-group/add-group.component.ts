@@ -28,8 +28,10 @@ export class AddGroupComponent  implements OnInit {
 
   fileGroupForm: FormGroup;
   groupForm: FormGroup;
-  kartaPomiarowNazwa: string = null;
-  kartaPomiarowLink: string = null;
+  isDeleteFile: boolean = false;
+  isNewFile: boolean = false;
+  // kartaPomiarowNazwa: string = null;
+  // kartaPomiarowLink: string = null;
   g: GroupInstrument;
 
   constructor(
@@ -48,7 +50,10 @@ export class AddGroupComponent  implements OnInit {
 
   get nazwa() { return this.groupForm.get('nazwa'); }
   get metodaKontroli() { return this.groupForm.get('metodaKontroli'); }
-
+  get kartaPomiarowId() { return this.fileGroupForm.get('kartaPomiarowId').value;}
+  get kartaPomiarowNazwa() { return this.fileGroupForm.get('kartaPomiarowNazwa').value;}
+  get kartaPomiarowLink() { return this.fileGroupForm.get('kartaPomiarowLink').value;}
+  get kartaPomiarowIdGrupa() { return this.fileGroupForm.get('idGrupa').value;}
 
 
 
@@ -72,14 +77,15 @@ export class AddGroupComponent  implements OnInit {
 
 
     this.fileGroupForm = this.formBuilder.group({
-      kartaPomiarowNazwa: [null],
-      kartaPomiarowLink: [null],
-      idGrupa: [null]
+      kartaPomiarowId: [this.data.karta[0]?.id || null],
+      kartaPomiarowNazwa: [this.data.karta[0]?.nazwa || null],
+      kartaPomiarowLink: [this.data.karta[0]?.link || null],
+      idGrupa: [this.data?.id.toString() || null]
     });
-    if (this.data.karta && this.data.karta.length){
-      this.kartaPomiarowNazwa = this.data.karta[0].nazwa;
-      this.kartaPomiarowLink = this.data.karta[0].link;
-    }
+    // if (this.data.karta && this.data.karta.length){
+    //   this.kartaPomiarowNazwa = this.data.karta[0].nazwa;
+    //   this.kartaPomiarowLink = this.data.karta[0].link;
+    // }
   }
 
   onNoClick(): void {
@@ -94,8 +100,8 @@ export class AddGroupComponent  implements OnInit {
     //             metodaKontroli: this.addgroupform.value.metodaKontroli
     //           };
 
-    console.log('Wysłanie:');
-    console.log(groupFormData);
+    // console.log('Wysłanie:');
+    // console.log(groupFormData);
 
     // const formData = new FormData();
     // formData.append('nazwa', this.addgroupform.value.nazwa);
@@ -103,20 +109,20 @@ export class AddGroupComponent  implements OnInit {
 
 
     if (this.data && this.data.id){
-      this.db.updateGroup(this.data.id, groupFormData).subscribe();
-      if (this.data.karta.length === 0 && this.kartaPomiarowNazwa){
-        const groupFormFile = new FormData();
-        groupFormFile.append('nazwa', this.fileGroupForm.get('kartaPomiarowNazwa').value);
-        groupFormFile.append('link', this.fileGroupForm.get('kartaPomiarowLink').value);
-        groupFormFile.append('idGrupa', this.data.id.toString());
-        this.groupService.addNewFile(groupFormFile).subscribe();
-        console.log(`groupFormFile:`);
-        console.log(groupFormFile.forEach);
+      this.groupService.update(this.data.id, groupFormData).subscribe();
+      if(this.isDeleteFile){
+        this.groupService.deleteFile(this.kartaPomiarowId).subscribe();
       }
+      this.saveNewFile();
     }
     else
     {
-      this.db.addNewGroup(groupFormData).subscribe();
+      this.groupService.addNew(groupFormData).subscribe(
+        (res: GroupInstrument) => {
+                  this.fileGroupForm.get('idGrupa').setValue(res.id);
+                  this.saveNewFile();
+                }
+      );
     }
 
 
@@ -133,27 +139,35 @@ export class AddGroupComponent  implements OnInit {
 
     this.dialogRef.close();
   }
+
+  saveNewFile(){
+    if (this.isNewFile){
+      const groupFormFile = new FormData();
+      groupFormFile.append('nazwa', this.kartaPomiarowNazwa);
+      groupFormFile.append('link', this.kartaPomiarowLink);
+      groupFormFile.append('idGrupa', this.kartaPomiarowIdGrupa);
+      this.groupService.addNewFile(groupFormFile).subscribe();
+      // console.log(`groupFormFile:`);
+      // console.log(groupFormFile.forEach);
+    }
+  }
   handleFileInput(event){
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.fileGroupForm.get('kartaPomiarowLink').setValue(file);
       this.fileGroupForm.patchValue({kartaPomiarowNazwa: event.target.files[0].name});
-      this.kartaPomiarowNazwa = event.target.files[0].name;
-      this.kartaPomiarowLink = null;
-      console.log(this.fileGroupForm);
+      this.isNewFile = true;
+      // this.kartaPomiarowNazwa = event.target.files[0].name;
+      // this.kartaPomiarowLink = null;
+      // console.log(this.fileGroupForm);
     }
   }
 
   deleteFile(){
-    if (this.data.karta.length){
-      this.groupService.deleteFile(this.data.karta[0].id).subscribe(() => {
-        this.kartaPomiarowNazwa = null;
-        this.kartaPomiarowLink = null;
-      });
-    }else{
-      this.fileGroupForm.reset();
-      this.kartaPomiarowNazwa = null;
-      console.log(this.fileGroupForm);
+    if (this.kartaPomiarowId){
+      this.isDeleteFile = true
     }
+      this.fileGroupForm.get('kartaPomiarowNazwa').setValue(null);
+      this.fileGroupForm.get('kartaPomiarowLink').setValue(null);
   }
 }

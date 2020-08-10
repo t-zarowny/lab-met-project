@@ -96,10 +96,10 @@ export class GroupinstrumentsComponent implements OnInit {
       hasBackdrop: true,
       disableClose: true,
       data: {
-        id: g?.id,
+        id: g?.id || 0,
         nazwa: g?.nazwa,
         metodaKontroli: g?.metodaKontroli,
-        karta: g?.karta
+        karta: g?.karta || []
       }
     });
     dialogRef.afterClosed().subscribe(result => {
