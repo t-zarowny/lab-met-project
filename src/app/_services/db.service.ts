@@ -6,6 +6,7 @@ import { isUndefined } from 'util';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { catchError, retry, tap } from 'rxjs/operators';
+import { AuthenticationService } from '../login/_services';
 
 
 @Injectable({
@@ -26,10 +27,11 @@ export class DbService implements OnInit {
   public measurementCardArray = new Array<MeasurementCardTemplate>();
   private measurementCardObs = new Subject<MeasurementCardTemplate[]>();
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,
+              private auth: AuthenticationService) {
     const md = new MenuData();
     this.menu = md.menu_list();
-    console.log(this.menu);
+    // console.log(this.menu);
   }
 
   addNewGroup(form: FormData){
@@ -53,9 +55,6 @@ export class DbService implements OnInit {
     return this.http.put<any>(url, form)
       .pipe(tap(console.log));
   }
-
-
-
 
   addNewMeasurementCard(c: MeasurementCardTemplate) {
     if (c.id === undefined) {
@@ -81,23 +80,6 @@ export class DbService implements OnInit {
 
   getListMeasurementCard(): Observable<MeasurementCardTemplate[]> {
     return this.measurementCardObs.asObservable();
-  }
-
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
   }
 
 }

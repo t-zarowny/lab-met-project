@@ -7,32 +7,39 @@ import {ListusersComponent} from './users/listusers.component';
 import {GroupinstrumentsComponent} from './group/group.component';
 import {MeasurementCardsComponent} from './documents/measurement-cards/measurement-cards.component';
 import {AddGroupComponent} from './group/add-group/add-group.component';
+import { AuthGuard } from './_helpers';
 
 
 const appRoutes: Routes = [
   {
     path: 'desktop',
-    component: DesktopComponent
+    component: DesktopComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'addinstrument',
-    component: AddinstrumentComponent
+    component: AddinstrumentComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'listinstrument',
-    component: ListInstrumentComponent
+    component: ListInstrumentComponent,
+    canActivate: [AuthGuard]
   },
     {
     path: 'listusers',
-    component: ListusersComponent
+    component: ListusersComponent,
+    canActivate: [AuthGuard]
   },
     {
     path: 'listgroup',
-    component: GroupinstrumentsComponent
+    component: GroupinstrumentsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'measurementcards',
-    component: MeasurementCardsComponent
+    component: MeasurementCardsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '',

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
 import { DbService } from './_services/db.service';
 import { MenuComponent } from './menu/menu.component';
@@ -18,9 +18,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MeasurementCardsComponent } from './documents/measurement-cards/measurement-cards.component';
 import { MeasurementCardsDialogComponent } from './documents/measurement-cards-dialog/measurement-cards-dialog.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppMaterialModule } from './shared/material.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { LoginModule } from './login/login.module';
+import { JwtInterceptor, ErrorInterceptor, appInitializer } from './_helpers';
+import { AlertComponent } from './_component/alert/alert.component';
+import { AuthenticationService } from './login/_services';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -37,7 +41,8 @@ registerLocaleData(localePl);
     AddGroupComponent,
     MeasurementCardsComponent,
     MeasurementCardsDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -46,10 +51,13 @@ registerLocaleData(localePl);
     HttpClientModule,
     AppRoutingModule, FormsModule,
     AppMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoginModule
   ],
   exports: [FormsModule],
   providers: [DbService,
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
       {
         provide: LOCALE_ID,
         useValue: 'pl-PL'

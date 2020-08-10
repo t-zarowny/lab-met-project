@@ -1,13 +1,21 @@
-<div class="bg-info text-white border-bottom p-0  border-dark d-flex justify-content-between ">
+<div class="bg-info text-dark border-bottom p-0  border-dark d-flex justify-content-between custom-bar">
     <div class="p-2 m-0 ">
-        
+
     </div>
-    <div class="mr-3 text-center text-white-50 pt-2">
+    <div class="mr-3 text-center  pt-2">
         <h6 class="p-0 m-0 w-40">Dziś jest {{ CurrentDate | date:'EEEE':'':'pl'}}</h6>
         <h6 class="w-40">{{ CurrentDate | date:'dd-MM-yyyy ':'':'pl'}}</h6>
     </div>
     <div class=" mr-3">
-        <p class="p-0 m-0  text-white-50">Zalogowany:</p>
-        <h5>Tomasz Zarówny</h5>
+      <!-- <div class="div" *ngIf="isAuthenticated then authOK else authNOK"></div>
+        <ng-template #authOK>
+          <p class="p-0 m-0  text-white-50">Zalogowany:</p>
+          <h5>{{ user.first_name }} {{ user.last_name }}
+          <a class="nav-link d-inline ml-2 text-light" (click)="logout()">Wyloguj</a> </h5>
+        </ng-template>
+        <ng-template #authNOK>
+          <p class="p-0 m-0  text-white-50">Zalogowany:</p>
+          <h5><a class="nav-link d-inline ml-2 text-light" routerLink="/logowanie/">Zaloguj</a></h5>
+        </ng-template> -->
     </div>
 </div>

@@ -1,0 +1,4 @@
+.custom-bar{
+  background: rgb(95,186,179);
+  background: linear-gradient(90deg, rgba(95,186,179,1) 0%, rgba(105,215,207,1) 15%, rgba(122,195,190,1) 32%, rgba(61,196,186,1) 57%, rgba(111,219,211,1) 83%, rgba(84,184,176,1) 100%);
+}

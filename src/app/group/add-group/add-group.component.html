@@ -1,4 +1,4 @@
-<form [formGroup]="addgroupform" class="h-100" (ngSubmit)="onSubmit()">
+<form [formGroup]="groupForm" class="h-100" (ngSubmit)="onSubmit()">
 <div style="height:calc(100% - 60px)">
 
 	<!--
@@ -36,7 +36,20 @@
 		</mat-error>
   </mat-form-field>
 
-  <mat-form-field  class="w-100 " appearance="outline">
+  <h6>Karta pomiarów:</h6>
+  <div *ngIf="kartaPomiarowNazwa; then karta else blank" ></div>
+  <ng-template #karta>
+    <mat-icon matSuffix class="d-block" class="ml-2" svgIcon="attach_file"></mat-icon>
+    <a *ngIf="kartaPomiarowLink" mat-button href="{{kartaPomiarowLink}}" target="_blank" class="ml-2">{{kartaPomiarowNazwa}}</a>
+    <span *ngIf="!kartaPomiarowLink"  class="ml-2">{{kartaPomiarowNazwa}}</span>
+    <button type="button" class="ml-2" mat-raised-button color="warn" (click)="deleteFile()">Usuń kartę</button>
+  </ng-template>
+
+  <ng-template #blank>
+    <button class="ml-2" type="button" mat-raised-button color="primary" (click)="fileInput.click()">Dodaj kartę pomiarów</button>
+    <input type="file" #fileInput hidden (change)="handleFileInput($event)">
+  </ng-template>
+  <!-- <mat-form-field  class="w-100 " appearance="outline">
 		<mat-label>Karta pomiarów</mat-label>
     <input matInput formControlName="kartaPomiarowNazwa" placeholder="Nie wybrano pliku" >
     <input type="file" #fileInput hidden
@@ -48,7 +61,7 @@
            aria-describedby="inputGroupFileAddon01">
       <mat-icon matSuffix class="d-flex" style="cursor:pointer;" svgIcon="attach_file" (click)="fileInput.click()" matTooltip="Kliknij, aby wybrać plik."
       matTooltipPosition="left"></mat-icon>
-  </mat-form-field>
+  </mat-form-field> -->
 <!--
   <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -81,6 +94,6 @@
   </div>
 	<div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
 		<button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()" >Anuluj</button>
-		<button mat-raised-button class="btn btn-success" type="submit" [disabled]="!addgroupform.valid" >Zapisz</button>
+		<button mat-raised-button class="btn btn-success" type="submit" [disabled]="!groupForm.valid" >Zapisz</button>
   </div>
 </form>

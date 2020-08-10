@@ -1,16 +1,24 @@
+<div *ngIf="isAuthenticated then aplication else login"></div>
+<ng-template #aplication>
 <div class="left-content position-fixed h-100 bg-dark shadow border-right border-secondary " width="190">
 
 
 
     <app-menu></app-menu>
 </div>
-<div class="right-content position-fixed h-100 bg-secondary">
+<div class="right-content position-fixed h-100 bg-light" style="background-color: #e0e0e0;">
     <div>
         <app-bar></app-bar>
     </div>
     <div>
+      <alert></alert>
       <router-outlet></router-outlet>
       <div>
 </div>
     </div>
 </div>
+</ng-template>
+<ng-template #login>
+  <alert></alert>
+  <router-outlet></router-outlet>
+</ng-template>

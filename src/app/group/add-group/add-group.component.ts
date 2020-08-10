@@ -8,6 +8,7 @@ import { GroupinstrumentsComponent } from '../group.component';
 import { HttpClient } from '@angular/common/http';
 import { MatIconRegistry} from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { GroupService } from 'src/app/_services';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -25,31 +26,36 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AddGroupComponent  implements OnInit {
 
-  uploadForm: FormGroup;
+  fileGroupForm: FormGroup;
+  groupForm: FormGroup;
+  kartaPomiarowNazwa: string = null;
+  kartaPomiarowLink: string = null;
+  g: GroupInstrument;
 
   constructor(
     public dialogRef: MatDialogRef<AddGroupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: GroupInstrument,
     private db: DbService,
+    private groupService: GroupService,
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry,
-    private formBuilder: FormBuilder, private httpClient: HttpClient) {
-      // tslint:disable-next-line: max-line-length
-      this.matIconRegistry.addSvgIcon('attach_file', this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/attach_file-24px.svg'));
+    private formBuilder: FormBuilder)
+    {
+      this.matIconRegistry.addSvgIcon('attach_file',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/attach_file-24px.svg'));
+      console.log(this.data);
     }
 
-  get nazwa() { return this.addgroupform.get('nazwa'); }
-  get metodaKontroli() { return this.addgroupform.get('metodaKontroli'); }
+  get nazwa() { return this.groupForm.get('nazwa'); }
+  get metodaKontroli() { return this.groupForm.get('metodaKontroli'); }
 
 
-  addgroupform: FormGroup;
 
-  g: GroupInstrument;
 
   // matcher = new MyErrorStateMatcher();
 
   ngOnInit() {
-    this.addgroupform = new FormGroup({
+    this.groupForm = new FormGroup({
 
       nazwa: new FormControl(this.data.nazwa, [
         Validators.required,
@@ -59,43 +65,58 @@ export class AddGroupComponent  implements OnInit {
         Validators.required,
         Validators.minLength(3)
       ]),
-      kartaPomiarowNazwa: new FormControl(this.data.kartaPomiarowNazwa),
-      kartaPomiarowPlik: new FormControl(this.data.kartaPomiarowPlik),
+      // kartaPomiarowNazwa: new FormControl(this.data.karta ? this.data.karta[0].nazwa : ''),
+      // kartaPomiarowPlik: new FormControl(this.data.karta ? this.data.karta[0].link : ''),
 
     });
 
 
-    this.uploadForm = this.formBuilder.group({
-      kartaPomiarowPlik: ['']
+    this.fileGroupForm = this.formBuilder.group({
+      kartaPomiarowNazwa: [null],
+      kartaPomiarowLink: [null],
+      idGrupa: [null]
     });
+    if (this.data.karta && this.data.karta.length){
+      this.kartaPomiarowNazwa = this.data.karta[0].nazwa;
+      this.kartaPomiarowLink = this.data.karta[0].link;
+    }
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
   onSubmit() {
-    this.g = {  id: this.data.id,
-                nazwa: this.addgroupform.value.nazwa,
-                metodaKontroli: this.addgroupform.value.metodaKontroli,
-                kartaPomiarowNazwa: this.data.kartaPomiarowNazwa,
-                kartaPomiarowPlik: this.data.kartaPomiarowPlik
-              };
+    const groupFormData = new FormData();
+    groupFormData.append('nazwa', this.groupForm.value.nazwa);
+    groupFormData.append('metodaKontroli', this.groupForm.value.metodaKontroli);
+    // = {  id: this.data.id,
+    //             nazwa: this.groupForm.value.nazwa,
+    //             metodaKontroli: this.addgroupform.value.metodaKontroli
+    //           };
 
     console.log('Wysłanie:');
-    console.log(this.g);
+    console.log(groupFormData);
 
-    const formData = new FormData();
-    formData.append('nazwa', this.addgroupform.value.nazwa);
-    formData.append('metodaKontroli', this.addgroupform.value.metodaKontroli);
-    formData.append('kartaPomiarowNazwa', this.addgroupform.value.kartaPomiarowNazwa);
-    formData.append('kartaPomiarowPlik', this.uploadForm.get('kartaPomiarowPlik').value);
+    // const formData = new FormData();
+    // formData.append('nazwa', this.addgroupform.value.nazwa);
+    // formData.append('metodaKontroli', this.addgroupform.value.metodaKontroli);
 
-    if (this.g.id){
-      this.db.updateGroup(this.g.id, formData).subscribe();
+
+    if (this.data && this.data.id){
+      this.db.updateGroup(this.data.id, groupFormData).subscribe();
+      if (this.data.karta.length === 0 && this.kartaPomiarowNazwa){
+        const groupFormFile = new FormData();
+        groupFormFile.append('nazwa', this.fileGroupForm.get('kartaPomiarowNazwa').value);
+        groupFormFile.append('link', this.fileGroupForm.get('kartaPomiarowLink').value);
+        groupFormFile.append('idGrupa', this.data.id.toString());
+        this.groupService.addNewFile(groupFormFile).subscribe();
+        console.log(`groupFormFile:`);
+        console.log(groupFormFile.forEach);
+      }
     }
     else
     {
-      this.db.addNewGroup(formData).subscribe();
+      this.db.addNewGroup(groupFormData).subscribe();
     }
 
 
@@ -115,9 +136,24 @@ export class AddGroupComponent  implements OnInit {
   handleFileInput(event){
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.uploadForm.get('kartaPomiarowPlik').setValue(file);
-      this.addgroupform.patchValue({kartaPomiarowNazwa: event.target.files[0].name});
-      // console.log(event.target.files[0].name);
+      this.fileGroupForm.get('kartaPomiarowLink').setValue(file);
+      this.fileGroupForm.patchValue({kartaPomiarowNazwa: event.target.files[0].name});
+      this.kartaPomiarowNazwa = event.target.files[0].name;
+      this.kartaPomiarowLink = null;
+      console.log(this.fileGroupForm);
+    }
+  }
+
+  deleteFile(){
+    if (this.data.karta.length){
+      this.groupService.deleteFile(this.data.karta[0].id).subscribe(() => {
+        this.kartaPomiarowNazwa = null;
+        this.kartaPomiarowLink = null;
+      });
+    }else{
+      this.fileGroupForm.reset();
+      this.kartaPomiarowNazwa = null;
+      console.log(this.fileGroupForm);
     }
   }
 }

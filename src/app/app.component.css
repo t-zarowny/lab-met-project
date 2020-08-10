@@ -5,4 +5,7 @@
 .left-content{
     width: 190px;
     z-index: 100;
+    /*background-image: url("../assets/bg-menu3.jpg");*/
+    background: rgb(58,57,70);
+    background: linear-gradient(0deg, rgba(58,57,70,1) 0%, rgba(74,76,103,1) 15%, rgba(50,52,79,1) 32%, rgba(64,67,96,1) 57%, rgba(67,69,96,1) 83%, rgba(70,73,110,1) 100%);
 }

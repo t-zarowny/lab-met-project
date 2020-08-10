@@ -1,3 +1,5 @@
+
+
 interface MenuItems {
   name: string;
   alias: string;
@@ -10,12 +12,17 @@ export interface Menu {
   item?: MenuItems[] | null;
 }
 
+export interface KartaPomiarow {
+  id: number;
+  nazwa?: string;
+  link: string;
+}
+
 export interface GroupInstrument {
   id?: number;
   nazwa: string;
   metodaKontroli: string;
-  kartaPomiarowNazwa?: string;
-  kartaPomiarowPlik?: File;
+  karta?: KartaPomiarow[] | null;
 }
 
 export interface MeasurementCardTemplate {

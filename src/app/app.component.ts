@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './login/_services';
 
 
 @Component({
@@ -8,11 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'lab-app';
+  isAuthenticated = false;
 
 
-  constructor(){}
+  constructor( private auth: AuthenticationService ){
+    this.auth.currentToken.subscribe(data => {
+      this.isAuthenticated = !!data;
+    });
+  }
 
   ngOnInit(){
-
   }
 }
