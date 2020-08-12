@@ -1,0 +1,80 @@
+<form [formGroup]="userForm" class="h-100" (ngSubmit)="onSubmit()">
+  <div style="height:calc(100% - 60px)">
+
+    <h1 mat-dialog-title class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">
+      Edycja danych użytkownika</h1>
+
+    <!-- username -->
+    <mat-form-field  class="w-100 p-2">
+      <mat-label>Nazwa użytkownika</mat-label>
+      <input matInput formControlName="username" cdkFocusInitial >
+      <mat-error *ngIf="username.errors?.minlength &&! username.errors?.required">
+        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="username.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- email -->
+    <mat-form-field  class="w-100 p-2">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" cdkFocusInitial >
+      <mat-error *ngIf="email.errors?.minlength &&! email.errors?.required">
+        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="email.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- first_name -->
+    <mat-form-field  class="w-100 p-2">
+      <mat-label>Imię</mat-label>
+      <input matInput formControlName="first_name" cdkFocusInitial >
+      <mat-error *ngIf="first_name.errors?.minlength &&! first_name.errors?.required">
+        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="first_name.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- last_name -->
+    <mat-form-field  class="w-100 p-2">
+      <mat-label>Nazwisko</mat-label>
+      <input matInput formControlName="last_name" cdkFocusInitial >
+      <mat-error *ngIf="last_name.errors?.minlength &&! last_name.errors?.required">
+        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="last_name.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- is_staff -->
+
+
+
+    <!-- <mat-slide-toggle>Slide me!</mat-slide-toggle> -->
+
+
+    <!-- is_active -->
+    <mat-form-field  class="w-100 p-2">
+      <mat-label>Aktywny</mat-label>
+      <input matInput formControlName="is_active" cdkFocusInitial >
+      <mat-error *ngIf="is_active.errors?.minlength &&! is_active.errors?.required">
+        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="is_active.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+
+    </div>
+    <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+      <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()" >Anuluj</button>
+      <button mat-raised-button class="btn btn-success" type="submit" [disabled]="!userForm.valid" >Zapisz</button>
+    </div>
+  </form>

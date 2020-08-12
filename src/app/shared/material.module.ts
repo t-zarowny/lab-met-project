@@ -11,6 +11,7 @@ import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -21,12 +22,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     exports: [
       MatDialogModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule,
       MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule,
-      MatDialogModule,
+      MatDialogModule, MatSlideToggleModule,
       MatButtonModule,
       MatFormFieldModule,
       MatIconModule,
       MatInputModule,
-      MatTooltipModule,
+      MatTooltipModule
     ],
     entryComponents: [],
     providers: [

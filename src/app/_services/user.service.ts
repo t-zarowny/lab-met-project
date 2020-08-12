@@ -14,7 +14,7 @@ export class UserService {
       return this.http.get<User>(`${environment.apiUrl}users/${id}/`);
     }
     getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}users/`);
+      return this.http.get<User[]>(`${environment.apiUrl}users/`);
     }
 
     addUser(user: User) {
@@ -26,6 +26,6 @@ export class UserService {
     }
 
     delete(id: number) {
-        return this.http.delete(`${environment.apiUrl}users/${id}/`);
+      return this.http.delete(`${environment.apiUrl}users/${id}/`);
     }
 }

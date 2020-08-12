@@ -18,7 +18,7 @@
 
 
 
-  < class="mat-elevation-z8 mr-2 ml-2 mb-2">
+  <div class="mat-elevation-z8 mr-2 ml-2 mb-2">
     <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- Checkbox -->
@@ -85,13 +85,11 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-
-      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[14]" [hidePageSize]="true"></mat-paginator>
-  </ div>
+  </div>
 
 
 

@@ -28,8 +28,8 @@ export class AddGroupComponent  implements OnInit {
 
   fileGroupForm: FormGroup;
   groupForm: FormGroup;
-  isDeleteFile: boolean = false;
-  isNewFile: boolean = false;
+  isDeleteFile = false;
+  isNewFile = false;
   // kartaPomiarowNazwa: string = null;
   // kartaPomiarowLink: string = null;
   g: GroupInstrument;
@@ -50,10 +50,10 @@ export class AddGroupComponent  implements OnInit {
 
   get nazwa() { return this.groupForm.get('nazwa'); }
   get metodaKontroli() { return this.groupForm.get('metodaKontroli'); }
-  get kartaPomiarowId() { return this.fileGroupForm.get('kartaPomiarowId').value;}
-  get kartaPomiarowNazwa() { return this.fileGroupForm.get('kartaPomiarowNazwa').value;}
-  get kartaPomiarowLink() { return this.fileGroupForm.get('kartaPomiarowLink').value;}
-  get kartaPomiarowIdGrupa() { return this.fileGroupForm.get('idGrupa').value;}
+  get kartaPomiarowId() { return this.fileGroupForm.get('kartaPomiarowId').value; }
+  get kartaPomiarowNazwa() { return this.fileGroupForm.get('kartaPomiarowNazwa').value; }
+  get kartaPomiarowLink() { return this.fileGroupForm.get('kartaPomiarowLink').value; }
+  get kartaPomiarowIdGrupa() { return this.fileGroupForm.get('idGrupa').value; }
 
 
 
@@ -110,7 +110,7 @@ export class AddGroupComponent  implements OnInit {
 
     if (this.data && this.data.id){
       this.groupService.update(this.data.id, groupFormData).subscribe();
-      if(this.isDeleteFile){
+      if (this.isDeleteFile){
         this.groupService.deleteFile(this.kartaPomiarowId).subscribe();
       }
       this.saveNewFile();
@@ -165,9 +165,9 @@ export class AddGroupComponent  implements OnInit {
 
   deleteFile(){
     if (this.kartaPomiarowId){
-      this.isDeleteFile = true
+      this.isDeleteFile = true;
     }
-      this.fileGroupForm.get('kartaPomiarowNazwa').setValue(null);
-      this.fileGroupForm.get('kartaPomiarowLink').setValue(null);
+    this.fileGroupForm.get('kartaPomiarowNazwa').setValue(null);
+    this.fileGroupForm.get('kartaPomiarowLink').setValue(null);
   }
 }

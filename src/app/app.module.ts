@@ -25,6 +25,7 @@ import { LoginModule } from './login/login.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './_helpers';
 import { AlertComponent } from './_component/alert/alert.component';
 import { AuthenticationService } from './login/_services';
+import { FormUserComponent } from './users/form-user/form-user.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -42,7 +43,8 @@ registerLocaleData(localePl);
     MeasurementCardsComponent,
     MeasurementCardsDialogComponent,
     ConfirmDialogComponent,
-    AlertComponent
+    AlertComponent,
+    FormUserComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,7 @@ registerLocaleData(localePl);
 
      ],
   bootstrap: [AppComponent],
-  entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent, ConfirmDialogComponent],
+  entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent, ConfirmDialogComponent, FormUserComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

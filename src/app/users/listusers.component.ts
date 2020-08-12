@@ -1,3 +1,5 @@
+import { first } from 'rxjs/operators';
+import { FormUserComponent } from './form-user/form-user.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../_models';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,9 +25,12 @@ export class ListusersComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog,
-              private userService: UserService) { }
+              private userService: UserService) {
+    this.dataSource = new MatTableDataSource(Array<User>());
+               }
 
   ngOnInit() {
+    this.refresh();
   }
 
   applyFilter(event: Event) {
@@ -37,9 +42,10 @@ export class ListusersComponent implements OnInit {
     }
   }
 
-  refreshGroup() {
-    this.userService.getAll().subscribe(data => {
-      this.dataSource.data = data;
+  refresh() {
+    this.userService.getAll().subscribe( data => {
+      const sorted = data.sort((a, b) => a.id - b.id);
+      this.dataSource.data = sorted;
       // console.log(data);
     });
     this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
@@ -59,4 +65,44 @@ export class ListusersComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  checkboxLabel(row?: User): string {
+    if (!row) {
+
+    }
+    return null;
+  }
+  highlight(row: any) {
+    this.selectedRowIndex = row.id;
+    // console.log(this.selection.selected);
+  }
+  openDialogAddGroup(u?: User): void {
+    const dialogRef = this.dialog.open(FormUserComponent, {
+      width: '550px',
+      height: '630px',
+      panelClass: 'mat-dialog-bg',
+      position: {
+        top: '80px',
+      },
+      hasBackdrop: true,
+      disableClose: true,
+      data: {
+        id: u?.id || 0,
+        username: u?.username || null,
+        email: u?.email || null,
+        first_name: u?.first_name || null,
+        last_name: u?.last_name || null,
+        is_staff: u?.is_staff || false,
+        is_active: u?.is_active || false
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.selection.clear();
+      this.highlight(-1);
+      this.refresh();
+      // this.email1 = result;
+      // console.log(result);
+      // this.db.groupInstrumentArray.push(result);
+      // console.log(this.db.groupInstrumentArray);
+    });
+  }
 }
