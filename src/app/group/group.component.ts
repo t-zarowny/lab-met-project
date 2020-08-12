@@ -28,7 +28,6 @@ export class GroupinstrumentsComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog,
-              private db: DbService,
               private groupService: GroupService,
               private domSanitizer: DomSanitizer,
               private matIconRegistry: MatIconRegistry
@@ -128,7 +127,7 @@ export class GroupinstrumentsComponent implements OnInit {
       if (dialogResult) {
         this.selection.clear();
         this.highlight(-1);
-        this.db.deleteGroup(g.id).subscribe(() => {
+        this.groupService.delete(g.id).subscribe(() => {
           this.refreshGroup();
         });
       }
