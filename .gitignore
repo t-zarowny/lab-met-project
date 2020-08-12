@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 
 /django-api/env
+/django-api/lmapi
