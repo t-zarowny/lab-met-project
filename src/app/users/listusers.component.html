@@ -1,3 +1,14 @@
-<p>
-listusers  works!
-</p>
+<div class="nag_comp d-inline-block w-100">
+  <mat-toolbar class="p-1 d-flex justify-content-between">
+
+    <mat-toolbar-row>
+      <h4 class="text-capitalize ">Użytkownicy</h4>
+
+    </mat-toolbar-row>
+    <mat-form-field style="margin-bottom: -10px;">
+      <mat-label>Szukaj grupy</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Wpisz czego szukasz?">
+    </mat-form-field>
+  </mat-toolbar>
+</div>
+
