@@ -5,7 +5,7 @@
       Edycja danych użytkownika</h1>
 
     <!-- username -->
-    <mat-form-field  class="w-100 p-2">
+    <mat-form-field  class="w-100 p-1">
       <mat-label>Nazwa użytkownika</mat-label>
       <input matInput formControlName="username" cdkFocusInitial >
       <mat-error *ngIf="username.errors?.minlength &&! username.errors?.required">
@@ -16,8 +16,20 @@
       </mat-error>
     </mat-form-field>
 
+    <!-- password -->
+    <mat-form-field  class="w-100 p-1">
+      <mat-label>Hasło</mat-label>
+      <input matInput formControlName="password" cdkFocusInitial >
+      <mat-error *ngIf="password.errors?.minlength &&! password.errors?.required">
+        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="password.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
     <!-- email -->
-    <mat-form-field  class="w-100 p-2">
+    <mat-form-field  class="w-100 p-1">
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" cdkFocusInitial >
       <mat-error *ngIf="email.errors?.minlength &&! email.errors?.required">
@@ -29,7 +41,7 @@
     </mat-form-field>
 
     <!-- first_name -->
-    <mat-form-field  class="w-100 p-2">
+    <mat-form-field  class="w-100 p-1">
       <mat-label>Imię</mat-label>
       <input matInput formControlName="first_name" cdkFocusInitial >
       <mat-error *ngIf="first_name.errors?.minlength &&! first_name.errors?.required">
@@ -41,7 +53,7 @@
     </mat-form-field>
 
     <!-- last_name -->
-    <mat-form-field  class="w-100 p-2">
+    <mat-form-field  class="w-100 p-1">
       <mat-label>Nazwisko</mat-label>
       <input matInput formControlName="last_name" cdkFocusInitial >
       <mat-error *ngIf="last_name.errors?.minlength &&! last_name.errors?.required">
@@ -53,24 +65,16 @@
     </mat-form-field>
 
     <!-- is_staff -->
-
-
-
-    <!-- <mat-slide-toggle>Slide me!</mat-slide-toggle> -->
-
+    <div mat-dialog-actions class="p-1 d-flex justify-content-between">
+      <mat-label>Użytkownik jest administratorem</mat-label>
+      <mat-slide-toggle formControlName="is_staff" class="ml-4"></mat-slide-toggle>
+    </div>
 
     <!-- is_active -->
-    <mat-form-field  class="w-100 p-2">
-      <mat-label>Aktywny</mat-label>
-      <input matInput formControlName="is_active" cdkFocusInitial >
-      <mat-error *ngIf="is_active.errors?.minlength &&! is_active.errors?.required">
-        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
-      </mat-error>
-      <mat-error *ngIf="is_active.errors?.required">
-        To pole jest <strong>wymagane</strong>
-      </mat-error>
-    </mat-form-field>
-
+    <div mat-dialog-actions class="mt-3 p-1 d-flex justify-content-between">
+      <mat-label>Użytkownik jest aktywny</mat-label>
+      <mat-slide-toggle formControlName="is_active" class="ml-4"></mat-slide-toggle>
+    </div>
 
     </div>
     <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">

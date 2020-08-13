@@ -14,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
+
 @NgModule({
     declarations: [],
     imports: [
@@ -22,11 +23,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     exports: [
       MatDialogModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule,
       MatPaginatorModule, MatTableModule, MatTabsModule, MatSortModule, MatCheckboxModule,
-      MatDialogModule, MatSlideToggleModule,
+      MatDialogModule,
       MatButtonModule,
       MatFormFieldModule,
       MatIconModule,
-      MatInputModule,
+      MatInputModule, MatSlideToggleModule,
       MatTooltipModule
     ],
     entryComponents: [],

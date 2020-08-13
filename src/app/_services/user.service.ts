@@ -17,12 +17,12 @@ export class UserService {
       return this.http.get<User[]>(`${environment.apiUrl}users/`);
     }
 
-    addUser(user: User) {
+    addUser(user: FormData) {
         return this.http.post(`${environment.apiUrl}users/`, user);
     }
 
-    editUser(user: User) {
-      return this.http.put(`${environment.apiUrl}users/`, user);
+    editUser(id: number, user: FormData) {
+      return this.http.put(`${environment.apiUrl}users/${id}/`, user);
     }
 
     delete(id: number) {
