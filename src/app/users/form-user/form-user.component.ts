@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from './../../_services';
 import { User } from '../../_models';
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, AbstractControl, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -26,13 +26,14 @@ export class FormUserComponent implements OnInit {
   ngOnInit(): void {
     this.userForm = new FormGroup({
 
-      username: new FormControl(this.data.username, [
+      editUsername: new FormControl(this.data.username, [
         Validators.required,
         Validators.minLength(3)
       ]),
-      password: new FormControl(null, [
-        Validators.minLength(3)
+      editPassword: new FormControl(null, [
+        Validators.minLength(5)
       ]),
+      rePassword: new FormControl(null, []),
       email: new FormControl(this.data.email, [
         Validators.required,
         Validators.email,
@@ -48,11 +49,12 @@ export class FormUserComponent implements OnInit {
       ]),
       is_staff: new FormControl(!!this.data.is_staff),
       is_active: new FormControl(this.data.is_active),
-    });
+    }, this.passwordConfirming);
     console.log(this.data);
   }
-  get username() { return this.userForm.get('username'); }
-  get password() { return this.userForm.get('password'); }
+  get editUsername() { return this.userForm.get('editUsername'); }
+  get editPassword() { return this.userForm.get('editPassword') || null; }
+  get rePassword() { return this.userForm.get('rePassword') || null; }
   get email() { return this.userForm.get('email'); }
   get first_name() { return this.userForm.get('first_name'); }
   get last_name() { return this.userForm.get('last_name'); }
@@ -61,8 +63,8 @@ export class FormUserComponent implements OnInit {
 
   onSubmit() {
     const userFormData = new FormData();
-    userFormData.append('username', this.userForm.value.username);
-    userFormData.append('password', this.userForm.value.password);
+    userFormData.append('username', this.userForm.value.editUsername);
+    userFormData.append('password', this.userForm.value.editPassword);
     userFormData.append('email', this.userForm.value.email);
     userFormData.append('first_name', this.userForm.value.first_name);
     userFormData.append('last_name', this.userForm.value.last_name);
@@ -89,4 +91,10 @@ export class FormUserComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  passwordConfirming(c: AbstractControl): { invalid: boolean } {
+    if (c.get('editPassword').value !== c.get('rePassword').value) {
+        c.get('rePassword').setErrors({notUnique: true});
+        return {invalid: true};
+    }
+  }
 }

@@ -7,24 +7,30 @@
     <!-- username -->
     <mat-form-field  class="w-100 p-1">
       <mat-label>Nazwa użytkownika</mat-label>
-      <input matInput formControlName="username" cdkFocusInitial >
-      <mat-error *ngIf="username.errors?.minlength &&! username.errors?.required">
+      <input matInput formControlName="editUsername"  cdkFocusInitial >
+      <mat-error *ngIf="editUsername.errors?.minlength &&! editUsername.errors?.required">
         Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
       </mat-error>
-      <mat-error *ngIf="username.errors?.required">
+      <mat-error *ngIf="editUsername.errors?.required">
         To pole jest <strong>wymagane</strong>
       </mat-error>
     </mat-form-field>
 
     <!-- password -->
-    <mat-form-field  class="w-100 p-1">
-      <mat-label>Hasło</mat-label>
-      <input matInput formControlName="password" cdkFocusInitial >
-      <mat-error *ngIf="password.errors?.minlength &&! password.errors?.required">
-        Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+    <mat-form-field  class="w-50 p-1">
+      <mat-label>Nowe hasło</mat-label>
+      <input matInput type="password" autocomplete="new-password" formControlName="editPassword" cdkFocusInitial >
+      <mat-error *ngIf="editPassword.errors?.minlength">
+        Wpisz minimum 5 znaków
       </mat-error>
-      <mat-error *ngIf="password.errors?.required">
-        To pole jest <strong>wymagane</strong>
+    </mat-form-field>
+
+    <!-- rePassword -->
+    <mat-form-field  class="w-50 p-1">
+      <mat-label>Powtórz hasło</mat-label>
+      <input matInput type="password" autocomplete="new-password" formControlName="rePassword" cdkFocusInitial >
+      <mat-error *ngIf="rePassword.errors?.notUnique">
+        Wpisane hasła nie są identyczne
       </mat-error>
     </mat-form-field>
 
