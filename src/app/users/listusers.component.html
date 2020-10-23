@@ -3,7 +3,15 @@
 
     <mat-toolbar-row>
       <h4 class="text-capitalize ">Użytkownicy</h4>
-      <button mat-raised-button (click)="openDialogAddGroup()" class="m-1">Dodaj użytkownika</button>
+      <span *ngIf="!!user.is_staff">
+        <button mat-raised-button (click)="openDialogAdd()" class="m-1">Dodaj</button>
+        <button mat-raised-button (click)="openDialogAdd(selection.selected[0])"
+          [disabled]="selection.selected.length==0" class="m-1">Edytuj</button>
+        <button mat-raised-button (click)="deleteSelected(selection.selected[0])"
+          [disabled]="selection.selected.length==0" class="m-1">Usuń</button>
+        <button mat-raised-button (click)="openDialogPass(selection.selected[0])"
+          [disabled]="selection.selected.length==0" class="m-1">Zmień hasło</button>
+      </span>
     </mat-toolbar-row>
     <mat-form-field style="margin-bottom: -10px;">
       <mat-label>Wyszukaj</mat-label>

@@ -1,13 +1,16 @@
+import { User } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { FormUserComponent } from './form-user/form-user.component';
+import { FormUserChangePassComponent } from './form-user-change-pass/form-user-change-pass.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../_models';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../_services';
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AuthenticationService } from '../login/_services';
 
 @Component({
   selector: 'app-listusers',
@@ -20,16 +23,22 @@ export class ListusersComponent implements OnInit {
   dataSource: MatTableDataSource<User>;
   selection = new SelectionModel<User>();
   selectedRowIndex = -1;
+  user: User;
+  isAuthenticated = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog,
-              private userService: UserService) {
+              private userService: UserService, private auth: AuthenticationService) {
     this.dataSource = new MatTableDataSource(Array<User>());
                }
 
   ngOnInit() {
+    this.auth.currentUser.subscribe(user => {
+      this.user = user;
+      this.isAuthenticated = !!user;
+    });
     this.refresh();
   }
 
@@ -46,7 +55,7 @@ export class ListusersComponent implements OnInit {
     this.userService.getAll().subscribe( data => {
       const sorted = data.sort((a, b) => a.id - b.id);
       this.dataSource.data = sorted;
-      // console.log(data);
+      console.log(data);
     });
     this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
     this.paginator._intl.nextPageLabel = 'Następna strona';
@@ -75,10 +84,10 @@ export class ListusersComponent implements OnInit {
     this.selectedRowIndex = row.id;
     // console.log(this.selection.selected);
   }
-  openDialogAddGroup(u?: User): void {
+  openDialogAdd(u?: User): void {
     const dialogRef = this.dialog.open(FormUserComponent, {
       width: '550px',
-      height: '630px',
+      height: '550px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',
@@ -104,5 +113,62 @@ export class ListusersComponent implements OnInit {
       // this.db.groupInstrumentArray.push(result);
       // console.log(this.db.groupInstrumentArray);
     });
+  }
+
+  openDialogPass(u?: User): void {
+    const dialogRef = this.dialog.open(FormUserChangePassComponent, {
+      width: '550px',
+      height: '230px',
+      panelClass: 'mat-dialog-bg',
+      position: {
+        top: '80px',
+      },
+      hasBackdrop: true,
+      disableClose: true,
+      data: {
+        id: u?.id || 0,
+        username: u?.username || null,
+        email: u?.email || null,
+        first_name: u?.first_name || null,
+        last_name: u?.last_name || null,
+        is_staff: u?.is_staff || false,
+        is_active: u?.is_active || false
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.selection.clear();
+      this.highlight(-1);
+      this.refresh();
+      // this.email1 = result;
+      // console.log(result);
+      // this.db.groupInstrumentArray.push(result);
+      // console.log(this.db.groupInstrumentArray);
+    });
+  }
+  deleteSelected(u?: User): void {
+    // this.db.deleteGroup(g.id);
+    const message = `Czy napewno chcesz usunąć użytkownika ${u.first_name} ${u.last_name}? Zostanie on trwale usunięty.`;
+
+    const dialogData = new ConfirmDialogModel('Potwierdź usunięcie', message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.selection.clear();
+        this.highlight(-1);
+        this.userService.delete(u.id).subscribe(() => {
+          this.refresh();
+        });
+      }
+      else {
+        this.selection.clear();
+        this.highlight(-1);
+      }
+    });
+
   }
 }

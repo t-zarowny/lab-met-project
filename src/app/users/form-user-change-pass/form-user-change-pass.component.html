@@ -1,0 +1,29 @@
+<form [formGroup]="userForm" class="h-100" (ngSubmit)="onSubmit()">
+<div style="height:calc(100% - 60px)">
+  <h1 mat-dialog-title class="p-1 w-100 text-center border-bottom bg-secondary text-white shadow  rounded">
+    Zmiana hasła użytkownika {{data.first_name}} {{data.last_name}}</h1>
+
+    <!-- password -->
+    <mat-form-field  class="w-50 p-1">
+      <mat-label>Nowe hasło</mat-label>
+      <input matInput type="password" autocomplete="new-password" formControlName="editPassword" cdkFocusInitial >
+      <mat-error *ngIf="editPassword.errors?.minlength">
+        Wpisz minimum 8 znaków
+      </mat-error>
+    </mat-form-field>
+
+    <!-- rePassword -->
+    <mat-form-field  class="w-50 p-1">
+      <mat-label>Powtórz hasło</mat-label>
+      <input matInput type="password" autocomplete="new-password" formControlName="rePassword" cdkFocusInitial >
+      <mat-error *ngIf="rePassword.errors?.notUnique">
+        Wpisane hasła nie są identyczne
+      </mat-error>
+    </mat-form-field>
+
+  <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+    <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()" >Anuluj</button>
+    <button mat-raised-button class="btn btn-success" type="submit" [disabled]="!userForm.valid" >Zapisz</button>
+  </div>
+</div>
+</form>

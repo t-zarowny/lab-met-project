@@ -6,8 +6,14 @@ from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
+router.register(r'users-pass', views.UserPassViewSet)
+router.register(r'usersObszar', views.UserObszarViewSet)
 router.register(r'grupy', views.GroupInstrumentsViewSet)
 router.register(r'karta-pomiarow', views.GrupaKartaPomiarowViewSet)
+router.register(r'obszary', views.ObszaryViewSet)
+router.register(r'lokalizacje', views.LokalizacjeViewSet)
+router.register(r'przyrzady', views.PrzyrzadyViewSet)
+router.register(r'sprawdzenia-planowane', views.SprawdzeniaPlanoweViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

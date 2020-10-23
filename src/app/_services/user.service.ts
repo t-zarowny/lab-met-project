@@ -25,6 +25,10 @@ export class UserService {
       return this.http.put(`${environment.apiUrl}users/${id}/`, user);
     }
 
+    passUser(id: number, user: FormData) {
+      return this.http.put(`${environment.apiUrl}users-pass/${id}/`, user);
+    }
+
     delete(id: number) {
       return this.http.delete(`${environment.apiUrl}users/${id}/`);
     }

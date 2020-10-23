@@ -16,24 +16,6 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- password -->
-    <mat-form-field  class="w-50 p-1">
-      <mat-label>Nowe hasło</mat-label>
-      <input matInput type="password" autocomplete="new-password" formControlName="editPassword" cdkFocusInitial >
-      <mat-error *ngIf="editPassword.errors?.minlength">
-        Wpisz minimum 5 znaków
-      </mat-error>
-    </mat-form-field>
-
-    <!-- rePassword -->
-    <mat-form-field  class="w-50 p-1">
-      <mat-label>Powtórz hasło</mat-label>
-      <input matInput type="password" autocomplete="new-password" formControlName="rePassword" cdkFocusInitial >
-      <mat-error *ngIf="rePassword.errors?.notUnique">
-        Wpisane hasła nie są identyczne
-      </mat-error>
-    </mat-form-field>
-
     <!-- email -->
     <mat-form-field  class="w-100 p-1">
       <mat-label>Email</mat-label>
