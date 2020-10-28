@@ -48,3 +48,7 @@ Thumbs.db
 /django-api/env
 /django-api/env_copy
 /django-api/lmapi
+django-api/requirements.txt
+django-api/api/__pycache__/
+django-api/api/migrations/__pycache__/
+.vscode/
