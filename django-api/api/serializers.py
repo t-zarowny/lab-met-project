@@ -4,6 +4,11 @@ from rest_framework import serializers
 # from api.models import GroupInstruments, GrupaKartaPomiarow, Obszary, Lokalizacje, Przyrzady
 from api import models
 
+class StatusSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.Statusy
+    fields = ['id','nazwa']
+
 class SprawdzeniaPlanoweSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.SprawdzeniaPlanowe
@@ -15,10 +20,39 @@ class SprawdzeniaPlanoweMiniSerializer(serializers.ModelSerializer):
     fields = ['dataPlanowa']
 
 class PrzyrzadySerializer(serializers.ModelSerializer):
-  sprawdzenia_planowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
+  sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzenia_planowe']
+    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+
+class PrzyrzadySerializerD1(serializers.ModelSerializer):
+  sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
+  class Meta:
+    model = models.Przyrzady
+    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    depth = 1
+
+class PrzyrzadySerializerD2(serializers.ModelSerializer):
+  sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
+  class Meta:
+    model = models.Przyrzady
+    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    depth = 2
+
+class PrzyrzadySerializerD3(serializers.ModelSerializer):
+  sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
+  class Meta:
+    model = models.Przyrzady
+    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    depth = 3
+
+class PrzyrzadyFullSerializer(serializers.ModelSerializer):
+  sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
+  # aktStatus = StatusSerializer(many=False, read_only=True)
+  class Meta:
+    model = models.Przyrzady
+    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    depth = 3
 
 class LokalizacjeSerializer(serializers.ModelSerializer):
   przyrzad = PrzyrzadySerializer(many=True, read_only=True)
@@ -31,12 +65,6 @@ class LokalizacjeMiniSerializer(serializers.ModelSerializer):
     model = models.Lokalizacje
     fields = ['id', 'nazwa']
 
-class ObszarySerializer(serializers.ModelSerializer):
-  lokalizacja = LokalizacjeMiniSerializer(many=True, read_only=True)
-  class Meta:
-    model = models.Obszary
-    fields = ['id', 'nazwa', 'idUser', 'lokalizacja']
-
 class ObszaryMiniSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.Obszary
@@ -48,26 +76,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     # fields = '__all__'
     fields = ['id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active']
 
-  # def create(self, validated_data):
-  #   user = User.objects.create(
-  #     username=validated_data['username'],
-  #     email=validated_data['email'],
-  #     first_name=validated_data['first_name'],
-  #     last_name=validated_data['last_name'],
-  #     is_staff=validated_data['is_staff'],
-  #     is_active=validated_data['is_active'],
-  #     password=make_password(validated_data['password'])
-  #   )
-  #   user.save()
-  #   return user
-
   def validate_password(self, value: str) -> str:
           return make_password(value)
 
 class UserPassSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = User
-    # fields = '__all__'
     fields = ['password']
 
   def validate_password(self, value: str) -> str:
@@ -85,6 +99,22 @@ class UserObszarSerializer(serializers.HyperlinkedModelSerializer):
     model = User
     # fields = '__all__'
     fields = ['id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'obszar']
+
+class ObszarySerializer(serializers.ModelSerializer):
+  # idUser = UserMiniSerializer(many=False, read_only=True)
+  lokalizacja = LokalizacjeMiniSerializer(many=True, read_only=True)
+  class Meta:
+    model = models.Obszary
+    fields = ['id', 'nazwa', 'idUser', 'lokalizacja']
+
+class ObszaryD1Serializer(serializers.ModelSerializer):
+  # user = serializers.RelatedField(source='user', read_only=True)
+  idUser = UserMiniSerializer(many=False, read_only=True)
+  lokalizacja = LokalizacjeMiniSerializer(many=True, read_only=True)
+  class Meta:
+    model = models.Obszary
+    fields = ['id', 'nazwa', 'idUser', 'lokalizacja']
+    # depth = 1
 
 class GrupaKartaPomiarowSerializer(serializers.ModelSerializer):
   class Meta:

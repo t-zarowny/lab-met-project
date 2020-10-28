@@ -12,6 +12,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -28,7 +29,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
       MatFormFieldModule,
       MatIconModule,
       MatInputModule, MatSlideToggleModule,
-      MatTooltipModule
+      MatTooltipModule,
+      MatSelectModule
     ],
     entryComponents: [],
     providers: [

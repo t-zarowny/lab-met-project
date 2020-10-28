@@ -1,0 +1,44 @@
+[
+  {
+    "model": "api.statusy",
+    "pk": 0,
+    "fields": {
+      "nazwa": "Nieznany"
+    }
+  },
+  {
+    "model": "api.statusy",
+    "pk": 1,
+    "fields": {
+      "nazwa": "W eksploatacji"
+    }
+  },
+  {
+    "model": "api.statusy",
+    "pk": 2,
+    "fields": {
+      "nazwa": "Ostrzeżenie"
+    }
+  },
+  {
+    "model": "api.statusy",
+    "pk": 3,
+    "fields": {
+      "nazwa": "Przechowywany"
+    }
+  },
+  {
+    "model": "api.statusy",
+    "pk": 4,
+    "fields": {
+      "nazwa": "Wysłany"
+    }
+  },
+  {
+    "model": "api.statusy",
+    "pk": 5,
+    "fields": {
+      "nazwa": "Zlikwidowany"
+    }
+  }
+]

@@ -31,6 +31,19 @@ class ObszaryViewSet(viewsets.ModelViewSet):
     queryset = models.Obszary.objects.all()
     serializer_class = serializers.ObszarySerializer
 
+    # def get_serializer_class(self):
+    #   serializer_class = self.serializer_class
+    #   if self.request.method in ('PUT','PATCH','POST'):
+    #     serializer_class = serializers.ObszarySerializerWrite
+    #   if self.request.method == 'GET':
+    #     serializer_class = serializers.ObszarySerializerRead
+    #   return serializer_class
+
+class ObszaryD1ViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Obszary.objects.all()
+    serializer_class = serializers.ObszaryD1Serializer
+
 class LokalizacjeViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Lokalizacje.objects.all()
@@ -41,8 +54,33 @@ class PrzyrzadyViewSet(viewsets.ModelViewSet):
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadySerializer
 
+class PrzyrzadyD1ViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Przyrzady.objects.all()
+    serializer_class = serializers.PrzyrzadySerializerD1
+
+class PrzyrzadyD2ViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Przyrzady.objects.all()
+    serializer_class = serializers.PrzyrzadySerializerD2
+
+class PrzyrzadyD3ViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Przyrzady.objects.all()
+    serializer_class = serializers.PrzyrzadySerializerD3
+
+class PrzyrzadyFullViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Przyrzady.objects.all()
+    serializer_class = serializers.PrzyrzadyFullSerializer
+
 class SprawdzeniaPlanoweViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SprawdzeniaPlanowe.objects.all()
     serializer_class = serializers.SprawdzeniaPlanoweSerializer
+
+class StatusViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Statusy.objects.all()
+    serializer_class = serializers.StatusSerializer
 

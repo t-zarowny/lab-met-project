@@ -1,3 +1,88 @@
-<p>
-listinstrumaent  works!
-</p>
+<div class="nag_comp d-inline-block w-100">
+  <mat-toolbar class="p-1 d-flex justify-content-between">
+    <mat-toolbar-row>
+      <h4 class="text-capitalize ">Przyrządy</h4>
+      <button mat-raised-button (click)="openDialogAdd()"
+      [disabled]="!isPossibleAdd" class="m-1">Dodaj przyrząd</button>
+      <button mat-raised-button (click)="openDialogAdd(selection.selected[0])"
+      [disabled]="!isPossibleEdit" class="m-1">Edytuj</button>
+      <button mat-raised-button (click)="deleteSelected(selection.selected[0])"
+        [disabled]="!isPossibleDelete" class="m-1">Usuń zaznaczony przyrząd</button>
+    </mat-toolbar-row>
+    <mat-form-field style="margin-bottom: -10px;">
+      <mat-label>Wyszukaj</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Wpisz czego szukasz?">
+    </mat-form-field>
+  </mat-toolbar>
+</div>
+<div class="mat-elevation-z8 mr-2 ml-2 mb-2">
+
+  <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
+    <!-- Checkbox -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef class="matSelectColumn" fxFlex="100px"></mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matSelectColumn" fxFlex="100px"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+        <mat-checkbox (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matIdColumn"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.id}} </mat-cell>
+      <!-- <mat-cell *matCellDef="let row" class="matIdColumn" [ngClass]="{'matSelectRow': expandedElement == row}">
+               {{row.id}} </mat-cell> -->
+    </ng-container>
+    <!-- nazwa -->
+    <ng-container matColumnDef="nazwa">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nazwa </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nazwa}} </mat-cell>
+    </ng-container>
+    <!-- typ -->
+    <ng-container matColumnDef="typ">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Typ </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.typ}}
+      </mat-cell>
+    </ng-container>
+    <!-- grupa -->
+    <ng-container matColumnDef="grupa">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Grupa </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.idGrupa.nazwa}}
+      </mat-cell>
+    </ng-container>
+    <!-- miejsce -->
+    <ng-container matColumnDef="miejsce">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Lokalizacja </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.idLokalizacja.nazwa}} ({{row.idLokalizacja.idObszar.nazwa}})
+      </mat-cell>
+    </ng-container>
+    <!-- status -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matStatusHeader"> Status </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matStatusRow"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.aktStatus.nazwa}}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
+  </mat-table>
+
+  <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator>
+
+
+</div>

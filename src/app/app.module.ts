@@ -27,6 +27,9 @@ import { AlertComponent } from './_component/alert/alert.component';
 import { AuthenticationService } from './login/_services';
 import { FormUserComponent } from './users/form-user/form-user.component';
 import { FormUserChangePassComponent } from './users/form-user-change-pass/form-user-change-pass.component';
+import { AreaComponent } from './area/area.component';
+import { AddPlaceComponent } from './area/add-place/add-place.component';
+import { AddAreaComponent } from './area/add-area/add-area.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -46,7 +49,10 @@ registerLocaleData(localePl);
     ConfirmDialogComponent,
     AlertComponent,
     FormUserComponent,
-    FormUserChangePassComponent
+    FormUserChangePassComponent,
+    AreaComponent,
+    AddPlaceComponent,
+    AddAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +76,7 @@ registerLocaleData(localePl);
      ],
   bootstrap: [AppComponent],
   entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent, ConfirmDialogComponent, FormUserComponent,
-                    FormUserChangePassComponent],
+                    FormUserChangePassComponent, AddPlaceComponent, AddAreaComponent, AddinstrumentComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

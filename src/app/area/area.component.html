@@ -1,0 +1,142 @@
+<div class="nag_comp d-inline-block w-100">
+  <mat-toolbar class="p-1 d-flex justify-content-between">
+    <mat-toolbar-row>
+      <h4 class="text-capitalize ">Obszary</h4>
+      <button mat-raised-button (click)="openDialogAddArea()"
+      [disabled]="!isPossibleAdd" class="m-1">Dodaj obszar</button>
+      <button mat-raised-button (click)="openDialogAddArea(selection.selected[0])"
+      [disabled]="!isPossibleEdit" class="m-1">Edytuj</button>
+      <button mat-raised-button (click)="deleteSelectedArea(selection.selected[0])"
+        [disabled]="!isPossibleDelete" class="m-1">Usuń zaznaczony obszar</button>
+    </mat-toolbar-row>
+    <mat-form-field style="margin-bottom: -10px;">
+      <mat-label>Wyszukaj</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Wpisz czego szukasz?">
+    </mat-form-field>
+  </mat-toolbar>
+</div>
+<div class="mat-elevation-z8 mr-2 ml-2 mb-2">
+
+  <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
+    <!-- Checkbox -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef class="matSelectColumn" fxFlex="100px"></mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matSelectColumn" fxFlex="100px"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+        <mat-checkbox (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matIdColumn"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.id}} </mat-cell>
+      <!-- <mat-cell *matCellDef="let row" class="matIdColumn" [ngClass]="{'matSelectRow': expandedElement == row}">
+               {{row.id}} </mat-cell> -->
+    </ng-container>
+    <!-- name -->
+    <ng-container matColumnDef="nazwa">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nazwa obszaru </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nazwa}} </mat-cell>
+    </ng-container>
+    <!-- user -->
+    <ng-container matColumnDef="user">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Osoba odpowiedzialna za obszar
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+        <span *ngIf="row.idUser">
+          {{row.idUser.first_name}} {{row.idUser.last_name}} ({{row.idUser.email}})
+        </span>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column -->
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let detail" class="expandDetailRow">
+        <div class="expandDetailRowDesc">Lista stanowisk przypisanych do obszaru</div>
+        <div class="table-scroll-container">
+          <mat-table [dataSource]="detail.lokalizacja" multiTemplateDataRows class="w-100">
+            <!-- ID -->
+            <!-- <ng-container matColumnDef="id" >
+                    <mat-cell *matCellDef="let rowPlace" class="matIdColumn"
+                      (click)="$event ? selectionPlace.toggle(rowPlace) : null; selectionPlace.isSelected(rowPlace) ? highlight(rowPlace) : highlight(-1);"
+                      [ngClass]="{'matSelectRow': selectedRowIndexPlace == rowPlace.id}"> {{rowPlace.id}} </mat-cell>
+                  </ng-container> -->
+            <!-- name -->
+            <ng-container matColumnDef="nazwa">
+              <mat-cell *matCellDef="let rowPlace" class="matNazwaPlaceRow"
+                [ngClass]="{'matSelectRowPLace': selectedRowIndexPlace == rowPlace.id}"
+                (mouseenter)="$event ? selectionPlace.select(rowPlace) : null; selectionPlace.isSelected(rowPlace) ? highlightPlace(rowPlace) : highlightPlace(-1);">
+                ({{rowPlace.id}}) {{rowPlace.nazwa}}
+              </mat-cell>
+            </ng-container>
+            <!-- action -->
+            <ng-container matColumnDef="action">
+              <mat-cell *matCellDef="let rowPlace" class="matActionPlaceRow"
+                [ngClass]="{'matSelectRowPLace': selectedRowIndexPlace == rowPlace.id}"
+                (mouseenter)="$event ? selectionPlace.select(rowPlace) : null; selectionPlace.isSelected(rowPlace) ? highlightPlace(rowPlace) : highlightPlace(-1);">
+
+                  <button mat-icon-button color="primary" aria-label="button edit" *ngIf="selectedRowIndexPlace == rowPlace.id"
+                          matTooltip="Edytuj" matTooltipPosition="above"
+                          (mouseenter)="$event ? selectionPlace.select(rowPlace) : null; selectionPlace.isSelected(rowPlace) ? highlightPlace(rowPlace) : highlightPlace(-1);"
+                          (click)="openDialogAddPlace(rowPlace)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary" aria-label="button delete" *ngIf="selectedRowIndexPlace == rowPlace.id"
+                          matTooltip="Usuń" matTooltipPosition="above"
+                          (mouseenter)="$event ? selectionPlace.select(rowPlace) : null; selectionPlace.isSelected(rowPlace) ? highlightPlace(rowPlace) : highlightPlace(-1);"
+                          (click)="deleteSelectedPlace(rowPlace)">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+
+              </mat-cell>
+            </ng-container>
+            <!-- <mat-header-row *matHeaderRowDef="displayedColumnsPlace"></mat-header-row> -->
+            <mat-row *matRowDef="let row; columns: displayedColumnsPlace;" matRipple class="element-row"></mat-row>
+            <!-- <mat-row *matRowDef="let rowPlace; columns: displayedColumnsPlace;"></mat-row> -->
+          </mat-table>
+          <div class="matAddPlace">
+            <button mat-raised-button color="primary"
+              (click)="openDialogAddPlace()">
+              <mat-icon>add</mat-icon>Dodaj stanowisko
+            </button>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> action </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'matSelectRow': expandedElement == element}">
+              <button  mat-icon-button *ngIf="expandedElement != element"
+                      [class.expanded]="expandedElement == element"
+                      (click)="expandedElement = element">
+                      <mat-icon>keyboard_arrow_down</mat-icon>
+              </button>
+              <button  mat-icon-button *ngIf="expandedElement == element"
+                      [class.expanded]="expandedElement == undefined"
+                      (click)="expandedElement = undefined">
+                      <mat-icon>keyboard_arrow_up</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container> -->
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail'];"
+      [@detailExpand]="row.id == selectedRowIndex ? 'expanded' : 'collapsed'" style="overflow: hidden">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator>
+
+
+</div>

@@ -1,0 +1,32 @@
+<form [formGroup]="areaForm" class="h-100" (ngSubmit)="onSubmit()">
+  <div style="height:calc(100% - 60px)">
+
+    <h1 mat-dialog-title
+      class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">
+      Edycja obszaru</h1>
+
+    <!-- nazwa -->
+    <mat-form-field class="w-100 p-1">
+      <mat-label>Nazwa obszaru</mat-label>
+      <input matInput formControlName="nazwa" cdkFocusInitial>
+      <mat-error *ngIf="nazwa.errors?.minlength &&! nazwa.errors?.required">
+        Prosze wprowadzić nazwę obszaru, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="nazwa.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field  class="w-100 p-1">
+      <mat-label>Osoba odpowiedzialna{{selectedUserId}}</mat-label>
+      <mat-select  formControlName="idUser" [(value)]="selectedUserId">
+      <mat-option [value]="0">--BRAK--</mat-option>
+        <mat-option *ngFor="let user of listUsers" [value]="user.id">{{user.first_name}} {{user.last_name}} ({{user.email}})</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+    <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">Anuluj</button>
+    <button mat-raised-button class="btn btn-success" type="submit" [disabled]="!areaForm.valid">Zapisz</button>
+  </div>
+</form>

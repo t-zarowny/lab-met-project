@@ -1,0 +1,25 @@
+<form [formGroup]="placeForm" class="h-100" (ngSubmit)="onSubmit()">
+  <div style="height:calc(100% - 60px)">
+
+    <h1 mat-dialog-title
+      class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">
+      Edycja nazwy stanowiska</h1>
+
+    <!-- nazwa -->
+    <mat-form-field class="w-100 p-1">
+      <mat-label>Nazwa stanowiska</mat-label>
+      <input matInput formControlName="nazwa" cdkFocusInitial>
+      <mat-error *ngIf="nazwa.errors?.minlength &&! nazwa.errors?.required">
+        Prosze wprowadzić nazwę stanowiska, składającą się z przynajmniej 3 znaków
+      </mat-error>
+      <mat-error *ngIf="nazwa.errors?.required">
+        To pole jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+    <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">Anuluj</button>
+    <button mat-raised-button class="btn btn-success" type="submit" [disabled]="!placeForm.valid">Zapisz</button>
+  </div>
+</form>

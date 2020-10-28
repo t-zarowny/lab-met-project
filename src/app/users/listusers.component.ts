@@ -30,7 +30,8 @@ export class ListusersComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog,
-              private userService: UserService, private auth: AuthenticationService) {
+              private userService: UserService,
+              private auth: AuthenticationService) {
     this.dataSource = new MatTableDataSource(Array<User>());
                }
 

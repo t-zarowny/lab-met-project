@@ -1,3 +1,56 @@
-<p>
-addinstrument works!
-</p>
+<form [formGroup]="instrumentForm" class="h-100" (ngSubmit)="onSubmit()">
+  <div style="height:calc(100% - 60px)">
+
+    <h1 mat-dialog-title
+      class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">
+      Edycja przyrządu</h1>
+
+    <!-- nazwa -->
+    <mat-form-field class="w-100 p-1">
+      <mat-label>Nazwa przyrządu</mat-label>
+      <input matInput formControlName="nazwa" cdkFocusInitial>
+        <mat-error *ngIf="nazwa.errors?.minlength &&! nazwa.errors?.required">
+          Prosze wprowadzić nazwę przyrządu, składającą się z przynajmniej 3 znaków
+        </mat-error>
+        <mat-error *ngIf="nazwa.errors?.required">
+          To pole jest <strong>wymagane</strong>
+        </mat-error>
+    </mat-form-field>
+    <!-- typ -->
+    <mat-form-field class="w-100 p-1">
+      <mat-label>Typ</mat-label>
+      <input matInput formControlName="typ">
+    </mat-form-field>
+    <!-- grupa -->
+    <mat-form-field  class="w-100 p-1">
+      <mat-label>Grupa</mat-label>
+      <mat-select  formControlName="grupa" [(value)]="selectedGroupId" >
+        <mat-option *ngFor="let item of listGroup" [value]="item.id">{{item.nazwa}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- lokalizacja -->
+    <mat-form-field  class="w-100 p-1">
+      <mat-label>Lokalizacja</mat-label>
+      <mat-select  formControlName="lokalizacja" [(value)]="selectedAreaId"  (ngModelChange)="onChangeSelect()">
+        <mat-select-trigger>
+          {{selectedAreaName}}
+        </mat-select-trigger>
+      <mat-optgroup *ngFor="let group of listArea" [label]="'Obszar: ' + group.nazwa">
+        <mat-option *ngFor="let item of group.lokalizacja" [value]="item.id">{{item.id}}: {{item.nazwa}}</mat-option>
+      </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+    <!-- aktStatus -->
+    <mat-form-field  class="w-100 p-1">
+      <mat-label>Status</mat-label>
+      <mat-select  formControlName="aktStatus" [(value)]="selectedStateId" >
+        <mat-option *ngFor="let item of listState" [value]="item.id">{{item.nazwa}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slide-toggle formControlName="wzorzec" [(ngModel)]="isSample"> Przyrząd jest wzorcem: <b>{{isSample ? 'TAK' : 'NIE'}}</b></mat-slide-toggle>
+  </div>
+  <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+    <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">Anuluj</button>
+    <button mat-raised-button class="btn btn-success" type="submit" >Zapisz</button>
+  </div>
+</form>
