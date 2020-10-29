@@ -1,0 +1,29 @@
+<div style="height:calc(100% - 60px)">
+  <h1 mat-dialog-title
+    class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">
+    Przyrząd: {{data}}</h1>
+
+  <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+    <!-- <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+      Contents for {{tab}} tab
+
+      <button mat-raised-button class="example-delete-tab-button" [disabled]="tabs.length === 1">
+        Delete Tab
+      </button>
+    </mat-tab> -->
+    <mat-tab label="Dane podstawowe">
+      dane
+    </mat-tab>
+    <mat-tab label="Sprawdzenia/Kalibracje">
+      dane
+    </mat-tab>
+    <mat-tab label="Historia">
+      dane
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
+<div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+  <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">Anuluj</button>
+  <button mat-raised-button class="btn btn-success" type="submit">Zapisz</button>
+</div>

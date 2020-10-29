@@ -8,6 +8,8 @@
       [disabled]="!isPossibleEdit" class="m-1">Edytuj</button>
       <button mat-raised-button (click)="deleteSelected(selection.selected[0])"
         [disabled]="!isPossibleDelete" class="m-1">Usuń zaznaczony przyrząd</button>
+      <button mat-raised-button (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [disabled]="!isPossibleDelete" class="m-1">Pokaż dane przyrządu</button>
     </mat-toolbar-row>
     <mat-form-field style="margin-bottom: -10px;">
       <mat-label>Wyszukaj</mat-label>

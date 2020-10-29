@@ -74,6 +74,8 @@ export class AuthenticationService {
 
     refreshToken() {
       const formData = new FormData();
+      console.log('this.currentTokenValue.refreshToken:' + this.currentTokenValue.refreshToken);
+      // formData.append('refresh', this.currentTokenValue.refreshToken);
       formData.append('refresh', this.currentTokenValue.refreshToken);
       return this.http.post<any>(environment.apiUrlTokenRefresh, formData)
           .pipe(map((data) => {

@@ -56,7 +56,7 @@ export class AreaComponent implements OnInit, AfterViewInit {
     this.auth.currentUser.subscribe(user => {
       this.user = user;
       this.isAuthenticated = !!user;
-      if (this.user.is_staff){
+      if (this.user && this.user.is_staff){
         this.isPossibleAdd = true;
       }
     });

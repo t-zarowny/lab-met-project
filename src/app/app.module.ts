@@ -28,6 +28,7 @@ import { FormUserChangePassComponent } from './users/form-user-change-pass/form-
 import { AreaComponent } from './area/area.component';
 import { AddPlaceComponent } from './area/add-place/add-place.component';
 import { AddAreaComponent } from './area/add-area/add-area.component';
+import { InstrumentDataDialogComponent } from './instrument/instrument-data-dialog/instrument-data-dialog.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -48,7 +49,8 @@ registerLocaleData(localePl);
     FormUserChangePassComponent,
     AreaComponent,
     AddPlaceComponent,
-    AddAreaComponent
+    AddAreaComponent,
+    InstrumentDataDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ registerLocaleData(localePl);
      ],
   bootstrap: [AppComponent],
   entryComponents: [AddGroupComponent, ConfirmDialogComponent, FormUserComponent,
-                    FormUserChangePassComponent, AddPlaceComponent, AddAreaComponent, AddinstrumentComponent],
+                    FormUserChangePassComponent, AddPlaceComponent, AddAreaComponent,
+                    AddinstrumentComponent, InstrumentDataDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

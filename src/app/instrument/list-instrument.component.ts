@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/login/_services';
 import { InstrumentService } from 'src/app/_services';
 import { AddinstrumentComponent } from './add-instrument/add-instrument.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
+import { InstrumentDataDialogComponent } from './instrument-data-dialog/instrument-data-dialog.component';
 
 @Component({
   selector: 'app-listinstrument',
@@ -119,6 +120,24 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
       this.highlight(-1);
       this.refresh();
     });
+  }
+  openDialogInstrumentData(id: number): void{
+    const dialogRef = this.dialog.open(InstrumentDataDialogComponent, {
+      width: '800px',
+      height: '700px',
+      panelClass: 'mat-dialog-bg',
+      position: {
+        top: '80px',
+      },
+      hasBackdrop: true,
+      disableClose: true,
+      data: id
+    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.selection.clear();
+    //   this.highlight(-1);
+    //   this.refresh();
+    // });
   }
   deleteSelected(i?: InstrumentFull): void{
     // this.db.deleteGroup(g.id);

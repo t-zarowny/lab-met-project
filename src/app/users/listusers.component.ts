@@ -36,6 +36,7 @@ export class ListusersComponent implements OnInit {
                }
 
   ngOnInit() {
+    this.user = new User();
     this.auth.currentUser.subscribe(user => {
       this.user = user;
       this.isAuthenticated = !!user;
@@ -86,6 +87,9 @@ export class ListusersComponent implements OnInit {
     // console.log(this.selection.selected);
   }
   openDialogAdd(u?: User): void {
+    if (!u){
+      u = new User();
+    }
     const dialogRef = this.dialog.open(FormUserComponent, {
       width: '550px',
       height: '550px',
