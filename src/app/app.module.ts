@@ -16,8 +16,6 @@ import { AddGroupComponent} from './group/add-group/add-group.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MeasurementCardsComponent } from './documents/measurement-cards/measurement-cards.component';
-import { MeasurementCardsDialogComponent } from './documents/measurement-cards-dialog/measurement-cards-dialog.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppMaterialModule } from './shared/material.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
@@ -44,8 +42,6 @@ registerLocaleData(localePl);
     ListusersComponent,
     GroupinstrumentsComponent,
     AddGroupComponent,
-    MeasurementCardsComponent,
-    MeasurementCardsDialogComponent,
     ConfirmDialogComponent,
     AlertComponent,
     FormUserComponent,
@@ -75,7 +71,7 @@ registerLocaleData(localePl);
 
      ],
   bootstrap: [AppComponent],
-  entryComponents: [AddGroupComponent, MeasurementCardsDialogComponent, ConfirmDialogComponent, FormUserComponent,
+  entryComponents: [AddGroupComponent, ConfirmDialogComponent, FormUserComponent,
                     FormUserChangePassComponent, AddPlaceComponent, AddAreaComponent, AddinstrumentComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

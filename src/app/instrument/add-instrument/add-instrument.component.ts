@@ -1,11 +1,5 @@
-import { InstrumentService } from './../../_services/instrument.service';
-import { AreaFull } from './../../_models/area';
-import { StateService } from './../../_services/state.service';
-import { AreaService, GroupService, PlaceService } from 'src/app/_services';
-import { InstrumentFull } from 'src/app/_models';
-import { State } from './../../_models/state';
-import { PlaceFull } from './../../_models/place';
-import { GroupInstrument } from 'src/app/assistant/interfaces';
+import { AreaFull, GroupInstrument, InstrumentFull, PlaceFull, State } from './../../_models';
+import { AreaService, GroupService, PlaceService, InstrumentService, StateService } from 'src/app/_services';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

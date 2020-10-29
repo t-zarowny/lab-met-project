@@ -117,6 +117,9 @@ export class ListusersComponent implements OnInit {
   }
 
   openDialogPass(u?: User): void {
+    if (!u){
+      u = new User();
+    }
     const dialogRef = this.dialog.open(FormUserChangePassComponent, {
       width: '550px',
       height: '230px',

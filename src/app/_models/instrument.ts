@@ -1,6 +1,6 @@
 import { State } from './state';
 import { PlaceFull } from './place';
-import { GroupInstrument } from 'src/app/assistant/interfaces';
+import { GroupInstrument } from './group';
 import { Inspection } from './inspection';
 
 export class Instrument {

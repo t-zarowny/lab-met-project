@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder} from '@angular/forms';
-import {GroupInstrument} from '../../assistant/interfaces';
+import {GroupInstrument} from '../../_models';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { DbService } from '../../_services/db.service';
 import { GroupinstrumentsComponent } from '../group.component';

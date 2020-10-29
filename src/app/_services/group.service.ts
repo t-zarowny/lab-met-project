@@ -1,9 +1,8 @@
-import { KartaPomiarow, GroupInstrument } from './../assistant/interfaces';
+import { MeasurementCard, GroupInstrument } from './../_models';
 import { tap } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +33,11 @@ export class GroupService {
       .pipe(tap(console.log));
   }
   addNewFile(form: FormData){
-    return this.http.post<any>(environment.apiUrl + 'karta-pomiarow/', form)
+    return this.http.post<MeasurementCard>(environment.apiUrl + 'karta-pomiarow/', form)
       .pipe(tap(console.log));
   }
   deleteFile(id: number){
-    return this.http.delete<any>(`${environment.apiUrl}karta-pomiarow/${id}/`)
+    return this.http.delete<MeasurementCard>(`${environment.apiUrl}karta-pomiarow/${id}/`)
       .pipe(tap(console.log));
   }
 }
