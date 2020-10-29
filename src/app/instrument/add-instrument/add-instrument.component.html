@@ -25,13 +25,13 @@
     <mat-form-field  class="w-100 p-1">
       <mat-label>Grupa</mat-label>
       <mat-select  formControlName="grupa" [(value)]="selectedGroupId" >
-        <mat-option *ngFor="let item of listGroup" [value]="item.id">{{item.nazwa}}</mat-option>
+        <mat-option *ngFor="let item of listGroup" [value]="item.id">{{item.nazwa}} ({{item.metodaKontroli}})</mat-option>
       </mat-select>
     </mat-form-field>
     <!-- lokalizacja -->
     <mat-form-field  class="w-100 p-1">
       <mat-label>Lokalizacja</mat-label>
-      <mat-select  formControlName="lokalizacja" [(value)]="selectedAreaId"  (ngModelChange)="onChangeSelect()">
+      <mat-select  formControlName="lokalizacja" (selectionChange)="onChangeSelect()">
         <mat-select-trigger>
           {{selectedAreaName}}
         </mat-select-trigger>
@@ -47,7 +47,7 @@
         <mat-option *ngFor="let item of listState" [value]="item.id">{{item.nazwa}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-slide-toggle formControlName="wzorzec" [(ngModel)]="isSample"> Przyrząd jest wzorcem: <b>{{isSample ? 'TAK' : 'NIE'}}</b></mat-slide-toggle>
+    <mat-slide-toggle formControlName="wzorzec"> Przyrząd jest wzorcem: <b>{{wzorzec.value ? 'TAK' : 'NIE'}}</b></mat-slide-toggle>
   </div>
   <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
     <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">Anuluj</button>

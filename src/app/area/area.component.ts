@@ -56,11 +56,11 @@ export class AreaComponent implements OnInit, AfterViewInit {
     this.auth.currentUser.subscribe(user => {
       this.user = user;
       this.isAuthenticated = !!user;
+      if (this.user.is_staff){
+        this.isPossibleAdd = true;
+      }
     });
     this.refresh();
-    if (this.user.is_staff){
-      this.isPossibleAdd = true;
-    }
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;

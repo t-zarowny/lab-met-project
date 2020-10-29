@@ -55,7 +55,11 @@ export class AddAreaComponent implements OnInit {
     const areaFormData = new FormData();
     areaFormData.append('nazwa', this.areaForm.value.nazwa);
     areaFormData.append('idUser', this.areaForm.value.idUser);
-
+    // console.log(...areaFormData);
+    // new Response(areaFormData).text().then(console.log);
+    // areaFormData.forEach((value, key) => {
+    //   console.log(key + value);
+    //    });
     if (this.data && this.data.id) {
       this.areaService.edit(this.data.id, areaFormData).subscribe(
         (res: Area) => {

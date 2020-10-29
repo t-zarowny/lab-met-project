@@ -1,3 +1,4 @@
+import { InstrumentService } from './../../_services/instrument.service';
 import { AreaFull } from './../../_models/area';
 import { StateService } from './../../_services/state.service';
 import { AreaService, GroupService, PlaceService } from 'src/app/_services';
@@ -30,6 +31,7 @@ export class AddinstrumentComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<InstrumentFull>,
               @Inject(MAT_DIALOG_DATA) public data: InstrumentFull,
               private groupService: GroupService,
+              private instrumentService: InstrumentService,
               private areaService: AreaService,
               private stateService: StateService) { }
 
@@ -44,7 +46,9 @@ export class AddinstrumentComponent implements OnInit {
       if (this.data.aktStatus){
         this.selectedStateId = this.data.aktStatus.id;
       }
-      this.isSample = this.data.wzorzec;
+      if (this.data.wzorzec){
+        this.isSample = this.data.wzorzec;
+      }
     }
     this.groupService.getList().subscribe( data => {
       const sorted = data.sort((a, b) => a.id - b.id);
@@ -68,7 +72,6 @@ export class AddinstrumentComponent implements OnInit {
       ]),
       typ: new FormControl(this.data.typ),
       grupa: new FormControl(this.selectedGroupId),
-      // lokalizacja: new FormControl(this.data.idLokalizacja.id),
       lokalizacja: new FormControl(this.selectedAreaId),
       aktStatus: new FormControl(this.selectedStateId),
       wzorzec: new FormControl(this.isSample)
@@ -83,7 +86,34 @@ export class AddinstrumentComponent implements OnInit {
   get wzorzec() { return this.instrumentForm.get('wzorzec'); }
 
   onSubmit(){
+    const instrumentFormData = new FormData();
+    instrumentFormData.append('nazwa', this.instrumentForm.value.nazwa);
+    instrumentFormData.append('typ', this.instrumentForm.value.typ);
+    instrumentFormData.append('idGrupa', this.instrumentForm.value.grupa);
+    instrumentFormData.append('idLokalizacja', this.instrumentForm.value.lokalizacja);
+    instrumentFormData.append('aktStatus', this.instrumentForm.value.aktStatus);
+    instrumentFormData.append('wzorzec', this.instrumentForm.value.wzorzec);
 
+    instrumentFormData.forEach((value, key) => {
+      console.log(key + ': ' + value);
+       });
+
+    if (this.data && this.data.id) {
+      this.instrumentService.edit(this.data.id, instrumentFormData).subscribe(
+        (res: InstrumentFull) => {
+          console.log(res);
+          this.dialogRef.close();
+        }
+      );
+    }
+    else {
+      this.instrumentService.add(instrumentFormData).subscribe(
+        (res: InstrumentFull) => {
+          console.log(res);
+          this.dialogRef.close();
+        }
+      );
+    }
   }
 
   onNoClick(){
@@ -91,10 +121,11 @@ export class AddinstrumentComponent implements OnInit {
   }
 
   onChangeSelect(): void {
+    // console.log('sel: ' + this.instrumentForm.value.lokalizacja);
     this.listArea.forEach(element => {
       if (element.lokalizacja.length){
         element.lokalizacja.forEach(lok => {
-          if (lok.id === this.selectedAreaId){
+          if (lok.id === this.instrumentForm.value.lokalizacja){
             this.selectedAreaName = element.nazwa + ': ' + lok.nazwa;
           }
         });

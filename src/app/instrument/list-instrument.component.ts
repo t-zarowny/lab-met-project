@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/login/_services';
 import { InstrumentService } from 'src/app/_services';
 import { AddinstrumentComponent } from './add-instrument/add-instrument.component';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-listinstrument',
@@ -114,10 +115,29 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
       data: i
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.selection.clear();
+      this.highlight(-1);
       this.refresh();
     });
   }
   deleteSelected(i?: InstrumentFull): void{
+    // this.db.deleteGroup(g.id);
+    const message = `Czy napewno chcesz usunąć przyrząd:<br/><b> ${i.nazwa}? </b><br/>Zostanie on trwale usunięty.`;
+    // const message = 'Czy napewno chcesz usunąć stanowisko' + '<br>' + p.nazwa + '? Stanowisko zostanie trwale usunięte.';
 
+    const dialogData = new ConfirmDialogModel('Potwierdź usunięcie', message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '600px',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.instrumentService.delete(i.id).subscribe(() => {
+          this.refresh();
+        });
+      }
+    });
   }
 }
