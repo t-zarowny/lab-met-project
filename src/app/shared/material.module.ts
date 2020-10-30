@@ -14,6 +14,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 
@@ -33,7 +35,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
       MatInputModule, MatSlideToggleModule,
       MatTooltipModule,
       MatSelectModule,
-      DragDropModule
+      DragDropModule,
+      MatGridListModule,
+      MatDividerModule
     ],
     entryComponents: [],
     providers: [

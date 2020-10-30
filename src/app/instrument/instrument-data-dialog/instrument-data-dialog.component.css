@@ -1,0 +1,14 @@
+.datatab{
+  padding: 15px;
+  font-size: medium;
+}
+.ins-title{
+  font-size: small;
+  color: cadetblue;
+  display: flex;
+  margin-left: -5px;
+}
+mat-list-item{
+  padding: 5px;
+  display: block;
+}

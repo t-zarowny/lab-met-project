@@ -11,7 +11,7 @@ export class InstrumentService {
   constructor(private http: HttpClient) { }
 
   get(id: number){
-    return this.http.get<Instrument>(`${environment.apiUrl}przyrzady/${id}/`);
+    return this.http.get<InstrumentFull>(`${environment.apiUrl}przyrzady-full/${id}/`);
   }
   getAll() {
     return this.http.get<InstrumentFull[]>(`${environment.apiUrl}przyrzady-full/`);

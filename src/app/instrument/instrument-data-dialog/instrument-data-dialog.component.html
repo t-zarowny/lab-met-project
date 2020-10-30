@@ -1,9 +1,15 @@
-<div style="height:calc(100% - 60px)">
-  <h1 mat-dialog-title
-    class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">
-    Przyrząd: {{data}}</h1>
+<div style="height: calc(100% - 60px)">
+  <h1
+    mat-dialog-title
+    class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow rounded"
+  >
+    Przyrząd: {{ data }}
+  </h1>
 
-  <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+  <mat-tab-group
+    [selectedIndex]="selected.value"
+    (selectedIndexChange)="selected.setValue($event)"
+  >
     <!-- <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
       Contents for {{tab}} tab
 
@@ -12,18 +18,40 @@
       </button>
     </mat-tab> -->
     <mat-tab label="Dane podstawowe">
-      dane
+      <div class="datatab">
+      <mat-list>
+        <mat-list-item><span class="ins-title">Nazwa: </span>{{instrument.nazwa}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><span class="ins-title">Typ: </span> {{instrument.typ}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><span class="ins-title">Grupa: </span> {{instrument.idGrupa.nazwa}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><span class="ins-title">Metoda kontroli: </span> {{instrument.idGrupa.metodaKontroli}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><span class="ins-title">Lokalizacja: </span>{{instrument.idLokalizacja.idObszar.nazwa}}: {{instrument.idLokalizacja.nazwa}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><span class="ins-title">Status: </span>{{instrument.aktStatus.nazwa}} </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+      <!-- <button mat-raised-button (click)="editInstrumentData()" class="m-1">Edytuj dane przyrządu</button> -->
+      </div>
+
     </mat-tab>
-    <mat-tab label="Sprawdzenia/Kalibracje">
-      dane
-    </mat-tab>
-    <mat-tab label="Historia">
-      dane
-    </mat-tab>
+    <mat-tab label="Sprawdzenia/Kalibracje"> dane </mat-tab>
+    <mat-tab label="Historia"> dane </mat-tab>
   </mat-tab-group>
 
 </div>
 <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
-  <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">Anuluj</button>
-  <button mat-raised-button class="btn btn-success" type="submit">Zapisz</button>
+  <button
+    mat-raised-button
+    class="btn btn-secondary"
+    type="button"
+    (click)="onNoClick()"
+  >
+    Anuluj
+  </button>
+  <button mat-raised-button class="btn btn-success" type="submit">
+    Zapisz
+  </button>
 </div>
