@@ -133,11 +133,11 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
       disableClose: true,
       data: id
     });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.selection.clear();
-    //   this.highlight(-1);
-    //   this.refresh();
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      this.selection.clear();
+      this.highlight(-1);
+      this.refresh();
+    });
   }
   deleteSelected(i?: InstrumentFull): void{
     // this.db.deleteGroup(g.id);

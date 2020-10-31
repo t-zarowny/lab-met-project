@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class GroupInstruments(models.Model):
     nazwa = models.CharField(max_length=32)
+    nrGrupy = models.IntegerField(default=0)
     metodaKontroli = models.CharField(max_length=50)
     interwalWartosc = models.IntegerField(default=1)
     interwalJednostka = models.CharField(max_length=32, default="d")

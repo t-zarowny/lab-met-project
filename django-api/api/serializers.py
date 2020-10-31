@@ -133,7 +133,7 @@ class GroupInstrumentsSerializer(serializers.ModelSerializer):
   przyrzad = PrzyrzadySerializer(many=True, read_only=True)
   class Meta:
     model = models.GroupInstruments
-    fields = ['id', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'jednostkaNazwa', 'jednostkaSkrot', 'karta', 'przyrzad']
+    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'jednostkaNazwa', 'jednostkaSkrot', 'karta', 'przyrzad']
 
 
 

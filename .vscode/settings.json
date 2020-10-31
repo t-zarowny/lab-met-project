@@ -1,9 +1,10 @@
 {
     "git.ignoreLimitWarning": true,
     //"python.pythonPath": "/usr/bin/python3"
-    "python.pythonPath": "C:\\Python\\python.exe",
+    "python.pythonPath": "django-api\\env\\Scripts\\python.exe",
     "python.linting.pylintPath": "env/bin/pylint",
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": false
+    "python.linting.enabled": false,
+    "python.autoComplete.extraPaths": ["./django-api"]
 }
 

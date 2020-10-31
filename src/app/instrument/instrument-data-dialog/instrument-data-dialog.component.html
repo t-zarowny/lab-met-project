@@ -32,8 +32,10 @@
         <mat-divider></mat-divider>
         <mat-list-item><span class="ins-title">Status: </span>{{instrument.aktStatus.nazwa}} </mat-list-item>
         <mat-divider></mat-divider>
+        <mat-list-item><span class="ins-title">Używany jako wzorzec?: </span>{{instrument.wzorzec? 'Tak' : 'Nie'}} </mat-list-item>
+        <mat-divider></mat-divider>
       </mat-list>
-      <!-- <button mat-raised-button (click)="editInstrumentData()" class="m-1">Edytuj dane przyrządu</button> -->
+      <button mat-raised-button mat-button color="primary" (click)="editInstrumentData()" class="m-1">Edytuj dane przyrządu</button>
       </div>
 
     </mat-tab>
