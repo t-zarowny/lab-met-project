@@ -1,14 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Jednostki(models.Model):
+  nazwa = models.CharField(max_length=32)
+  skrot = models.CharField(max_length=32)
+
 class GroupInstruments(models.Model):
     nazwa = models.CharField(max_length=32)
     nrGrupy = models.IntegerField(default=0)
     metodaKontroli = models.CharField(max_length=50)
     interwalWartosc = models.IntegerField(default=1)
     interwalJednostka = models.CharField(max_length=32, default="d")
-    jednostkaNazwa = models.CharField(max_length=32, default="milimetr")
-    jednostkaSkrot = models.CharField(max_length=32, default="mm")
+    wielkoscBadana = models.ForeignKey(Jednostki, default=0, related_name='wielkoscBadana', on_delete=models.PROTECT, null=False)
 
 class GrupaKartaPomiarow(models.Model):
     link = models.FileField(upload_to='kartyPomiarow/', null=False)
@@ -25,6 +28,7 @@ class Lokalizacje(models.Model):
 
 class Statusy(models.Model):
   nazwa = models.CharField(max_length=32)
+
 
 class Przyrzady(models.Model):
     nazwa = models.CharField(max_length=32)
