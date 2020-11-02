@@ -116,6 +116,16 @@ class ObszaryD1Serializer(serializers.ModelSerializer):
     fields = ['id', 'nazwa', 'idUser', 'lokalizacja']
     # depth = 1
 
+class JednostkiBadaneSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.JednostkiBadane
+    fields = ['id', 'nazwa', 'skrot']
+
+class JednostkiInterwalSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.JednostkiInterwal
+    fields = ['id', 'nazwa', 'skrot']
+
 class GrupaKartaPomiarowSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.GrupaKartaPomiarow
@@ -133,7 +143,16 @@ class GroupInstrumentsSerializer(serializers.ModelSerializer):
   przyrzad = PrzyrzadySerializer(many=True, read_only=True)
   class Meta:
     model = models.GroupInstruments
-    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'jednostkaNazwa', 'jednostkaSkrot', 'karta', 'przyrzad']
+    # fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'przyrzad']
+    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'karta', 'przyrzad']
 
+class GroupInstrumentsFullSerializer(serializers.ModelSerializer):
+  karta = GrupaKartaPomiarowSerializerMini(many=True, read_only=True)
+  przyrzad = PrzyrzadySerializer(many=True, read_only=True)
+  class Meta:
+    model = models.GroupInstruments
+    # fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'przyrzad']
+    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'karta', 'przyrzad']
+    depth = 3
 
 

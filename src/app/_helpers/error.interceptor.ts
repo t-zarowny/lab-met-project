@@ -23,11 +23,11 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (errorResponse instanceof HttpErrorResponse) {
               const err = JSON.stringify(errorResponse.error) || errorResponse.message;
               errMsg = `${errorResponse.status} - ${errorResponse.statusText || ''}, Szczególy: ${err}`;
-              console.log('if');
+              // console.log('if');
               this.alertService.error(errMsg);
             } else {
               errMsg = errorResponse.message ? errorResponse.message : errorResponse.toString();
-              console.log('else');
+              // console.log('else');
               this.alertService.error(errMsg);
             }
             console.log(errMsg);

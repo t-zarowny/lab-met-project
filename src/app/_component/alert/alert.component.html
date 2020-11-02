@@ -1,1 +1,3 @@
-<div *ngIf="message" [ngClass]="message.cssClass">{{message.text}}</div>
+<div *ngIf="message" style="position: relative; overflow-y: scroll; max-height: 300px;" [ngClass]="message.cssClass">
+  <p [innerHTML]="message.text"></p>
+</div>

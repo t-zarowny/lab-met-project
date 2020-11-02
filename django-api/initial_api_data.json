@@ -40,5 +40,93 @@
     "fields": {
       "nazwa": "Zlikwidowany"
     }
+  },
+  {
+    "model": "api.jednostkibadane",
+    "pk": 0,
+    "fields": {
+      "nazwa": "metr",
+      "skrot": "m"
+    }
+  },
+  {
+    "model": "api.jednostkibadane",
+    "pk": 1,
+    "fields": {
+      "nazwa": "kilogram",
+      "skrot": "kg"
+    }
+  },
+  {
+    "model": "api.jednostkibadane",
+    "pk": 2,
+    "fields": {
+      "nazwa": "sekunda",
+      "skrot": "s"
+    }
+  },
+  {
+    "model": "api.jednostkibadane",
+    "pk": 3,
+    "fields": {
+      "nazwa": "amper",
+      "skrot": "A"
+    }
+  },
+  {
+    "model": "api.jednostkibadane",
+    "pk": 4,
+    "fields": {
+      "nazwa": "paskal",
+      "skrot": "Pa"
+    }
+  },
+  {
+    "model": "api.jednostkibadane",
+    "pk": 5,
+    "fields": {
+      "nazwa": "rezystancja",
+      "skrot": "om"
+    }
+  },
+  {
+    "model": "api.jednostkibadane",
+    "pk": 6,
+    "fields": {
+      "nazwa": "przewodność elektryczna",
+      "skrot": "simens"
+    }
+  },
+  {
+    "model": "api.jednostkiinterwal",
+    "pk": 0,
+    "fields": {
+      "nazwa": "dzień",
+      "skrot": "d"
+    }
+  },
+  {
+    "model": "api.jednostkiinterwal",
+    "pk": 1,
+    "fields": {
+      "nazwa": "tydzień",
+      "skrot": "t"
+    }
+  },
+  {
+    "model": "api.jednostkiinterwal",
+    "pk": 2,
+    "fields": {
+      "nazwa": "miesiąc",
+      "skrot": "m"
+    }
+  },
+  {
+    "model": "api.jednostkiinterwal",
+    "pk": 3,
+    "fields": {
+      "nazwa": "rok",
+      "skrot": "r"
+    }
   }
 ]

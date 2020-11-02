@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Jednostki(models.Model):
+class JednostkiBadane(models.Model):
+  nazwa = models.CharField(max_length=32)
+  skrot = models.CharField(max_length=32)
+
+class JednostkiInterwal(models.Model):
   nazwa = models.CharField(max_length=32)
   skrot = models.CharField(max_length=32)
 
@@ -10,8 +14,8 @@ class GroupInstruments(models.Model):
     nrGrupy = models.IntegerField(default=0)
     metodaKontroli = models.CharField(max_length=50)
     interwalWartosc = models.IntegerField(default=1)
-    interwalJednostka = models.CharField(max_length=32, default="d")
-    wielkoscBadana = models.ForeignKey(Jednostki, default=0, related_name='wielkoscBadana', on_delete=models.PROTECT, null=False)
+    interwalJednostka = models.ForeignKey(JednostkiInterwal, related_name='grupa', on_delete=models.PROTECT, null=True)
+    wielkoscBadana = models.ForeignKey(JednostkiBadane, related_name='grupa', on_delete=models.PROTECT, null=True)
 
 class GrupaKartaPomiarow(models.Model):
     link = models.FileField(upload_to='kartyPomiarow/', null=False)

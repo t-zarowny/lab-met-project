@@ -23,6 +23,7 @@ export class AlertComponent implements OnInit, OnDestroy {
                         break;
                     case 'error':
                         message.cssClass = 'alert alert-danger';
+                        console.log(message);
                         break;
                 }
 

@@ -21,6 +21,11 @@ class GroupInstrumentsViewSet(viewsets.ModelViewSet):
     queryset = models.GroupInstruments.objects.all()
     serializer_class = serializers.GroupInstrumentsSerializer
 
+class GroupInstrumentsFullViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.GroupInstruments.objects.all()
+    serializer_class = serializers.GroupInstrumentsFullSerializer
+
 class GrupaKartaPomiarowViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.GrupaKartaPomiarow.objects.all()
@@ -83,4 +88,14 @@ class StatusViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Statusy.objects.all()
     serializer_class = serializers.StatusSerializer
+
+class JednostkiBadaneViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.JednostkiBadane.objects.all()
+    serializer_class = serializers.JednostkiBadaneSerializer
+
+class JednostkiInterwalViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.JednostkiInterwal.objects.all()
+    serializer_class = serializers.JednostkiInterwalSerializer
 

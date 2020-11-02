@@ -20,6 +20,8 @@ router.register(r'przyrzady-d3', views.PrzyrzadyD3ViewSet)
 router.register(r'przyrzady-full', views.PrzyrzadyFullViewSet)
 router.register(r'sprawdzenia-planowane', views.SprawdzeniaPlanoweViewSet)
 router.register(r'statusy', views.StatusViewSet)
+router.register(r'JednostkiBadane', views.JednostkiBadaneViewSet)
+router.register(r'JednostkiInterwal', views.JednostkiInterwalViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
