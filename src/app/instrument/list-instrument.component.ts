@@ -17,7 +17,7 @@ import { InstrumentDataDialogComponent } from './instrument-data-dialog/instrume
   styleUrls: ['./list-instrument.component.css']
 })
 export class ListInstrumentComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['select', 'id', 'nazwa', 'typ', 'grupa', 'miejsce', 'status'];
+  displayedColumns: string[] = ['select', 'id', 'nazwa', 'typ', 'nrFabryczny', 'zakres', 'grupa', 'miejsce', 'status'];
   dataSource: MatTableDataSource<InstrumentFull>;
   selection = new SelectionModel<InstrumentFull>();
   selectedRowIndex = -1;
@@ -106,7 +106,7 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
     }
     const dialogRef = this.dialog.open(AddinstrumentComponent, {
       width: '550px',
-      height: '630px',
+      height: '720px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',
@@ -124,7 +124,7 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
   openDialogInstrumentData(id: number): void{
     const dialogRef = this.dialog.open(InstrumentDataDialogComponent, {
       width: '800px',
-      height: '700px',
+      height: '740px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',

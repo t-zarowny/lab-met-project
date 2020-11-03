@@ -6,8 +6,6 @@ table {
   font-size: 14px;
   width: 300px;
 }
-
-
 .nag_comp{
   background-color: #eef1ef!important;
   text-align: center ;
@@ -23,6 +21,7 @@ table {
 }
 .matSelectColumn{
   max-width: 50px;
+  padding-top: 7px;
 }
 .matSelectRow{
   background-color: #e5e8ff;

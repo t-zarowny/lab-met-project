@@ -1,4 +1,4 @@
-export interface MeasurementCard {
+export class MeasurementCard {
   id: number;
   nazwa?: string;
   link: string;

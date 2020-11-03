@@ -1,3 +1,7 @@
+import { AuditUnitService } from './../../_services/audit-unit.service';
+import { IntervalUnitService } from './../../_services/interval-unit.service';
+import { IntervalUnit } from './../../_models/intervalUnit';
+import { AuditUnit } from './../../_models/auditUnit';
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder} from '@angular/forms';
@@ -30,14 +34,17 @@ export class AddGroupComponent  implements OnInit {
   groupForm: FormGroup;
   isDeleteFile = false;
   isNewFile = false;
-  // kartaPomiarowNazwa: string = null;
-  // kartaPomiarowLink: string = null;
-  g: GroupInstrument;
+  auditUnitList: AuditUnit[];
+  auditUnitSelectedId = 0;
+  intervalUnitList: IntervalUnit[];
+  intervalUnitSelectedId = 0;
+
 
   constructor(
     public dialogRef: MatDialogRef<AddGroupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: GroupInstrument,
-    private db: DbService,
+    private intervalUnitService: IntervalUnitService,
+    private auditUnitService: AuditUnitService,
     private groupService: GroupService,
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry,
@@ -54,12 +61,29 @@ export class AddGroupComponent  implements OnInit {
   get kartaPomiarowNazwa() { return this.fileGroupForm.get('kartaPomiarowNazwa').value; }
   get kartaPomiarowLink() { return this.fileGroupForm.get('kartaPomiarowLink').value; }
   get kartaPomiarowIdGrupa() { return this.fileGroupForm.get('idGrupa').value; }
+  get intervalValue() { return this.fileGroupForm.get('intervalValue').value; }
+  get nrGrupy() { return this.fileGroupForm.get('nrGrupy').value; }
+  get intervalUnit() { return this.fileGroupForm.get('intervalUnit').value; }
+  get auditUnit() { return this.fileGroupForm.get('auditUnit').value; }
 
-
-
-  // matcher = new MyErrorStateMatcher();
 
   ngOnInit() {
+    // if (this.data.id !== 0){
+    //   if (this.data.wielkoscBadana){
+    //     this.auditUnitSelectedId = this.data.wielkoscBadana.id;
+    //   }
+    //   if (this.data.interwalJednostka){
+    //     this.intervalUnitSelectedId = this.data.interwalJednostka.id;
+    //   }
+    // }
+    this.intervalUnitService.getAll().subscribe( data => {
+      // const sorted = data.sort((a, b) => a.id - b.id);
+      this.intervalUnitList = data;
+    });
+    this.auditUnitService.getAll().subscribe( data => {
+      // const sorted = data.sort((a, b) => a.id - b.id);
+      this.auditUnitList = data;
+    });
     this.groupForm = new FormGroup({
 
       nazwa: new FormControl(this.data.nazwa, [
@@ -70,18 +94,30 @@ export class AddGroupComponent  implements OnInit {
         Validators.required,
         Validators.minLength(3)
       ]),
+      nrGrupy: new FormControl(this.data.id ? this.data.nrGrupy : null, [
+        Validators.min(1),
+        Validators.required
+      ]),
+      intervalValue: new FormControl(this.data.id ? this.data.interwalWartosc : '', [
+        Validators.min(1),
+        Validators.required
+      ]),
+      intervalUnit: new FormControl(this.data.interwalJednostka ? this.data.interwalJednostka.id : '', [
+        Validators.required
+      ]),
+      auditUnit: new FormControl(this.data.wielkoscBadana ? this.data.wielkoscBadana.id : '')
       // kartaPomiarowNazwa: new FormControl(this.data.karta ? this.data.karta[0].nazwa : ''),
       // kartaPomiarowPlik: new FormControl(this.data.karta ? this.data.karta[0].link : ''),
-
     });
 
 
     this.fileGroupForm = this.formBuilder.group({
-      kartaPomiarowId: [this.data.karta[0]?.id || null],
-      kartaPomiarowNazwa: [this.data.karta[0]?.nazwa || null],
-      kartaPomiarowLink: [this.data.karta[0]?.link || null],
-      idGrupa: [this.data?.id.toString() || null]
+      kartaPomiarowId: [this.data.karta ? this.data.karta[0]?.id : null],
+      kartaPomiarowNazwa: [this.data.karta ? this.data.karta[0]?.nazwa : null],
+      kartaPomiarowLink: [this.data.karta ? this.data.karta[0]?.link : null],
+      idGrupa: [this.data.karta ? this.data?.id.toString() : null]
     });
+
     // if (this.data.karta && this.data.karta.length){
     //   this.kartaPomiarowNazwa = this.data.karta[0].nazwa;
     //   this.kartaPomiarowLink = this.data.karta[0].link;
@@ -95,6 +131,14 @@ export class AddGroupComponent  implements OnInit {
     const groupFormData = new FormData();
     groupFormData.append('nazwa', this.groupForm.value.nazwa);
     groupFormData.append('metodaKontroli', this.groupForm.value.metodaKontroli);
+    groupFormData.append('nrGrupy', this.groupForm.value.nrGrupy);
+    groupFormData.append('interwalWartosc', this.groupForm.value.intervalValue);
+    groupFormData.append('interwalJednostka', this.groupForm.value.intervalUnit);
+    groupFormData.append('wielkoscBadana', this.groupForm.value.auditUnit);
+
+    groupFormData.forEach((value, key) => {
+      console.log(key + ': ' + value);
+       });
     // = {  id: this.data.id,
     //             nazwa: this.groupForm.value.nazwa,
     //             metodaKontroli: this.addgroupform.value.metodaKontroli

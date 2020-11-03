@@ -14,7 +14,7 @@ export class AddinstrumentComponent implements OnInit {
 
   instrumentForm: FormGroup;
   listGroup: GroupInstrument[];
-  selectedGroupId = 0;
+  selectedGroupId = -1;
   listArea: AreaFull[];
   selectedAreaId = 0;
   selectedAreaName = '';
@@ -65,8 +65,13 @@ export class AddinstrumentComponent implements OnInit {
         Validators.minLength(3)
       ]),
       typ: new FormControl(this.data.typ),
-      grupa: new FormControl(this.selectedGroupId),
+      grupa: new FormControl(this.selectedGroupId, [
+        Validators.required,
+        Validators.min(0)
+      ]),
       lokalizacja: new FormControl(this.selectedAreaId),
+      nrFabryczny: new FormControl(this.data.nrFabryczny),
+      zakres: new FormControl(this.data.zakres),
       aktStatus: new FormControl(this.selectedStateId),
       wzorzec: new FormControl(this.isSample)
     }, );
@@ -74,6 +79,8 @@ export class AddinstrumentComponent implements OnInit {
   }
   get nazwa() { return this.instrumentForm.get('nazwa'); }
   get typ() { return this.instrumentForm.get('typ'); }
+  get nrFabryczny() { return this.instrumentForm.get('nrFabryczny'); }
+  get zakres() { return this.instrumentForm.get('zakres'); }
   get grupa() { return this.instrumentForm.get('grupa'); }
   get lokalizacja() { return this.instrumentForm.get('lokalizacja'); }
   get aktStatus() { return this.instrumentForm.get('aktStatus'); }
@@ -83,6 +90,8 @@ export class AddinstrumentComponent implements OnInit {
     const instrumentFormData = new FormData();
     instrumentFormData.append('nazwa', this.instrumentForm.value.nazwa);
     instrumentFormData.append('typ', this.instrumentForm.value.typ);
+    instrumentFormData.append('nrFabryczny', this.instrumentForm.value.nrFabryczny);
+    instrumentFormData.append('zakres', this.instrumentForm.value.zakres);
     instrumentFormData.append('idGrupa', this.instrumentForm.value.grupa);
     instrumentFormData.append('idLokalizacja', this.instrumentForm.value.lokalizacja);
     instrumentFormData.append('aktStatus', this.instrumentForm.value.aktStatus);

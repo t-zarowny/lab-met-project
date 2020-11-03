@@ -17,7 +17,7 @@ export class GroupService {
   }
 
   getList() {
-    return this.http.get<GroupInstrument[]>(environment.apiUrl + 'grupy/')
+    return this.http.get<GroupInstrument[]>(environment.apiUrl + 'grupy-full/')
       .pipe(tap(data => JSON.stringify(data as GroupInstrument[])));
   }
 

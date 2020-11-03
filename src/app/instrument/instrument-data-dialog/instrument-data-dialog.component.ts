@@ -18,9 +18,7 @@ export class InstrumentDataDialogComponent implements OnInit {
   tabs = ['Dane podstawowe', 'Sprawdzenia/Kalibracje', 'Historia'];
   selected = new FormControl(0);
   instrument: InstrumentFull;
-  group: GroupInstrument;
-  area: Area;
-  userArea: User;
+  isDataLoaded = false;
 
   constructor(public dialogRef: MatDialogRef<InstrumentFull>,
               public dialog: MatDialog,
@@ -37,8 +35,10 @@ export class InstrumentDataDialogComponent implements OnInit {
   }
 
   refresh(){
+    this.isDataLoaded = false;
     this.instrumentService.get(this.data).subscribe( data => {
       this.instrument = data;
+      this.isDataLoaded = true;
     });
   }
 

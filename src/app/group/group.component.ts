@@ -18,10 +18,12 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/co
 })
 export class GroupinstrumentsComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'id', 'nazwa', 'metodaKontroli', 'kartaPomiarowNazwa'];
+  displayedColumns: string[] = ['select', 'id', 'nazwa', 'metodaKontroli', 'wielkoscBadana', 'interwal' , 'kartaPomiarowNazwa'];
   dataSource: MatTableDataSource<GroupInstrument>;
   selection = new SelectionModel<GroupInstrument>();
   selectedRowIndex = -1;
+  possibleEdit = false;
+  possibleDelete = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -70,8 +72,13 @@ export class GroupinstrumentsComponent implements OnInit {
     return null;
   }
 
-  highlight(row: any) {
-    this.selectedRowIndex = row.id;
+  highlight(row?: GroupInstrument) {
+    this.selectedRowIndex = row ? row.id : -1;
+    if (this.selection.selected.length > 0 && row.przyrzad && row.przyrzad.length === 0){
+      this.possibleDelete = true;
+    }else{
+      this.possibleDelete = false;
+    }
     // console.log(this.selection.selected);
   }
 
@@ -85,25 +92,29 @@ export class GroupinstrumentsComponent implements OnInit {
   }
 
   openDialogAddGroup(g?: GroupInstrument): void {
+    if (!g){
+      g = new GroupInstrument();
+    }
     const dialogRef = this.dialog.open(AddGroupComponent, {
       width: '550px',
-      height: '430px',
+      height: '630px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',
       },
       hasBackdrop: true,
       disableClose: true,
-      data: {
-        id: g?.id || 0,
-        nazwa: g?.nazwa,
-        metodaKontroli: g?.metodaKontroli,
-        karta: g?.karta || []
-      }
+      data: g
+      // data: {
+      //   id: g?.id || 0,
+      //   nazwa: g?.nazwa,
+      //   metodaKontroli: g?.metodaKontroli,
+      //   karta: g?.karta || []
+      // }
     });
     dialogRef.afterClosed().subscribe(result => {
       this.selection.clear();
-      this.highlight(-1);
+      this.highlight();
       this.refreshGroup();
       // this.email1 = result;
       // console.log(result);
@@ -126,14 +137,14 @@ export class GroupinstrumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.selection.clear();
-        this.highlight(-1);
+        this.highlight();
         this.groupService.delete(g.id).subscribe(() => {
           this.refreshGroup();
         });
       }
       else {
         this.selection.clear();
-        this.highlight(-1);
+        this.highlight();
       }
     });
 

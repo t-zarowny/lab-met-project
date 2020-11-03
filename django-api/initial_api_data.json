@@ -45,8 +45,8 @@
     "model": "api.jednostkibadane",
     "pk": 0,
     "fields": {
-      "nazwa": "metr",
-      "skrot": "m"
+      "nazwa": "milimetr",
+      "skrot": "mm"
     }
   },
   {

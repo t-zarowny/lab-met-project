@@ -36,11 +36,12 @@ class Statusy(models.Model):
 
 class Przyrzady(models.Model):
     nazwa = models.CharField(max_length=32)
-    typ = models.CharField(max_length=32)
+    typ = models.CharField(max_length=32, null=True)
+    nrFabryczny = models.CharField(max_length=50, null=True)
+    zakres = models.CharField(max_length=50, null=True)
     idGrupa = models.ForeignKey(GroupInstruments, related_name='przyrzad', on_delete=models.PROTECT, null=True)
     idLokalizacja = models.ForeignKey(Lokalizacje, related_name='przyrzad', on_delete=models.PROTECT, null=True)
     aktStatus = models.ForeignKey(Statusy, default=3, related_name='status', on_delete=models.PROTECT, null=False)
-    # aktStatus = models.IntegerField(default=0)
     wzorzec = models.BooleanField(default=False)
 
 class SprawdzeniaPlanowe(models.Model):

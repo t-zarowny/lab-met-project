@@ -1,8 +1,9 @@
+import { Instrument } from './instrument';
 import { AuditUnit } from './auditUnit';
 import { IntervalUnit } from './intervalUnit';
 import { MeasurementCard } from './measurementCard';
 
-export interface GroupInstrument {
+export class GroupInstrument {
   id?: number;
   nazwa: string;
   nrGrupy?: number;
@@ -11,4 +12,5 @@ export interface GroupInstrument {
   interwalJednostka?: IntervalUnit;
   wielkoscBadana?: AuditUnit;
   karta?: MeasurementCard[] | null;
+  przyrzad?: Instrument[] | null;
 }

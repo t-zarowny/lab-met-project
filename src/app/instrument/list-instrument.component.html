@@ -31,12 +31,12 @@
         </mat-checkbox>
       </mat-cell>
     </ng-container>
-    <!-- ID -->
+    <!-- Nr -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> ID </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Numer </mat-header-cell>
       <mat-cell *matCellDef="let row" class="matIdColumn"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.id}} </mat-cell>
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.idGrupa.nrGrupy}}.{{row.id}} </mat-cell>
       <!-- <mat-cell *matCellDef="let row" class="matIdColumn" [ngClass]="{'matSelectRow': expandedElement == row}">
                {{row.id}} </mat-cell> -->
     </ng-container>
@@ -53,6 +53,22 @@
       <mat-cell *matCellDef="let row"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.typ}}
+      </mat-cell>
+    </ng-container>
+    <!-- Nr fabryczny -->
+    <ng-container matColumnDef="nrFabryczny">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nr fabryczny </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrFabryczny}}
+      </mat-cell>
+    </ng-container>
+    <!-- zakres -->
+    <ng-container matColumnDef="zakres">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Zakres </mat-header-cell>
+      <mat-cell *matCellDef="let row"
+        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.zakres}}
       </mat-cell>
     </ng-container>
     <!-- grupa -->

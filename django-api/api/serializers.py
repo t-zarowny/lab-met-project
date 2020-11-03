@@ -23,27 +23,27 @@ class PrzyrzadySerializer(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
 
 class PrzyrzadySerializerD1(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
     depth = 1
 
 class PrzyrzadySerializerD2(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
     depth = 2
 
 class PrzyrzadySerializerD3(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nazwa', 'typ', 'nrFabryczny', 'zakres', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
     depth = 3
 
 class PrzyrzadyFullSerializer(serializers.ModelSerializer):
@@ -51,7 +51,7 @@ class PrzyrzadyFullSerializer(serializers.ModelSerializer):
   # aktStatus = StatusSerializer(many=False, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nazwa', 'typ', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
     depth = 3
 
 class LokalizacjeSerializer(serializers.ModelSerializer):
@@ -143,16 +143,16 @@ class GroupInstrumentsSerializer(serializers.ModelSerializer):
   przyrzad = PrzyrzadySerializer(many=True, read_only=True)
   class Meta:
     model = models.GroupInstruments
-    # fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'przyrzad']
-    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'karta', 'przyrzad']
+    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'przyrzad']
+    # fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'karta', 'przyrzad']
 
 class GroupInstrumentsFullSerializer(serializers.ModelSerializer):
   karta = GrupaKartaPomiarowSerializerMini(many=True, read_only=True)
-  przyrzad = PrzyrzadySerializer(many=True, read_only=True)
+  przyrzad = PrzyrzadySerializerD3(many=True, read_only=True)
   class Meta:
     model = models.GroupInstruments
-    # fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'przyrzad']
-    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'karta', 'przyrzad']
+    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'przyrzad']
+    # fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'karta', 'przyrzad']
     depth = 3
 
 

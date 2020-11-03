@@ -111,7 +111,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 REST_USE_JWT = True
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    # 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=4),
     #'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(hours=9),
     'ROTATE_REFRESH_TOKENS': False,

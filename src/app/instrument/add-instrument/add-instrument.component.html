@@ -1,9 +1,13 @@
 <form [formGroup]="instrumentForm" class="h-100" (ngSubmit)="onSubmit()">
   <div style="height:calc(100% - 60px)">
 
-    <h1 mat-dialog-title
-      class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">
-      Edycja przyrządu</h1>
+    <h1 mat-dialog-title class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded" *ngIf="data.id">
+      Edycja przyrządu ZPL.{{data.idGrupa.nrGrupy}}.{{data.id}}
+    </h1>
+
+    <h1 mat-dialog-title class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded" *ngIf="!data.id">
+      Dodaj nowy przyrząd
+    </h1>
 
     <!-- nazwa -->
     <mat-form-field class="w-100 p-1">
@@ -21,12 +25,25 @@
       <mat-label>Typ</mat-label>
       <input matInput formControlName="typ">
     </mat-form-field>
+    <!-- nr fabryczny -->
+    <mat-form-field class="w-100 p-1">
+      <mat-label>Nr fabryczny</mat-label>
+      <input matInput formControlName="nrFabryczny">
+    </mat-form-field>
+    <!-- zakres -->
+    <mat-form-field class="w-100 p-1">
+      <mat-label>Zakres pomiarowy</mat-label>
+      <input matInput formControlName="zakres">
+    </mat-form-field>
     <!-- grupa -->
     <mat-form-field  class="w-100 p-1">
       <mat-label>Grupa</mat-label>
       <mat-select  formControlName="grupa" [(value)]="selectedGroupId" >
         <mat-option *ngFor="let item of listGroup" [value]="item.id">{{item.nazwa}} ({{item.metodaKontroli}})</mat-option>
       </mat-select>
+      <mat-error *ngIf="nazwa.errors?.required">
+          To pole jest <strong>wymagane</strong>
+        </mat-error>
     </mat-form-field>
     <!-- lokalizacja -->
     <mat-form-field  class="w-100 p-1">
@@ -51,6 +68,6 @@
   </div>
   <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
     <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">Anuluj</button>
-    <button mat-raised-button class="btn btn-success" type="submit" >Zapisz</button>
+    <button mat-raised-button class="btn btn-success" type="submit" [disabled]="!instrumentForm.valid">Zapisz</button>
   </div>
 </form>

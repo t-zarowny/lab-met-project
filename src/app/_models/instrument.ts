@@ -7,6 +7,8 @@ export class Instrument {
   id: number;
   nazwa: string;
   typ?: string;
+  nrFabryczny?: string;
+  zakres?: string;
   idGrupa?: number | null;
   idLokalizacja?: number | null;
   aktStatus: number;
@@ -17,6 +19,8 @@ export class InstrumentMin {
   id: number;
   nazwa: string;
   typ?: string;
+  nrFabryczny?: string;
+  zakres?: string;
   idGrupa?: number | null;
   idLokalizacja?: number | null;
   aktStatus: number;
@@ -26,6 +30,8 @@ export class InstrumentFull {
   id: number | 0;
   nazwa: string | '';
   typ?: string | null;
+  nrFabryczny?: string;
+  zakres?: string;
   idGrupa?: GroupInstrument | null;
   idLokalizacja?: PlaceFull | null;
   aktStatus: State | null;

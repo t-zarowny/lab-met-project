@@ -15,15 +15,22 @@
 	<h1 mat-dialog-title class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow  rounded">Dodaj nową grupę przyrządów</h1>
 
   <mat-form-field  class="w-100 p-2">
-		<mat-label>Nazwa grupy</mat-label>
-		<input matInput formControlName="nazwa" cdkFocusInitial >
+    <mat-label>Nazwa grupy</mat-label>
+		<input matInput formControlName="nazwa" >
 		<mat-error *ngIf="nazwa.errors?.minlength &&! nazwa.errors?.required">
-			Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
+      Prosze wprowadzić nazwę grupy, składającą się z przynajmniej 3 znaków
 		</mat-error>
 		<mat-error *ngIf="nazwa.errors?.required">
-			To pole jest <strong>wymagane</strong>
+      To pole jest <strong>wymagane</strong>
 		</mat-error>
 	</mat-form-field>
+
+    <!-- nr grupy-->
+    <mat-form-field  class="w-100 p-1">
+      <mat-label>Nr grupy</mat-label>
+      <input matInput type="number" formControlName="nrGrupy" cdkFocusInitial >
+      <span matPrefix>ZPL.</span>
+    </mat-form-field>
 
   <mat-form-field  class="w-100 p-2">
 		<mat-label>Instrukcja kontroli</mat-label>
@@ -34,6 +41,29 @@
 		<mat-error *ngIf="metodaKontroli.errors?.required">
 			To pole jest <strong>wymagane</strong>
 		</mat-error>
+  </mat-form-field>
+
+<!-- <h6>Przyrządy będą sprawdzane w odstępach czasowych:</h6> -->
+  <!-- interwał sprawdzeń - wartość -->
+  <mat-form-field  class="w-50 pt-0 p-2">
+		<mat-label>Interwał sprawdzeń</mat-label>
+		<input matInput type="number" formControlName="intervalValue" >
+  </mat-form-field>
+
+  <!-- interwał sprawdzeń - jednostka-->
+  <mat-form-field  class="w-50 p-1">
+    <mat-label>Jednostka</mat-label>
+    <mat-select  formControlName="intervalUnit">
+      <mat-option *ngFor="let item of intervalUnitList" [value]="item.id">{{item.nazwa}} ({{item.skrot}})</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- badana jednostka-->
+  <mat-form-field  class="w-100 p-1">
+    <mat-label>Badana jednostka</mat-label>
+    <mat-select  formControlName="auditUnit" [(value)]="auditUnitSelectedId" >
+      <mat-option *ngFor="let item of auditUnitList" [value]="item.id">{{item.nazwa}} ({{item.skrot}})</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <h6>Karta pomiarów:</h6>

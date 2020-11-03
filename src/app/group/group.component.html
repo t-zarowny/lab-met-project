@@ -8,7 +8,7 @@
       <button mat-raised-button (click)="openDialogAddGroup(selection.selected[0])"
         [disabled]="selection.selected.length==0" class="m-1">Edytuj zaznaczoną grupę</button>
       <button mat-raised-button (click)="deleteSelectedGroup(selection.selected[0])"
-        [disabled]="selection.selected.length==0" class="m-1">Usuń zaznaczoną grupę</button>
+        [disabled]="!possibleDelete" class="m-1">Usuń zaznaczoną grupę</button>
     </mat-toolbar-row>
     <mat-form-field style="margin-bottom: -10px;">
       <mat-label>Szukaj grupy</mat-label>
@@ -29,41 +29,57 @@
         <td mat-cell *matCellDef="let row" class="matSelectColumn" fxFlex="100px"
           [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
           <mat-checkbox (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+            (change)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
             [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
           </mat-checkbox>
         </td>
       </ng-container>
 
-      <!-- ID -->
+      <!-- Nr grupy -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nr grupy </th>
         <td mat-cell *matCellDef="let row"
-          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.id}} </td>
+          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
+          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.nrGrupy}}</td>
       </ng-container>
 
       <!-- Nazwa -->
       <ng-container matColumnDef="nazwa">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nazwa </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nazwa (ilość przyrządów) </th>
         <td mat-cell *matCellDef="let row"
-          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nazwa}} </td>
+          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
+          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nazwa}} ({{row.przyrzad ? row.przyrzad.length: 0}}) </td>
       </ng-container>
 
       <!-- Metoda kontroli -->
       <ng-container matColumnDef="metodaKontroli">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Instrukcja kontroli </th>
         <td mat-cell *matCellDef="let row"
-          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
           [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.metodaKontroli}} </td>
+      </ng-container>
+
+      <!-- Jednostka badana -->
+      <ng-container matColumnDef="wielkoscBadana">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Badana jednostka </th>
+        <td mat-cell *matCellDef="let row"
+          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
+          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.wielkoscBadana ? row.wielkoscBadana.nazwa + ' [' + row.wielkoscBadana.skrot + ']': 'nie określono'}} </td>
+      </ng-container>
+
+      <!-- Interwal -->
+      <ng-container matColumnDef="interwal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Interwał kontroli </th>
+        <td mat-cell *matCellDef="let row"
+          (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
+          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.interwalJednostka ? row.interwalWartosc + ' (' + row.interwalJednostka.nazwa + ')' : 'nie określono'}} </td>
       </ng-container>
 
       <!-- Karta pomiarow -->
       <ng-container matColumnDef="kartaPomiarowNazwa">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Karta pomiarów</th>
         <td mat-cell *matCellDef="let row" (click)="$event ? selection.toggle(row) : null;
-          selection.isSelected(row) ? highlight(row) : highlight(-1);"
+          selection.isSelected(row) ? highlight(row) : highlight();"
           [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
           <div *ngIf="row.karta.length > 0 then thenBlock else elseBlock"></div>
           <ng-template #thenBlock>

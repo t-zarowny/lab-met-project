@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -37,7 +38,8 @@ import {MatDividerModule} from '@angular/material/divider';
       MatSelectModule,
       DragDropModule,
       MatGridListModule,
-      MatDividerModule
+      MatDividerModule,
+      MatProgressSpinnerModule
     ],
     entryComponents: [],
     providers: [
