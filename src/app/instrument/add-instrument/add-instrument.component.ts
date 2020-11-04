@@ -70,8 +70,8 @@ export class AddinstrumentComponent implements OnInit {
         Validators.min(0)
       ]),
       lokalizacja: new FormControl(this.selectedAreaId),
-      nrFabryczny: new FormControl(this.data.nrFabryczny),
-      zakres: new FormControl(this.data.zakres),
+      nrFabryczny: new FormControl(this.data.nrFabryczny ? this.data.nrFabryczny : ''),
+      zakres: new FormControl(this.data.zakres ? this.data.zakres : ''),
       aktStatus: new FormControl(this.selectedStateId),
       wzorzec: new FormControl(this.isSample)
     }, );

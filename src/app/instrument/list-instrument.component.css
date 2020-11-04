@@ -2,7 +2,10 @@ mat-table {
   width: 100%;
   flex: 1;
   min-height: 0;
-  overflow: auto
+}
+.table-container{
+  height: calc(100% - 50px);
+  overflow: auto;
 }
 
 .mat-form-field {

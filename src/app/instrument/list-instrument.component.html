@@ -17,8 +17,8 @@
     </mat-form-field>
   </mat-toolbar>
 </div>
-<div class="mat-elevation-z8 mr-2 ml-2 mb-2">
-
+<div class="mat-elevation-z8 mr-2 ml-2 mb-2" style="height: calc(100% - 100px);">
+<div class="table-container">
   <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
     <!-- Checkbox -->
     <ng-container matColumnDef="select">
@@ -96,10 +96,10 @@
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
   </mat-table>
-
+</div>
   <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator>
 
 
