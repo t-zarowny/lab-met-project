@@ -48,7 +48,9 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nazwa (ilość przyrządów) </th>
         <td mat-cell *matCellDef="let row"
           (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
-          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nazwa}} ({{row.przyrzad ? row.przyrzad.length: 0}}) </td>
+          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+            <span [matBadge]="row.przyrzad ? row.przyrzad.length: 0" matBadgeOverlap="false">{{row.nazwa}}</span>
+           </td>
       </ng-container>
 
       <!-- Metoda kontroli -->

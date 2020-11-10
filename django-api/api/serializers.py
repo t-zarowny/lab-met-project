@@ -4,6 +4,22 @@ from rest_framework import serializers
 # from api.models import GroupInstruments, GrupaKartaPomiarow, Obszary, Lokalizacje, Przyrzady
 from api import models
 
+class SwiadectwoSprawdzeniaPlikSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.SwiadectwoSprawdzeniaPlik
+    fields = ['id', 'nazwa', 'link']
+
+class SwiadectwoSprawdzeniaSzablonSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.SwiadectwoSprawdzeniaSzablon
+    fields = ['id','grupaId','uzyteWzorce','warunkiSrodowiskowe']
+
+class SwiadectwoSprawdzeniaSerializer(serializers.ModelSerializer):
+  plik = SwiadectwoSprawdzeniaPlikSerializer(many=True, read_only=True)
+  class Meta:
+    model = models.SwiadectwoSprawdzenia
+    fields = ['id','nrSwiadectwa','przedmiot','przedmiotId','metoda','uzyteWzorce','warunkiSrodowiskowe','dataSprawdzenia','dataNastepnejKontroli','wynikSprawdzenia','uwagi','sprawdzajacy','sprawdzenieZewnetrzne','plik']
+
 class StatusSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.Statusy
@@ -149,9 +165,10 @@ class GroupInstrumentsSerializer(serializers.ModelSerializer):
 class GroupInstrumentsFullSerializer(serializers.ModelSerializer):
   karta = GrupaKartaPomiarowSerializerMini(many=True, read_only=True)
   przyrzad = PrzyrzadySerializerD3(many=True, read_only=True)
+  wzor = PrzyrzadySerializerD3(many=True, read_only=True)
   class Meta:
     model = models.GroupInstruments
-    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'przyrzad']
+    fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'interwalWartosc', 'interwalJednostka', 'wielkoscBadana', 'karta', 'wzor', 'przyrzad']
     # fields = ['id', 'nrGrupy', 'nazwa', 'metodaKontroli', 'karta', 'przyrzad']
     depth = 3
 

@@ -1,0 +1,80 @@
+<form [formGroup]="certificateForm" class="h-100" (ngSubmit)="onSubmit()">
+  <div style="height: calc(100% - 60px)" *ngIf="instrumentDataLoaded">
+    <h1 mat-dialog-title
+      class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow rounded">
+      Sprawdzenie przyrządu: {{ instrument.nazwa }}
+    </h1>
+    <mat-card>
+      <mat-card-content>
+        <section class="example-section">
+          <label class="radio-label">Rodzaj sprawdzenia:</label>
+          <mat-radio-group formControlName="rodzaj">
+            <mat-radio-button class="radio-margin" value="intern">Wewnętrze</mat-radio-button>
+            <mat-radio-button class="radio-margin" value="extern">Zewnętrzne</mat-radio-button>
+          </mat-radio-group>
+        </section>
+      </mat-card-content>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <div class="datatab">
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item><span class="ins-title">1. Przedmiot sprawdzenia: </span>
+          Nazwa: {{instrument.nazwa}} <br>
+          Typ: {{instrument.typ}} <br>
+          Zakres pomiaru: {{instrument.zakres}} <br>
+          Nr ewidencyjny: ZPL.{{instrument.idGrupa.nrGrupy}}.{{instrument.id}} <br>
+          Nr fabryczny: {{instrument.nrFabryczny}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item><span class="ins-title">2. Metoda sprawdzenia: </span>
+          Instrukcja {{instrument.idGrupa.metodaKontroli}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item><span class="ins-title">3. Użyte wzorce: </span>
+          <mat-form-field appearance="fill" class="wzorce-select">
+            <mat-label>Wzorce:</mat-label>
+            <mat-select formControlName="metoda_sprawdzenia" (selectionChange)="onChangeSelect()"
+            multiple>
+                <mat-select-trigger>
+                  {{instrumentPattern}}
+                </mat-select-trigger>
+              <mat-option *ngFor="let item of allInstrumentPattern" [value]="item.id">
+                ZPL.{{item.idGrupa.nrGrupy | number : '2.'}}.{{item.id | number : '3.'}} - {{item.nazwa}}, {{item.typ}} (fabr:{{item.nrFabryczny}})</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item><span class="ins-title">4. Warunki środowiskowe: </span>
+          <mat-form-field class="w-50 p-1">
+            <mat-label>Temperatura <span>&#8451;</span></mat-label>
+            <input matInput type="number" formControlName="temperatura">
+          </mat-form-field>
+          <mat-form-field class="w-50 p-1">
+            <mat-label>Wilgotnosc %</mat-label>
+            <input matInput type="number" min="0" max="100" formControlName="wilgotnosc">
+            <mat-error *ngIf="wilgotnosc.errors?.max">
+              Wprowadź wartość między 0 - 100
+            </mat-error>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+
+  </div>
+  <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+    <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">
+      Anuluj
+    </button>
+    <button mat-raised-button class="btn btn-success" type="submit">
+      Zapisz
+    </button>
+  </div>
+</form>

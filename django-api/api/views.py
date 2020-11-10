@@ -79,6 +79,11 @@ class PrzyrzadyFullViewSet(viewsets.ModelViewSet):
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadyFullSerializer
 
+class PrzyrzadyWzorceViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Przyrzady.objects.filter(wzorzec=True)
+    serializer_class = serializers.PrzyrzadySerializerD1
+
 class SprawdzeniaPlanoweViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SprawdzeniaPlanowe.objects.all()
@@ -98,4 +103,19 @@ class JednostkiInterwalViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.JednostkiInterwal.objects.all()
     serializer_class = serializers.JednostkiInterwalSerializer
+
+class SwiadectwoSprawdzeniaViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.SwiadectwoSprawdzenia.objects.all()
+    serializer_class = serializers.SwiadectwoSprawdzeniaSerializer
+
+class SwiadectwoSprawdzeniaPlikViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.SwiadectwoSprawdzeniaPlik.objects.all()
+    serializer_class = serializers.SwiadectwoSprawdzeniaPlikSerializer
+
+class SwiadectwoSprawdzeniaSzablonViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.SwiadectwoSprawdzeniaSzablon.objects.all()
+    serializer_class = serializers.SwiadectwoSprawdzeniaSzablonSerializer
 

@@ -19,10 +19,14 @@ router.register(r'przyrzady-d1', views.PrzyrzadyD1ViewSet)
 router.register(r'przyrzady-d2', views.PrzyrzadyD2ViewSet)
 router.register(r'przyrzady-d3', views.PrzyrzadyD3ViewSet)
 router.register(r'przyrzady-full', views.PrzyrzadyFullViewSet)
+router.register(r'przyrzady-wzorce', views.PrzyrzadyWzorceViewSet)
 router.register(r'sprawdzenia-planowane', views.SprawdzeniaPlanoweViewSet)
 router.register(r'statusy', views.StatusViewSet)
 router.register(r'JednostkiBadane', views.JednostkiBadaneViewSet)
 router.register(r'JednostkiInterwal', views.JednostkiInterwalViewSet)
+router.register(r'swiadectwo-sprawdzenia', views.SwiadectwoSprawdzeniaViewSet)
+router.register(r'swiadectwo-sprawdzenia-szablon', views.SwiadectwoSprawdzeniaSzablonViewSet)
+router.register(r'swiadectwo-sprawdzenia-plik', views.SwiadectwoSprawdzeniaPlikViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

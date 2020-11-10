@@ -17,6 +17,10 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 
@@ -39,7 +43,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
       DragDropModule,
       MatGridListModule,
       MatDividerModule,
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      MatBadgeModule,
+      MatRadioModule,
+      MatChipsModule
     ],
     entryComponents: [],
     providers: [

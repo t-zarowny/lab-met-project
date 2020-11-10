@@ -8,6 +8,7 @@ import { Observable, Observer } from 'rxjs';
 import { InstrumentFull, User } from 'src/app/_models';
 import { ListInstrumentComponent } from '../list-instrument.component';
 import { AddinstrumentComponent } from '../add-instrument/add-instrument.component';
+import { CertificateDialogComponent } from 'src/app/certificate-dialog/certificate-dialog.component';
 
 
 @Component({
@@ -55,6 +56,25 @@ export class InstrumentDataDialogComponent implements OnInit {
       hasBackdrop: true,
       disableClose: true,
       data: this.instrument
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // this.selection.clear();
+      // this.highlight(-1);
+      this.refresh();
+    });
+  }
+
+  addCertificate(){
+    // listInstrument: ListInstrumentComponent;
+    // ListInstrumentComponent.openDialogAdd(this.instrument);
+    const dialogRef = this.dialog.open(CertificateDialogComponent, {
+      panelClass: 'mat-dialog-bg',
+      position: {
+        top: '80px',
+      },
+      hasBackdrop: true,
+      disableClose: true,
+      data: this.instrument.id
     });
     dialogRef.afterClosed().subscribe(result => {
       // this.selection.clear();

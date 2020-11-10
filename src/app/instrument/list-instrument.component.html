@@ -65,7 +65,7 @@
     </ng-container>
     <!-- zakres -->
     <ng-container matColumnDef="zakres">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Zakres </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Zakres pomiarowy </mat-header-cell>
       <mat-cell *matCellDef="let row"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.zakres}}

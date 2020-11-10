@@ -29,6 +29,7 @@ import { AreaComponent } from './area/area.component';
 import { AddPlaceComponent } from './area/add-place/add-place.component';
 import { AddAreaComponent } from './area/add-area/add-area.component';
 import { InstrumentDataDialogComponent } from './instrument/instrument-data-dialog/instrument-data-dialog.component';
+import { CertificateDialogComponent } from './certificate-dialog/certificate-dialog.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -50,7 +51,8 @@ registerLocaleData(localePl);
     AreaComponent,
     AddPlaceComponent,
     AddAreaComponent,
-    InstrumentDataDialogComponent
+    InstrumentDataDialogComponent,
+    CertificateDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,7 @@ registerLocaleData(localePl);
   bootstrap: [AppComponent],
   entryComponents: [AddGroupComponent, ConfirmDialogComponent, FormUserComponent,
                     FormUserChangePassComponent, AddPlaceComponent, AddAreaComponent,
-                    AddinstrumentComponent, InstrumentDataDialogComponent],
+                    AddinstrumentComponent, InstrumentDataDialogComponent, CertificateDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

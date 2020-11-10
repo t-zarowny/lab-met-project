@@ -48,7 +48,9 @@
 
 
     </mat-tab>
-    <mat-tab label="Sprawdzenia/Kalibracje"> dane </mat-tab>
+    <mat-tab label="Sprawdzenia/Kalibracje">
+      <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1">Wykonaj sprawdzenie przyrządu</button>
+    </mat-tab>
     <mat-tab label="Historia"> dane </mat-tab>
   </mat-tab-group>
 
