@@ -20,9 +20,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatChipsModule} from '@angular/material/chips';
-
-
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -46,7 +46,10 @@ import {MatChipsModule} from '@angular/material/chips';
       MatProgressSpinnerModule,
       MatBadgeModule,
       MatRadioModule,
-      MatChipsModule
+      MatChipsModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatSnackBarModule
     ],
     entryComponents: [],
     providers: [

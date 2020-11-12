@@ -48,7 +48,7 @@ export class InstrumentDataDialogComponent implements OnInit {
     // ListInstrumentComponent.openDialogAdd(this.instrument);
     const dialogRef = this.dialog.open(AddinstrumentComponent, {
       width: '550px',
-      height: '630px',
+      height: '730px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',

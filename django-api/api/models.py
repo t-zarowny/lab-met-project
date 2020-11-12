@@ -69,6 +69,6 @@ class SwiadectwoSprawdzeniaSzablon(models.Model):
 
 
 class SwiadectwoSprawdzeniaPlik(models.Model):
-    link = models.FileField(upload_to='swiadectwaSprawdzenia/', null=False)
+    link = models.FileField(upload_to='swiadectwa-sprawdzenia/', null=False)
     nazwa = models.CharField(max_length=50, null=True)
     idSwiadectwoSprawdzenia = models.ForeignKey(SwiadectwoSprawdzenia, related_name='plik', on_delete=models.CASCADE, null=True)

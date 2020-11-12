@@ -2,7 +2,7 @@
   display: flex;
   align-content: center;
   align-items: center;
-  height: 60px;
+  height: 35px;
   font-style: oblique;
   font-size: small;
 }
@@ -15,8 +15,13 @@
   font-size: large;
 }
 .datatab{
-  padding: 15px;
+  padding: 0px 15px 0px 15px;
   font-size: medium;
+}
+.title_inst{
+  font-style: italic;
+  font-variant: small-caps;
+  color: slategrey;
 }
 .ins-title{
   font-size: small;
@@ -26,8 +31,40 @@
 }
 mat-list-item{
   padding: 2px;
+  padding-top: 5px;
   display: block;
 }
 .wzorce-select{
   width: 100%;
+}
+.dwnl_butt{
+  display: inline-block;
+  position: relative;
+  top: 10px;
+}
+.upld{
+  display: inline-block;
+  position: relative;
+  top: 10px;
+  left: 235px;
+}
+.next-arrow-icon{
+  font-size: 48px;
+  width: 48px;
+  display: block;
+  margin-bottom: -18px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.next-arrow-text{
+  padding: 0%;
+  display: flex;
+}
+.next-arrow{
+  display: inline-block;
+  position: relative;
+  top: 20px;
+  left: 146px;
+  margin: -24px;
+  color: slategrey;
 }

@@ -67,18 +67,18 @@
   </mat-form-field>
 
   <h6>Karta pomiarów:</h6>
-  <div *ngIf="kartaPomiarowNazwa then karta else blank" ></div>
-  <ng-template #karta>
-    <mat-icon matSuffix class="d-block" class="ml-2" svgIcon="attach_file"></mat-icon>
-    <a *ngIf="!isNewFile" mat-button href="{{kartaPomiarowLink}}" target="_blank" class="ml-2">{{kartaPomiarowNazwa}}</a>
-    <span *ngIf="isNewFile"  class="ml-2">{{kartaPomiarowNazwa}}</span>
-    <button type="button" class="ml-2" mat-raised-button color="warn" (click)="deleteFile()">Usuń kartę</button>
-  </ng-template>
+    <div *ngIf="kartaPomiarowNazwa then karta else blank" ></div>
+    <ng-template #karta>
+      <mat-icon matSuffix class="d-block" class="ml-2" svgIcon="attach_file"></mat-icon>
+      <a *ngIf="!isNewFile" mat-button href="{{kartaPomiarowLink}}" target="_blank" class="ml-2">{{kartaPomiarowNazwa}}</a>
+      <span *ngIf="isNewFile"  class="ml-2">{{kartaPomiarowNazwa}}</span>
+      <button type="button" class="ml-2" mat-raised-button color="warn" (click)="deleteFile()">Usuń kartę</button>
+    </ng-template>
 
-  <ng-template #blank>
-    <button class="ml-2" type="button" mat-raised-button color="primary" (click)="fileInput.click()">Dodaj kartę pomiarów</button>
-    <input type="file" #fileInput hidden (change)="handleFileInput($event)">
-  </ng-template>
+    <ng-template #blank>
+      <button class="ml-2" type="button" mat-raised-button color="primary" (click)="fileInput.click()">Dodaj kartę pomiarów</button>
+      <input type="file" #fileInput hidden (change)="handleFileInput($event)">
+    </ng-template>
   <!-- <mat-form-field  class="w-100 " appearance="outline">
 		<mat-label>Karta pomiarów</mat-label>
     <input matInput formControlName="kartaPomiarowNazwa" placeholder="Nie wybrano pliku" >

@@ -25,6 +25,7 @@ router.register(r'statusy', views.StatusViewSet)
 router.register(r'JednostkiBadane', views.JednostkiBadaneViewSet)
 router.register(r'JednostkiInterwal', views.JednostkiInterwalViewSet)
 router.register(r'swiadectwo-sprawdzenia', views.SwiadectwoSprawdzeniaViewSet)
+router.register(r'swiadectwo-sprawdzenia-min', views.SwiadectwoSprawdzeniaMinViewSet)
 router.register(r'swiadectwo-sprawdzenia-szablon', views.SwiadectwoSprawdzeniaSzablonViewSet)
 router.register(r'swiadectwo-sprawdzenia-plik', views.SwiadectwoSprawdzeniaPlikViewSet)
 

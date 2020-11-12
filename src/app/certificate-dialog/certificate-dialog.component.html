@@ -2,7 +2,7 @@
   <div style="height: calc(100% - 60px)" *ngIf="instrumentDataLoaded">
     <h1 mat-dialog-title
       class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow rounded">
-      Sprawdzenie przyrządu: {{ instrument.nazwa }}
+      Świadectwo sprawdzenia nr {{ certificateNr }}
     </h1>
     <mat-card>
       <mat-card-content>
@@ -16,17 +16,21 @@
       </mat-card-content>
     </mat-card>
     <mat-divider></mat-divider>
-    <div class="datatab">
+    <div class="datatab" *ngIf="isInternType">
+
       <mat-list style="padding: 10px 0px 10px 0px;">
         <mat-list-item><span class="ins-title">1. Przedmiot sprawdzenia: </span>
-          Nazwa: {{instrument.nazwa}} <br>
-          Typ: {{instrument.typ}} <br>
-          Zakres pomiaru: {{instrument.zakres}} <br>
-          Nr ewidencyjny: ZPL.{{instrument.idGrupa.nrGrupy}}.{{instrument.id}} <br>
-          Nr fabryczny: {{instrument.nrFabryczny}}
+          <span class="title_inst">Nr ewidencyjny:</span>
+          ZPL.{{instrument.idGrupa.nrGrupy | number:'2.'}}.{{instrument.id | number:'3.'}}<br>
+          <span class="title_inst">Nazwa:</span> {{instrument.nazwa}} <br>
+          <span class="title_inst">Typ:</span> {{instrument.typ}}<br>
+          <span class="title_inst">Nr fabryczny:</span> {{instrument.nrFabryczny}},
+          <span class="title_inst">Zakres pomiaru:</span> {{instrument.zakres}}
+
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
+
       <mat-list style="padding: 10px 0px 10px 0px;">
         <mat-list-item><span class="ins-title">2. Metoda sprawdzenia: </span>
           Instrukcja {{instrument.idGrupa.metodaKontroli}}
@@ -38,18 +42,19 @@
         <mat-list-item><span class="ins-title">3. Użyte wzorce: </span>
           <mat-form-field appearance="fill" class="wzorce-select">
             <mat-label>Wzorce:</mat-label>
-            <mat-select formControlName="metoda_sprawdzenia" (selectionChange)="onChangeSelect()"
-            multiple>
-                <mat-select-trigger>
-                  {{instrumentPattern}}
-                </mat-select-trigger>
+            <mat-select formControlName="uzyte_wzorce" (selectionChange)="onChangeSelect()" multiple>
+              <mat-select-trigger>
+                {{instrumentPattern}}
+              </mat-select-trigger>
               <mat-option *ngFor="let item of allInstrumentPattern" [value]="item.id">
-                ZPL.{{item.idGrupa.nrGrupy | number : '2.'}}.{{item.id | number : '3.'}} - {{item.nazwa}}, {{item.typ}} (fabr:{{item.nrFabryczny}})</mat-option>
+                ZPL.{{item.idGrupa.nrGrupy | number : '2.'}}.{{item.id | number : '3.'}} - {{item.nazwa}}, {{item.typ}}
+                (fabr:{{item.nrFabryczny}})</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
+
       <mat-list style="padding: 10px 0px 10px 0px;">
         <mat-list-item><span class="ins-title">4. Warunki środowiskowe: </span>
           <mat-form-field class="w-50 p-1">
@@ -66,14 +71,85 @@
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
-    </div>
 
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item class="w-50 d-inline-block"><span class="ins-title">5. Data sprawdzenia: </span>
+          <mat-form-field color="accent" appearance="fill">
+            <mat-label>Wybierz datę</mat-label>
+            <input matInput [matDatepicker]="picker2" formControlName="data_sprawdzenia">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item class="w-50 d-inline-block">
+          <span class="ins-title">6. Data następnej kontroli
+            (+{{instrument.idGrupa.interwalWartosc}}{{instrument.idGrupa.interwalJednostka.skrot}}): </span>
+          <mat-form-field color="accent" appearance="fill">
+            <mat-label>Wybierz datę</mat-label>
+            <input matInput [matDatepicker]="picker3" formControlName="data_nast_kontroli" >
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3 color="primary"></mat-datepicker>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item><span class="ins-title">7. Wynik sprawdzenia: </span>
+          <mat-card>
+            <mat-card-content>
+              <section class="example-section">
+                <mat-radio-group formControlName="wynik">
+                  <mat-radio-button class="radio-margin" value="ok">Pozytywny</mat-radio-button>
+                  <mat-radio-button class="radio-margin" value="nok">Negatywny</mat-radio-button>
+                </mat-radio-group>
+              </section>
+            </mat-card-content>
+          </mat-card>
+        </mat-list-item>
+      </mat-list>
+
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item><span class="ins-title">8. Karta pomiarów: </span>
+          <div class="dwnl_butt">
+            <button mat-stroked-button (click)="downloadFile()">
+              <span class="material-icons">get_app</span>
+              Otwórz kartę kontroli
+            </button>
+          </div>
+          <div class="next-arrow">
+            <span class="material-icons next-arrow-icon">trending_flat</span>
+            <span class="next-arrow-text">Uzupełnij</span>
+          </div>
+
+          <div class="upld">
+            <div *ngIf="isNewMeasurmentCardFile then karta else blank"></div>
+            <ng-template #karta>
+              <!-- <mat-icon matSuffix class="d-block" class="ml-2" svgIcon="attach_file"></mat-icon> -->
+              <span class="ml-2">{{kartaPomiarowNazwa | slice:0:25}}{{kartaPomiarowNazwa.length > 25 ? '...' : ''}} </span>
+              <button type="button" class="ml-2" mat-mini-fab color="warn"  (click)="deleteFile()">
+                <span class="material-icons">
+                  delete
+                  </span></button>
+            </ng-template>
+
+            <ng-template #blank>
+              <button class="ml-5" type="button" mat-raised-button color="primary" (click)="fileInput.click()">Wyślij
+                kartę pomiarów</button>
+              <input type="file" #fileInput hidden (change)="handleFileInput($event)">
+            </ng-template>
+          </div>
+        </mat-list-item>
+      </mat-list>
+
+    </div>
   </div>
+
   <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
     <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">
       Anuluj
     </button>
-    <button mat-raised-button class="btn btn-success" type="submit">
+    <button mat-raised-button class="btn btn-success" [disabled]="!isValid" type="submit">
       Zapisz
     </button>
   </div>

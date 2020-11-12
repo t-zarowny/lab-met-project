@@ -109,6 +109,11 @@ class SwiadectwoSprawdzeniaViewSet(viewsets.ModelViewSet):
     queryset = models.SwiadectwoSprawdzenia.objects.all()
     serializer_class = serializers.SwiadectwoSprawdzeniaSerializer
 
+class SwiadectwoSprawdzeniaMinViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.SwiadectwoSprawdzenia.objects.all()
+    serializer_class = serializers.SwiadectwoSprawdzeniaMinSerializer
+
 class SwiadectwoSprawdzeniaPlikViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SwiadectwoSprawdzeniaPlik.objects.all()

@@ -11,3 +11,7 @@ body {
 .nav-link:hover{
   color:rgb(185 251 246) !important;
 }
+.mat-icon-button:focus{
+  outline: none;
+  border: 0;
+}

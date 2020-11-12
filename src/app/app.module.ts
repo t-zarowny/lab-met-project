@@ -30,6 +30,7 @@ import { AddPlaceComponent } from './area/add-place/add-place.component';
 import { AddAreaComponent } from './area/add-area/add-area.component';
 import { InstrumentDataDialogComponent } from './instrument/instrument-data-dialog/instrument-data-dialog.component';
 import { CertificateDialogComponent } from './certificate-dialog/certificate-dialog.component';
+import { DatePipe } from '@angular/common';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -65,7 +66,7 @@ registerLocaleData(localePl);
     LoginModule
   ],
   exports: [FormsModule],
-  providers: [DbService,
+  providers: [DbService, DatePipe,
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
       {
