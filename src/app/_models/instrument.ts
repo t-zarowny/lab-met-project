@@ -1,3 +1,4 @@
+import { Certificate } from './certificate';
 import { State } from './state';
 import { PlaceFull } from './place';
 import { GroupInstrument } from './group';
@@ -37,4 +38,5 @@ export class InstrumentFull {
   aktStatus: State | null;
   wzorzec: boolean | false;
   sprawdzeniaPlanowe?: Inspection[] | null;
+  swiadectwa?: Certificate[] | null;
 }

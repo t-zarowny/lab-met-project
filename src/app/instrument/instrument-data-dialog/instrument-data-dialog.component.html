@@ -43,13 +43,61 @@
         <button mat-raised-button mat-button color="primary" (click)="editInstrumentData()" class="m-1">Edytuj dane
           przyrządu</button>
       </div>
-
-
-
-
     </mat-tab>
-    <mat-tab label="Sprawdzenia/Kalibracje">
+
+    <mat-tab label="Sprawdzenia/Kalibracje" class="h-100">
       <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1">Wykonaj sprawdzenie przyrządu</button>
+      <div class="datatab2">
+      <div class="mat-elevation-z8 mr-2 ml-2 mb-2" style="height: 100%;">
+        <div class="table-container">
+          <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
+                <!-- Nr -->
+                <ng-container matColumnDef="nrSwiadectwa">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Nr świadectwa </mat-header-cell>
+                  <mat-cell *matCellDef="let row" class="matIdColumn"
+                    (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                    (mouseleave)="$event ? selection.clear() : null; highlight();"
+                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrSwiadectwa}}</mat-cell>
+                </ng-container>
+                <!-- start-data -->
+                <ng-container matColumnDef="dataSprawdzenia">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Data sprawdzenia </mat-header-cell>
+                  <mat-cell *matCellDef="let row" class="matIdColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.dataSprawdzenia}} </mat-cell>
+                </ng-container>
+                <!-- next-data -->
+                <ng-container matColumnDef="dataNastepnejKontroli">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Data ważności </mat-header-cell>
+                  <mat-cell *matCellDef="let row" class="matIdColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.dataNastepnejKontroli}} </mat-cell>
+                </ng-container>
+                <!-- type -->
+                <ng-container matColumnDef="sprawdzenieZewnetrzne">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Rodzaj </mat-header-cell>
+                  <mat-cell *matCellDef="let row" class="matIdColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.sprawdzenieZewnetrzne ? 'Zewnętrzne' : 'Wewnętrzne'}} </mat-cell>
+                </ng-container>
+                <!-- action -->
+                <ng-container matColumnDef="action">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader">  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" class="matIdColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"></mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
+          </mat-table>
+        </div>
+        <!-- <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator> -->
+      </div>
+    </div>
     </mat-tab>
     <mat-tab label="Historia"> dane </mat-tab>
   </mat-tab-group>

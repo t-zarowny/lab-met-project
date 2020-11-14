@@ -14,6 +14,7 @@ export class Certificate {
   uwagi?: string;
   sprawdzajacy?: string;
   sprawdzenieZewnetrzne?: boolean;
+  plik?: CertificateFile | null;
 }
 
 export class CertificateTemplate {

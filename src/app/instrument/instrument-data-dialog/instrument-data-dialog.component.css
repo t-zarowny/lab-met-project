@@ -8,7 +8,24 @@
   display: flex;
   margin-left: -5px;
 }
+mat-tab-group{
+  height: calc(100% - 65px);
+}
 mat-list-item{
   padding: 2px;
   display: block;
+}
+.datatab2{
+  padding-top: 5px;
+  height: calc(100% - 60px);
+}
+:host ::ng-deep .mat-tab-body-wrapper {
+  height: 100%;
+}
+.table-container{
+  height: 100%;
+  overflow: auto;
+}
+.matSelectRow{
+  background-color: lavender;
 }

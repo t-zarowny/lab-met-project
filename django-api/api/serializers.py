@@ -183,7 +183,8 @@ class PrzyrzadyFullSerializer(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   # aktStatus = StatusSerializer(many=False, read_only=True)
   idGrupa = GroupInstruments1Serializer(many=False, read_only=True)
+  swiadectwa = SwiadectwoSprawdzeniaSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe', 'swiadectwa']
     depth = 3
