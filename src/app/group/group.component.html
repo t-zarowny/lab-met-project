@@ -40,7 +40,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Nr grupy </th>
         <td mat-cell *matCellDef="let row"
           (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight();"
-          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.nrGrupy}}</td>
+          [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.nrGrupy | number: '2.'}}</td>
       </ng-container>
 
       <!-- Nazwa -->

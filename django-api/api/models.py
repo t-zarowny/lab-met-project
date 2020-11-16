@@ -36,6 +36,7 @@ class Statusy(models.Model):
 
 class Przyrzady(models.Model):
     nazwa = models.CharField(max_length=32)
+    nr = models.IntegerField(default=0)
     typ = models.CharField(max_length=32, null=True)
     nrFabryczny = models.CharField(max_length=50, null=True)
     zakres = models.CharField(max_length=50, null=True)

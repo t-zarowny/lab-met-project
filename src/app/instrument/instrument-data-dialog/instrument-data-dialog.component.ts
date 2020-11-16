@@ -12,7 +12,7 @@ import { CertificateDialogComponent } from 'src/app/certificate-dialog/certifica
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 
 
 
@@ -25,10 +25,11 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   selected = new FormControl(0);
   instrument: InstrumentFull;
   isDataLoaded = false;
-  displayedColumns: string[] = ['nrSwiadectwa', 'dataSprawdzenia', 'dataNastepnejKontroli', 'sprawdzenieZewnetrzne', 'action'];
+  displayedColumns: string[] = ['nrSwiadectwa', 'wynikSprawdzenia', 'dataSprawdzenia', 'dataNastepnejKontroli', 'sprawdzenieZewnetrzne', 'action'];
   dataSource: MatTableDataSource<Certificate>;
   selection = new SelectionModel<Certificate>();
   selectedRowIndex = -1;
+  title = 'title';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -37,10 +38,15 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: number,
               private instrumentService: InstrumentService) {
+    this.instrument = new InstrumentFull();
     this.dataSource = new MatTableDataSource(Array<Certificate>());
   }
 
   ngOnInit(): void {
+    const sortState: Sort = {active: 'nrSwiadectwa', direction: 'desc'};
+    this.sort.active = sortState.active;
+    this.sort.direction = sortState.direction;
+    this.sort.sortChange.emit(sortState);
     this.refresh();
   }
 
@@ -71,6 +77,7 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
         }
       }
     };
+
   }
 
   refresh(){
@@ -81,6 +88,9 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
       const sorted = data.swiadectwa.sort((a, b) => a.id - b.id);
       this.dataSource.data = sorted;
       console.log(data);
+      const title1 = '0' + this.instrument.idGrupa.nrGrupy;
+      const title2 = '000' + this.instrument.nr;
+      this.title = 'ZPL.' + title1.slice(-2) + '.' + title2.slice(-4) + ' ' + this.instrument.nazwa;
     });
     // this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
     // this.paginator._intl.nextPageLabel = 'Następna strona';
@@ -113,7 +123,7 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
     // ListInstrumentComponent.openDialogAdd(this.instrument);
     const dialogRef = this.dialog.open(AddinstrumentComponent, {
       width: '550px',
-      height: '730px',
+      height: '800px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',
@@ -127,6 +137,14 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
       // this.highlight(-1);
       this.refresh();
     });
+  }
+
+  openCertificate(){
+
+  }
+
+  openMeasurementCard(){
+
   }
 
   addCertificate(){

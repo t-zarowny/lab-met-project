@@ -1,7 +1,7 @@
 <div style="height: calc(100% - 60px)">
   <h1 mat-dialog-title
     class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow rounded">
-    Przyrząd: {{ data }}
+    {{title}}
   </h1>
 
   <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
@@ -17,87 +17,117 @@
         <mat-spinner></mat-spinner>
       </div>
       <div *ngIf="isDataLoaded">
-      <div class="datatab" >
-        <mat-list style="padding: 10px 0px 10px 0px;">
-              <mat-list-item><span class="ins-title" >Nazwa: </span>{{instrument.nazwa}}</mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Typ: </span> {{instrument.typ}}</mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Nr fabryczny: </span> {{instrument.nrFabryczny}}</mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Zakres pomiarowy: </span> {{instrument.zakres}}</mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Lokalizacja: </span>{{instrument.idLokalizacja.idObszar.nazwa}}:
-                {{instrument.idLokalizacja.nazwa}} </mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Grupa: </span> {{instrument.idGrupa.nazwa}}</mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Metoda kontroli: </span> {{instrument.idGrupa.metodaKontroli}}</mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Status: </span>{{instrument.aktStatus.nazwa}} </mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item><span class="ins-title">Używany jako wzorzec?: </span>{{instrument.wzorzec? 'Tak' : 'Nie'}}</mat-list-item>
-              <mat-divider></mat-divider>
-        </mat-list>
-      </div>
+        <div class="datatab">
+          <mat-list style="padding: 10px 0px 10px 0px;">
+            <mat-list-item><span class="ins-title">Nr: </span>ZPL.{{instrument.idGrupa.nrGrupy | number: '2.'}}.{{instrument.nr | number: '3.'}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><span class="ins-title">Nazwa: </span>{{instrument.nazwa}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><span class="ins-title">Typ: </span> {{instrument.typ}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item class="w-50 d-inline-block"><span class="ins-title w-50">Nr fabryczny: </span> {{instrument.nrFabryczny}}</mat-list-item>
+            <mat-list-item class="w-50 d-inline-block"><span class="ins-title w-50">Zakres pomiarowy: </span> {{instrument.zakres ? instrument.zakres : '-'}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><span class="ins-title">Lokalizacja: </span>{{instrument.idLokalizacja.idObszar.nazwa}}:
+              {{instrument.idLokalizacja.nazwa}} </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><span class="ins-title">Grupa: </span> {{instrument.idGrupa.nazwa}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><span class="ins-title">Metoda kontroli: </span> {{instrument.idGrupa.metodaKontroli}}
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><span class="ins-title">Status: </span>{{instrument.aktStatus.nazwa}} </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><span class="ins-title">Używany jako wzorzec?: </span>{{instrument.wzorzec? 'Tak' : 'Nie'}}
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </mat-list>
+        </div>
         <button mat-raised-button mat-button color="primary" (click)="editInstrumentData()" class="m-1">Edytuj dane
           przyrządu</button>
       </div>
     </mat-tab>
 
     <mat-tab label="Sprawdzenia/Kalibracje" class="h-100">
-      <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1">Wykonaj sprawdzenie przyrządu</button>
+
       <div class="datatab2">
-      <div class="mat-elevation-z8 mr-2 ml-2 mb-2" style="height: 100%;">
-        <div class="table-container">
-          <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
-                <!-- Nr -->
-                <ng-container matColumnDef="nrSwiadectwa">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Nr świadectwa </mat-header-cell>
-                  <mat-cell *matCellDef="let row" class="matIdColumn"
+        <div class=" mr-2 ml-2 mb-2" style="height: 100%;">
+          <div class="table-container">
+            <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
+              <!-- Nr -->
+              <ng-container matColumnDef="nrSwiadectwa">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="matnrSwiadectwaHeader"> Nr świadectwa </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="matnrSwiadectwaColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                  [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrSwiadectwa}}</mat-cell>
+              </ng-container>
+              <!-- start-data -->
+              <ng-container matColumnDef="dataSprawdzenia">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="matdataSprawdzeniaHeader"> Data sprawdzenia
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="matdataSprawdzeniaColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                  [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.dataSprawdzenia}} </mat-cell>
+              </ng-container>
+              <!-- next-data -->
+              <ng-container matColumnDef="dataNastepnejKontroli">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="matdataNastepnejKontroliHeader"> Data ważności </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="matdataNastepnejKontroliColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                  [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.dataNastepnejKontroli}} </mat-cell>
+              </ng-container>
+              <!-- type -->
+              <ng-container matColumnDef="sprawdzenieZewnetrzne">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="matsprawdzenieZewnetrzneHeader"> Laboratorium </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="matsprawdzenieZewnetrzneColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                  [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+                  {{row.sprawdzenieZewnetrzne ? 'Zewnętrzne' : 'Wewnętrzne'}} </mat-cell>
+              </ng-container>
+              <!-- wynik -->
+              <ng-container matColumnDef="wynikSprawdzenia">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="matwynikSprawdzeniaHeader"></mat-header-cell>
+                <mat-cell *matCellDef="let row" class="matwynikSprawdzeniaColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                  [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+                   <mat-icon *ngIf="row.wynikSprawdzenia" matTooltip="Wynik pozytywny" matTooltipPosition="right" style="color: green;">check_circle</mat-icon>
+                   <mat-icon *ngIf="!row.wynikSprawdzenia" matTooltip="Wynik negatywny" matTooltipPosition="right" style="color: red;">unpublished</mat-icon></mat-cell>
+              </ng-container>
+              <!-- action -->
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="matactionHeader"></mat-header-cell>
+                <mat-cell *matCellDef="let row" class="matactionColumn"
+                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                  (mouseleave)="$event ? selection.clear() : null; highlight();"
+                  [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+                  <button mat-icon-button color="primary" aria-label="button certificate"
+                    *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz świadectwo sprawdzenia" matTooltipPosition="above"
                     (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                    (mouseleave)="$event ? selection.clear() : null; highlight();"
-                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrSwiadectwa}}</mat-cell>
-                </ng-container>
-                <!-- start-data -->
-                <ng-container matColumnDef="dataSprawdzenia">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Data sprawdzenia </mat-header-cell>
-                  <mat-cell *matCellDef="let row" class="matIdColumn"
-                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                  (mouseleave)="$event ? selection.clear() : null; highlight();"
-                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.dataSprawdzenia}} </mat-cell>
-                </ng-container>
-                <!-- next-data -->
-                <ng-container matColumnDef="dataNastepnejKontroli">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Data ważności </mat-header-cell>
-                  <mat-cell *matCellDef="let row" class="matIdColumn"
-                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                  (mouseleave)="$event ? selection.clear() : null; highlight();"
-                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.dataNastepnejKontroli}} </mat-cell>
-                </ng-container>
-                <!-- type -->
-                <ng-container matColumnDef="sprawdzenieZewnetrzne">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Rodzaj </mat-header-cell>
-                  <mat-cell *matCellDef="let row" class="matIdColumn"
-                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                  (mouseleave)="$event ? selection.clear() : null; highlight();"
-                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.sprawdzenieZewnetrzne ? 'Zewnętrzne' : 'Wewnętrzne'}} </mat-cell>
-                </ng-container>
-                <!-- action -->
-                <ng-container matColumnDef="action">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader">  </mat-header-cell>
-                  <mat-cell *matCellDef="let row" class="matIdColumn"
-                  (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                  (mouseleave)="$event ? selection.clear() : null; highlight();"
-                    [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"></mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
-          </mat-table>
+                    (click)="openCertificate()">
+                    <mat-icon>get_app</mat-icon>Świadectwo
+                  </button>
+                  <button mat-icon-button color="primary" aria-label="button measurement card" class="butt_downl"
+                    *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz kartę pomiarów" matTooltipPosition="above"
+                    (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                    (click)="openMeasurementCard()">
+                    <mat-icon>get_app</mat-icon>Karta
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
+            </mat-table>
+          </div>
+          <!-- <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator> -->
         </div>
-        <!-- <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator> -->
       </div>
-    </div>
+      <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1 mt-2">Wykonaj sprawdzenie
+        przyrządu</button>
     </mat-tab>
     <mat-tab label="Historia"> dane </mat-tab>
   </mat-tab-group>

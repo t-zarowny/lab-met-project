@@ -29,3 +29,61 @@ mat-list-item{
 .matSelectRow{
   background-color: lavender;
 }
+.mat-icon :hover{
+  color: red;
+}
+.matnrSwiadectwaHeader{
+  max-width: 110px;
+}
+.matnrSwiadectwaColumn{
+  max-width: 90px;
+  flex-direction: column;
+  justify-content: center;
+}
+.matdataSprawdzeniaHeader{
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+}
+.matdataSprawdzeniaColumn{
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+}
+.matdataNastepnejKontroliHeader{
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+}
+.matdataNastepnejKontroliColumn{
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+}
+.matsprawdzenieZewnetrzneHeader{
+  max-width: 95px;
+  flex-direction: column;
+  justify-content: center;
+}
+.matsprawdzenieZewnetrzneColumn{
+  max-width: 95px;
+  flex-direction: column;
+  justify-content: center;
+}
+.matwynikSprawdzeniaHeader{
+  max-width: 35px;
+  flex-direction: column;
+  justify-content: center;
+}
+.matwynikSprawdzeniaColumn{
+  max-width: 35px;
+}
+.matactionHeader{
+  width: auto;
+}
+.matactionColumn{
+  width: auto;
+}
+.butt_downl{
+  margin-left: 65px;
+}

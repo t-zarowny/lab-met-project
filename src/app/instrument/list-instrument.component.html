@@ -36,7 +36,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Numer </mat-header-cell>
       <mat-cell *matCellDef="let row" class="matIdColumn"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.idGrupa.nrGrupy}}.{{row.id}} </mat-cell>
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.idGrupa.nrGrupy | number: '2.'}}.{{row.nr | number: '3.'}} </mat-cell>
       <!-- <mat-cell *matCellDef="let row" class="matIdColumn" [ngClass]="{'matSelectRow': expandedElement == row}">
                {{row.id}} </mat-cell> -->
     </ng-container>

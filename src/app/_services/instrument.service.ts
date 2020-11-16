@@ -19,6 +19,9 @@ export class InstrumentService {
   getAll() {
     return this.http.get<InstrumentFull[]>(`${environment.apiUrl}przyrzady-full/`);
   }
+  getAllNr() {
+    return this.http.get<any[]>(`${environment.apiUrl}przyrzady-nr/`);
+  }
   add(data: FormData) {
     return this.http.post(`${environment.apiUrl}przyrzady/`, data);
   }

@@ -50,6 +50,7 @@ export class CertificateDialogComponent implements OnInit {
   get data_nast_kontroli() { return this.certificateForm.get('data_nast_kontroli'); }
   get data_sprawdzenia() { return this.certificateForm.get('data_sprawdzenia'); }
   get wynik() { return this.certificateForm.get('wynik'); }
+  get uwagi() { return this.certificateForm.get('uwagi'); }
   get kartaPomiarowNazwa() { return this.fileMeasurmentCard.get('kartaPomiarowNazwa').value; }
   get kartaPomiarowLink() { return this.fileMeasurmentCard.get('kartaPomiarowLink').value; }
 
@@ -73,6 +74,7 @@ export class CertificateDialogComponent implements OnInit {
       ]),
       data_sprawdzenia: new FormControl(this.today),
       data_nast_kontroli: new FormControl({value: this.nextDate}),
+      uwagi: new FormControl(null),
       wynik: new FormControl(null, [
         Validators.required
       ]),
@@ -114,14 +116,14 @@ export class CertificateDialogComponent implements OnInit {
       this.instrumentPattern = this.instrumentPattern.length > 0 ? this.instrumentPattern + ', ' : '';
       const instr: InstrumentFull = this.allInstrumentPattern.find(ins => ins.id === element);
       const nrGroup = '0' + instr.idGrupa.nrGrupy;
-      const nrInstr = '00' + instr.id;
+      const nrInstr = '00' + instr.nr;
       this.instrumentPattern = this.instrumentPattern + 'ZPL.' + nrGroup.slice(-2) + '.' + nrInstr.slice(-3);
     });
   }
   onSubmit(){
     this.refreshNextCertificateNr();
     const nrGroup = '0' + this.instrument.idGrupa.nrGrupy;
-    const nrInstr = '00' + this.instrument.id;
+    const nrInstr = '00' + this.instrument.nr;
     const przedmiot = 'Nr ewidencyjny: ZPL.' + nrGroup.slice(-2) + '.' + nrInstr.slice(-3) + '<br>' +
                       'Nazwa: ' + this.instrument.nazwa + '<br>' +
                       'Typ: ' + this.instrument.typ + '<br>' +
@@ -140,7 +142,7 @@ export class CertificateDialogComponent implements OnInit {
     certFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
     certFormData.append('wynikSprawdzenia', this.wynik.value ? 'true' : 'false');
     certFormData.append('sprawdzenieZewnetrzne', this.isInternType ? 'false' : 'true');
-    certFormData.append('uwagi', 'brak');
+    certFormData.append('uwagi', this.uwagi.value);
     certFormData.append('sprawdzajacy', this.auth.currentUserValue.first_name + ' ' + this.auth.currentUserValue.last_name);
 
     this.certificateService.add(certFormData).subscribe( data => {

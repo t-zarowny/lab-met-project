@@ -9,6 +9,17 @@
       Dodaj nowy przyrząd
     </h1>
 
+    <!-- nr -->
+    <mat-form-field class="w-100 p-1">
+      <mat-label>Nr przyrządu</mat-label>
+      <input matInput formControlName="nr" type="number" min="1" (change)="checkProposedNr()">
+        <mat-error *ngIf="nr.errors?.existInDatabase &&! nr.errors?.required">
+          Nr już istnieje. Proszę wybrać inny.
+        </mat-error>
+        <mat-error *ngIf="nr.errors?.required">
+          To pole jest <strong>wymagane</strong>
+        </mat-error>
+    </mat-form-field>
     <!-- nazwa -->
     <mat-form-field class="w-100 p-1">
       <mat-label>Nazwa przyrządu</mat-label>
@@ -39,7 +50,7 @@
     <mat-form-field  class="w-100 p-1">
       <mat-label>Grupa</mat-label>
       <mat-select  formControlName="grupa" [(value)]="selectedGroupId" >
-        <mat-option *ngFor="let item of listGroup" [value]="item.id">{{item.nazwa}} ({{item.metodaKontroli}})</mat-option>
+        <mat-option *ngFor="let item of listGroup" [value]="item.id">ZPL.{{item.nrGrupy | number: '2.'}} - {{item.nazwa}} ({{item.metodaKontroli}})</mat-option>
       </mat-select>
       <mat-error *ngIf="nazwa.errors?.required">
           To pole jest <strong>wymagane</strong>

@@ -6,6 +6,7 @@ import { Inspection } from './inspection';
 
 export class Instrument {
   id: number;
+  nr: number;
   nazwa: string;
   typ?: string;
   nrFabryczny?: string;
@@ -18,6 +19,7 @@ export class Instrument {
 }
 export class InstrumentMin {
   id: number;
+  nr: number;
   nazwa: string;
   typ?: string;
   nrFabryczny?: string;
@@ -29,6 +31,7 @@ export class InstrumentMin {
 }
 export class InstrumentFull {
   id: number | 0;
+  nr: number | 0;
   nazwa: string | '';
   typ?: string | null;
   nrFabryczny?: string;

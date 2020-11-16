@@ -106,7 +106,7 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
     }
     const dialogRef = this.dialog.open(AddinstrumentComponent, {
       width: '550px',
-      height: '720px',
+      height: '800px',
       panelClass: 'mat-dialog-bg',
       position: {
         top: '80px',

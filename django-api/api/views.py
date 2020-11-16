@@ -79,6 +79,11 @@ class PrzyrzadyFullViewSet(viewsets.ModelViewSet):
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadyFullSerializer
 
+class PrzyrzadyNrViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Przyrzady.objects.all()
+    serializer_class = serializers.PrzyrzadyNrSerializer
+
 class PrzyrzadyWzorceViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.filter(wzorzec=True)

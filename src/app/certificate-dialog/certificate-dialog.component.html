@@ -21,7 +21,7 @@
       <mat-list style="padding: 10px 0px 10px 0px;">
         <mat-list-item><span class="ins-title">1. Przedmiot sprawdzenia: </span>
           <span class="title_inst">Nr ewidencyjny:</span>
-          ZPL.{{instrument.idGrupa.nrGrupy | number:'2.'}}.{{instrument.id | number:'3.'}}<br>
+          ZPL.{{instrument.idGrupa.nrGrupy | number:'2.'}}.{{instrument.nr | number:'3.'}}<br>
           <span class="title_inst">Nazwa:</span> {{instrument.nazwa}} <br>
           <span class="title_inst">Typ:</span> {{instrument.typ}}<br>
           <span class="title_inst">Nr fabryczny:</span> {{instrument.nrFabryczny}},
@@ -47,7 +47,7 @@
                 {{instrumentPattern}}
               </mat-select-trigger>
               <mat-option *ngFor="let item of allInstrumentPattern" [value]="item.id">
-                ZPL.{{item.idGrupa.nrGrupy | number : '2.'}}.{{item.id | number : '3.'}} - {{item.nazwa}}, {{item.typ}}
+                ZPL.{{item.idGrupa.nrGrupy | number : '2.'}}.{{item.nr | number : '3.'}} - {{item.nazwa}}, {{item.typ}}
                 (fabr:{{item.nrFabryczny}})</mat-option>
             </mat-select>
           </mat-form-field>
@@ -107,12 +107,13 @@
             </mat-card-content>
           </mat-card>
         </mat-list-item>
+        <mat-divider></mat-divider>
       </mat-list>
 
       <mat-list style="padding: 10px 0px 10px 0px;">
         <mat-list-item><span class="ins-title">8. Karta pomiarów: </span>
           <div class="dwnl_butt">
-            <button mat-stroked-button (click)="downloadFile()">
+            <button mat-stroked-button (click)="downloadFile()" type="button">
               <span class="material-icons">get_app</span>
               Otwórz kartę kontroli
             </button>
@@ -139,6 +140,16 @@
               <input type="file" #fileInput hidden (change)="handleFileInput($event)">
             </ng-template>
           </div>
+        </mat-list-item>
+        <!-- <mat-divider></mat-divider> -->
+      </mat-list>
+
+      <mat-list style="padding: 10px 0px 10px 0px;">
+        <mat-list-item><span class="ins-title">9. Uwagi: </span>
+          <mat-form-field appearance="fill" class="w-100 h-100">
+            <mat-label>Tu możesz dodać uwagę:</mat-label>
+            <textarea matInput rows="4" formControlName="uwagi" style=" resize: none;"></textarea>
+          </mat-form-field>
         </mat-list-item>
       </mat-list>
 

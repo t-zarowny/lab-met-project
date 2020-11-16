@@ -1,7 +1,7 @@
 import { AreaFull, GroupInstrument, InstrumentFull, PlaceFull, State } from './../../_models';
 import { AreaService, GroupService, PlaceService, InstrumentService, StateService } from 'src/app/_services';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
@@ -21,13 +21,17 @@ export class AddinstrumentComponent implements OnInit {
   listState: State[];
   selectedStateId = 3;
   isSample = false;
+  currentNrList: any[];
+  currentNrListOk = false;
+  nrProposed = 0;
+  nrProposedOk = false;
 
   constructor(public dialogRef: MatDialogRef<InstrumentFull>,
               @Inject(MAT_DIALOG_DATA) public data: InstrumentFull,
               private groupService: GroupService,
               private instrumentService: InstrumentService,
               private areaService: AreaService,
-              private stateService: StateService) { }
+              private stateService: StateService) {}
 
   ngOnInit(){
     if (this.data.id !== 0){
@@ -44,6 +48,17 @@ export class AddinstrumentComponent implements OnInit {
         this.isSample = this.data.wzorzec;
       }
     }
+    // console.log('data.nr: ' + this.data.nr);
+    //
+    this.instrumentService.getAllNr().subscribe( data => {
+      this.currentNrList = data;
+      this.currentNrListOk = true;
+      console.log('data: ');
+      console.log(this.data);
+      console.log('currentNrList: ');
+      console.log(this.currentNrList);
+      this.findProposedNumber(data);
+    });
     this.groupService.getList().subscribe( data => {
       const sorted = data.sort((a, b) => a.id - b.id);
       this.listGroup = sorted;
@@ -59,6 +74,7 @@ export class AddinstrumentComponent implements OnInit {
       const sorted = data.sort((a, b) => a.id - b.id);
       this.listState = sorted;
     });
+    this.currentNrListOk = false;
     this.instrumentForm = new FormGroup({
       nazwa: new FormControl(this.data.nazwa, [
         Validators.required,
@@ -73,7 +89,11 @@ export class AddinstrumentComponent implements OnInit {
       nrFabryczny: new FormControl(this.data.nrFabryczny ? this.data.nrFabryczny : ''),
       zakres: new FormControl(this.data.zakres ? this.data.zakres : ''),
       aktStatus: new FormControl(this.selectedStateId),
-      wzorzec: new FormControl(this.isSample)
+      wzorzec: new FormControl(this.isSample),
+      nrhidden: new FormControl(0),
+      nr: new FormControl(this.data.nr ? this.data.nr : this.nrProposed, [
+        Validators.required
+      ])
     }, );
     console.log(this.selectedStateId);
   }
@@ -85,6 +105,33 @@ export class AddinstrumentComponent implements OnInit {
   get lokalizacja() { return this.instrumentForm.get('lokalizacja'); }
   get aktStatus() { return this.instrumentForm.get('aktStatus'); }
   get wzorzec() { return this.instrumentForm.get('wzorzec'); }
+  get nr() { return this.instrumentForm.get('nr'); }
+
+  findProposedNumber(data: any){
+    // console.log('Sprawdzam: ' + this.nrProposed);
+    if (data.find(d => d.nr === this.nrProposed)){
+      this.nrProposed++;
+      // console.log('Zwiększam o 1 : ' + this.nrProposed);
+      this.findProposedNumber(data);
+    }else{
+      if (!this.data.nr){
+        this.nr.setValue(this.nrProposed.toString());
+      }
+    }
+  }
+  checkProposedNr(){
+    if (this.currentNrListOk){
+      if (this.currentNrList.find(d => d.nr === this.nr.value) && this.data.nr !== this.nr.value){
+        this.instrumentForm.get('nr').setErrors({existInDatabase: true});
+        this.nrProposedOk = false;
+        console.log('sprawdzamNOK' + this.nr.value);
+      }else{
+        this.nrProposedOk = true;
+        console.log('sprawdzamOK' + this.nr.value);
+      }
+    }
+  }
+
 
   onSubmit(){
     const instrumentFormData = new FormData();
@@ -96,6 +143,7 @@ export class AddinstrumentComponent implements OnInit {
     instrumentFormData.append('idLokalizacja', this.instrumentForm.value.lokalizacja);
     instrumentFormData.append('aktStatus', this.instrumentForm.value.aktStatus);
     instrumentFormData.append('wzorzec', this.instrumentForm.value.wzorzec);
+    instrumentFormData.append('nr', this.instrumentForm.value.nr);
 
     instrumentFormData.forEach((value, key) => {
       console.log(key + ': ' + value);
