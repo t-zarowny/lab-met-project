@@ -8,6 +8,7 @@ import { InstrumentFull } from '../_models';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -29,6 +30,8 @@ export class CertificateDialogComponent implements OnInit {
   nextDate: Date;
   fileMeasurmentCard: FormGroup;
   isNewMeasurmentCardFile = false;
+  fileDocument: FormGroup;
+  isNewDocumentFile = false;
   isValid = false;
 
 
@@ -53,6 +56,8 @@ export class CertificateDialogComponent implements OnInit {
   get uwagi() { return this.certificateForm.get('uwagi'); }
   get kartaPomiarowNazwa() { return this.fileMeasurmentCard.get('kartaPomiarowNazwa').value; }
   get kartaPomiarowLink() { return this.fileMeasurmentCard.get('kartaPomiarowLink').value; }
+  get kartaPomiarowNazwaDoc() { return this.fileDocument.get('kartaPomiarowNazwa').value; }
+  get kartaPomiarowLinkDoc() { return this.fileDocument.get('kartaPomiarowLink').value; }
 
   ngOnInit(): void {
     this.dialogRef.updateSize('800px', '850px');
@@ -85,6 +90,11 @@ export class CertificateDialogComponent implements OnInit {
       kartaPomiarowLink: [null]
     });
 
+    this.fileDocument = this.formBuilder.group({
+      kartaPomiarowNazwa: [null],
+      kartaPomiarowLink: [null]
+    });
+
     this.refreshNextCertificateNr();
 
     this.instrumentService.get(this.data).subscribe( d => {
@@ -101,11 +111,34 @@ export class CertificateDialogComponent implements OnInit {
     });
     this.certificateForm.controls.rodzaj.valueChanges.subscribe(query => {
       this.isInternType = query === 'intern' ? true : false;
+      this.setValidators();
     });
     this.certificateForm.valueChanges.subscribe(query => {
       this.checkValid();
     });
     // console.log(this.auth.currentUserValue.first_name + this.auth.currentUserValue.last_name);
+  }
+  setValidators(){
+    if (this.isInternType){
+      this.uzyte_wzorce.setValidators([Validators.required]);
+      this.temperatura.setValidators([
+        Validators.required,
+        Validators.min(0),
+        Validators.max(50)
+      ]);
+      this.wilgotnosc.setValidators([
+        Validators.required,
+        Validators.min(0),
+        Validators.max(100)
+      ]);
+    }else{
+      this.uzyte_wzorce.setValidators(null);
+      this.temperatura.setValidators(null);
+      this.wilgotnosc.setValidators(null);
+    }
+    this.uzyte_wzorce.updateValueAndValidity();
+    this.temperatura.updateValueAndValidity();
+    this.wilgotnosc.updateValueAndValidity();
   }
   onNoClick(){
     this.dialogRef.close();
@@ -149,7 +182,11 @@ export class CertificateDialogComponent implements OnInit {
         this.snackBar.open('Zapisano świadectwo nr ' + data.nrSwiadectwa, 'Zamknij', {
           duration: 5000
         });
-        this.saveNewFile(data.id);
+        if(this.isInternType){
+          this.saveNewFile(data.id);
+        }else{
+          this.saveNewDocFile(data.id);
+        }
         console.log(data);
         this.dialogRef.close();
     });
@@ -158,41 +195,64 @@ export class CertificateDialogComponent implements OnInit {
 
   }
   refreshNextCertificateNr(): void {
-    this.certificateService.getAllNr().subscribe( data => {
+    this.certificateService.getLastNr().subscribe( data => {
       let preNr = 0;
       // console.log(data);
       const currYear = new Date().getFullYear();
-      data.forEach(val => {
       // tslint:disable-next-line: prefer-const
-      let valSplit = val.nrSwiadectwa.split('/');
+      let valSplit = data.nrSwiadectwa.split('/');
       // tslint:disable-next-line: prefer-const
       let valYear = +valSplit[1];
       if (valYear === currYear){
         preNr = preNr < +valSplit[0] ? +valSplit[0] : preNr;
         // console.log('prawda');
       }
-      // console.log('currYear: ' + currYear);
-      // console.log('0: ' + valSplit[0]);
-      // console.log('1: ' + valSplit[1]);
-      // console.log('preNr1: ' + preNr);
-      });
+      // data.forEach(val => {
+      // // tslint:disable-next-line: prefer-const
+      // let valSplit = val.nrSwiadectwa.split('/');
+      // // tslint:disable-next-line: prefer-const
+      // let valYear = +valSplit[1];
+      // if (valYear === currYear){
+      //   preNr = preNr < +valSplit[0] ? +valSplit[0] : preNr;
+      //   // console.log('prawda');
+      // }
+      // // console.log('currYear: ' + currYear);
+      // // console.log('0: ' + valSplit[0]);
+      // // console.log('1: ' + valSplit[1]);
+      // // console.log('preNr1: ' + preNr);
+      // });
       preNr++;
       // console.log('preNr2: ' + preNr);
       this.certificateNr = preNr + '/' + currYear;
     });
   }
   checkValid(){
-    this.isValid = (this.certificateForm.valid && this.isNewMeasurmentCardFile) ? true : false;
+    if (this.isInternType){
+      this.isValid = (this.certificateForm.valid && this.isNewMeasurmentCardFile) ? true : false;
+    }else{
+      this.isValid = (this.certificateForm.valid && this.isNewDocumentFile) ? true : false;
+    }
     // console.log('file: ' + this.isNewMeasurmentCardFile);
     // console.log('form: ' + this.certificateForm.valid);
   }
-
   handleFileInput(event){
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.fileMeasurmentCard.get('kartaPomiarowLink').setValue(file);
       this.fileMeasurmentCard.patchValue({kartaPomiarowNazwa: event.target.files[0].name});
       this.isNewMeasurmentCardFile = true;
+      this.checkValid();
+      // this.kartaPomiarowNazwa = event.target.files[0].name;
+      // this.kartaPomiarowLink = null;
+      // console.log(this.fileMeasurmentCard);
+    }
+  }
+  handleFileInputDoc(event){
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.fileDocument.get('kartaPomiarowLink').setValue(file);
+      this.fileDocument.patchValue({kartaPomiarowNazwa: event.target.files[0].name});
+      this.isNewDocumentFile = true;
       this.checkValid();
       // this.kartaPomiarowNazwa = event.target.files[0].name;
       // this.kartaPomiarowLink = null;
@@ -214,11 +274,28 @@ export class CertificateDialogComponent implements OnInit {
     this.isNewMeasurmentCardFile = false;
     this.checkValid();
   }
+  deleteFileDoc(){
+    this.fileDocument.get('kartaPomiarowNazwa').setValue(null);
+    this.fileDocument.get('kartaPomiarowLink').setValue(null);
+    this.isNewDocumentFile = false;
+    this.checkValid();
+  }
   saveNewFile(certId: number){
     if (this.isNewMeasurmentCardFile){
       const formFile = new FormData();
       formFile.append('nazwa', this.kartaPomiarowNazwa);
       formFile.append('link', this.kartaPomiarowLink);
+      formFile.append('idSwiadectwoSprawdzenia', certId.toString());
+      this.certificateService.addFile(formFile).subscribe();
+      // console.log(`groupFormFile:`);
+      // console.log(groupFormFile.forEach);
+    }
+  }
+  saveNewDocFile(certId: number){
+    if (this.isNewDocumentFile){
+      const formFile = new FormData();
+      formFile.append('nazwa', this.kartaPomiarowNazwaDoc);
+      formFile.append('link', this.kartaPomiarowLinkDoc);
       formFile.append('idSwiadectwoSprawdzenia', certId.toString());
       this.certificateService.addFile(formFile).subscribe();
       // console.log(`groupFormFile:`);

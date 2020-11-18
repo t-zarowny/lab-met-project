@@ -51,6 +51,10 @@ mat-list-item{
   top: 3px;
   left: 235px;
 }
+.upld-doc{
+  display: inline-block;
+  margin: 10px;
+}
 .next-arrow-icon{
   font-size: 48px;
   width: 48px;

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User, Group
+from django.utils.translation import TranslatorCommentWarning
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer
 from api import serializers
 from api import models
 
@@ -84,6 +86,11 @@ class PrzyrzadyNrViewSet(viewsets.ModelViewSet):
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadyNrSerializer
 
+class PrzyrzadyPropNrViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = models.Przyrzady.objects.all()
+    serializer_class = serializers.PrzyrzadyNrSerializer
+
 class PrzyrzadyWzorceViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.filter(wzorzec=True)
@@ -116,8 +123,18 @@ class SwiadectwoSprawdzeniaViewSet(viewsets.ModelViewSet):
 
 class SwiadectwoSprawdzeniaMinViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
-    queryset = models.SwiadectwoSprawdzenia.objects.all()
+    # queryset = models.SwiadectwoSprawdzenia.objects.all()
+
     serializer_class = serializers.SwiadectwoSprawdzeniaMinSerializer
+
+    def get_queryset(self):
+      swiadectwa = models.SwiadectwoSprawdzenia.objects.last()
+      return swiadectwa
+
+    def list(self, request, *args, **kwargs):
+      queryset = self.get_queryset()
+      Serializer = serializers.SwiadectwoSprawdzeniaMinSerializer(queryset, many=False)
+      return Response(Serializer.data)
 
 class SwiadectwoSprawdzeniaPlikViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)

@@ -23,7 +23,7 @@ export class AddinstrumentComponent implements OnInit {
   isSample = false;
   currentNrList: any[];
   currentNrListOk = false;
-  nrProposed = 0;
+  nrProposed = 1;
   nrProposedOk = false;
 
   constructor(public dialogRef: MatDialogRef<InstrumentFull>,
