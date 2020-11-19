@@ -182,7 +182,7 @@ export class CertificateDialogComponent implements OnInit {
         this.snackBar.open('Zapisano świadectwo nr ' + data.nrSwiadectwa, 'Zamknij', {
           duration: 5000
         });
-        if(this.isInternType){
+        if (this.isInternType){
           this.saveNewFile(data.id);
         }else{
           this.saveNewDocFile(data.id);

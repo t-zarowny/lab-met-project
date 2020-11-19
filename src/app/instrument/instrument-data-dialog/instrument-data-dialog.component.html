@@ -19,7 +19,7 @@
       <div *ngIf="isDataLoaded">
         <div class="datatab">
           <mat-list style="padding: 10px 0px 10px 0px;">
-            <mat-list-item><span class="ins-title">Nr: </span>ZPL.{{instrument.idGrupa.nrGrupy | number: '2.'}}.{{'000' + instrument.nr | slice: '-4'}}</mat-list-item>
+            <mat-list-item><span class="ins-title">Nr: </span> ZPL.{{instrument.idGrupa.nrGrupy | number: '2.'}}.{{'000' + instrument.nr | slice:-4}}</mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item><span class="ins-title">Nazwa: </span>{{instrument.nazwa}}</mat-list-item>
             <mat-divider></mat-divider>

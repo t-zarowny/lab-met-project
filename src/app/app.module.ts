@@ -31,6 +31,7 @@ import { AddAreaComponent } from './area/add-area/add-area.component';
 import { InstrumentDataDialogComponent } from './instrument/instrument-data-dialog/instrument-data-dialog.component';
 import { CertificateDialogComponent } from './certificate-dialog/certificate-dialog.component';
 import { DatePipe } from '@angular/common';
+import { CertificateToPdfComponent } from './certificate-dialog/certificate-to-pdf/certificate-to-pdf.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -53,7 +54,8 @@ registerLocaleData(localePl);
     AddPlaceComponent,
     AddAreaComponent,
     InstrumentDataDialogComponent,
-    CertificateDialogComponent
+    CertificateDialogComponent,
+    CertificateToPdfComponent
   ],
   imports: [
     BrowserModule,

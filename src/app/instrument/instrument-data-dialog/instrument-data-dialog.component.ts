@@ -4,7 +4,7 @@ import { InstrumentService } from './../../_services/instrument.service';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, Observer } from 'rxjs';
+import { from, Observable, Observer } from 'rxjs';
 import { Certificate, InstrumentFull, User } from 'src/app/_models';
 import { ListInstrumentComponent } from '../list-instrument.component';
 import { AddinstrumentComponent } from '../add-instrument/add-instrument.component';
@@ -13,6 +13,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
+import { CertificateToPdf } from 'src/app/_helpers/certificate.to.pdf';
+import { CertificateToPdfComponent } from 'src/app/certificate-dialog/certificate-to-pdf/certificate-to-pdf.component';
 
 
 
@@ -140,7 +142,8 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   }
 
   openCertificate(){
-
+    const pdf = new CertificateToPdf(1);
+    pdf.createTest();
   }
 
   openMeasurementCard(){

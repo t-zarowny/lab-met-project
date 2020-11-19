@@ -21,7 +21,7 @@
       <mat-list style="padding: 10px 0px 10px 0px;">
         <mat-list-item><span class="ins-title">1. Przedmiot sprawdzenia: </span>
           <span class="title_inst">Nr ewidencyjny:</span>
-          ZPL.{{instrument.idGrupa.nrGrupy | number:'2.'}}.{{instrument.nr | number:'3.'}}<br>
+          ZPL.{{instrument.idGrupa.nrGrupy | number:'2.'}}.{{'000' + instrument.nr | slice:-4}}<br>
           <span class="title_inst">Nazwa:</span> {{instrument.nazwa}} <br>
           <span class="title_inst">Typ:</span> {{instrument.typ}}<br>
           <span class="title_inst">Nr fabryczny:</span> {{instrument.nrFabryczny}},
@@ -47,7 +47,7 @@
                 {{instrumentPattern}}
               </mat-select-trigger>
               <mat-option *ngFor="let item of allInstrumentPattern" [value]="item.id">
-                ZPL.{{item.idGrupa.nrGrupy | number : '2.'}}.{{'0000' + item.nr | slice : '-4'}} - {{item.nazwa}}, {{item.typ}}
+                ZPL.{{item.idGrupa.nrGrupy | number : '2.'}}.{{'000'+ item.nr | slice : -4}} - {{item.nazwa}}, {{item.typ}}
                 (fabr:{{item.nrFabryczny}})</mat-option>
             </mat-select>
           </mat-form-field>
@@ -159,7 +159,7 @@
       <mat-list style="padding: 10px 0px 10px 0px;">
         <mat-list-item><span class="ins-title">1. Przedmiot sprawdzenia: </span>
           <span class="title_inst">Nr ewidencyjny:</span>
-          ZPL.{{instrument.idGrupa.nrGrupy | number:'2.'}}.{{instrument.nr | number:'3.'}}<br>
+          ZPL.{{instrument.idGrupa.nrGrupy | number:'2.'}}.{{'000' + instrument.nr | slice:-4}}<br>
           <span class="title_inst">Nazwa:</span> {{instrument.nazwa}} <br>
           <span class="title_inst">Typ:</span> {{instrument.typ}}<br>
           <span class="title_inst">Nr fabryczny:</span> {{instrument.nrFabryczny}},
