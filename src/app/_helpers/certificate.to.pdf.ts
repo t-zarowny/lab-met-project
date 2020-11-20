@@ -1,8 +1,14 @@
+import { Certificate } from 'src/app/_models';
 import * as jsPDF from 'jspdf';
+import { CertificateService } from '../_services';
 
 export class CertificateToPdf{
+  certificate: Certificate;
 
-  constructor(idCertificate: number){
+  constructor(){}
+
+  public loadData(idCertificate: number){
+
   }
 
   createTest(){
@@ -17,5 +23,9 @@ export class CertificateToPdf{
 
     doc.text('Hello world!', 1, 1);
     doc.save('two-by-four.pdf');
+  }
+  public downloadCertificatePDF(){
+
+
   }
 }

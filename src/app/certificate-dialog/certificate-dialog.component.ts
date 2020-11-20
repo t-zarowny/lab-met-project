@@ -162,7 +162,7 @@ export class CertificateDialogComponent implements OnInit {
                       'Typ: ' + this.instrument.typ + '<br>' +
                       'Nr fabryczny: ' + this.instrument.nrFabryczny + ', ' +
                       'Zakres pomiarowy: ' + this.instrument.zakres;
-    const warunki = 'Temperatura: ' + this.temperatura.value + ' &#8451; <br>' +
+    const warunki = 'Temperatura: ' + this.temperatura.value + '<br>' +
                     'Wilgotność: ' + this.wilgotnosc.value + '%';
     const certFormData = new FormData();
     certFormData.append('nrSwiadectwa', this.certificateNr);

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
-import { DbService } from './_services/db.service';
+import { DbService} from './_services';
 import { MenuComponent } from './menu/menu.component';
 import { BarComponent } from './menu/bar/bar.component';
 import localePl from '@angular/common/locales/pl';

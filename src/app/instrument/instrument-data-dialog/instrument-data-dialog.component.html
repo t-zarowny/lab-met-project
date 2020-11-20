@@ -108,7 +108,7 @@
                   <button mat-icon-button color="primary" aria-label="button certificate"
                     *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz świadectwo sprawdzenia" matTooltipPosition="above"
                     (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                    (click)="openCertificate()">
+                    (click)="openCertificate(row.id)">
                     <mat-icon>get_app</mat-icon>Świadectwo
                   </button>
                   <button mat-icon-button color="primary" aria-label="button measurement card" class="butt_downl"

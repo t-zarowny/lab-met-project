@@ -6,4 +6,5 @@ export * from './place.service';
 export * from './instrument.service';
 export * from './inspection.service';
 export * from './state.service';
+export * from './certificate.service';
 

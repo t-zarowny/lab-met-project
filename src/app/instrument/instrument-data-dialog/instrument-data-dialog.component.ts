@@ -1,3 +1,5 @@
+import { CertificateService } from 'src/app/_services';
+import { HttpEvent } from '@angular/common/http';
 import { Area } from './../../_models/area';
 import { GroupInstrument } from './../../_models/group';
 import { InstrumentService } from './../../_services/instrument.service';
@@ -14,7 +16,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { CertificateToPdf } from 'src/app/_helpers/certificate.to.pdf';
-import { CertificateToPdfComponent } from 'src/app/certificate-dialog/certificate-to-pdf/certificate-to-pdf.component';
 
 
 
@@ -39,7 +40,8 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   constructor(public dialogRef: MatDialogRef<InstrumentFull>,
               public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: number,
-              private instrumentService: InstrumentService) {
+              private instrumentService: InstrumentService,
+              private cetrificateService: CertificateService) {
     this.instrument = new InstrumentFull();
     this.dataSource = new MatTableDataSource(Array<Certificate>());
   }
@@ -50,6 +52,7 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
     this.sort.direction = sortState.direction;
     this.sort.sortChange.emit(sortState);
     this.refresh();
+    this.cetrificateService.downloadCertificatePDF(15);
   }
 
   onNoClick(){
@@ -141,9 +144,11 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openCertificate(){
-    const pdf = new CertificateToPdf(1);
-    pdf.createTest();
+  openCertificate(idCert: number){
+    console.log(idCert);
+    this.cetrificateService.downloadCertificatePDF(idCert);
+    // const pdf = new CertificateToPdf();
+    // pdf.createTest();
   }
 
   openMeasurementCard(){
