@@ -186,10 +186,16 @@ class PrzyrzadyFullSerializer(serializers.ModelSerializer):
   swiadectwa = SwiadectwoSprawdzeniaSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe', 'swiadectwa']
+    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja',
+              'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe', 'swiadectwa','dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa']
     depth = 3
 
 class PrzyrzadyNrSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.Przyrzady
     fields = ['nr']
+
+class PrzyrzadyDatySerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.Przyrzady
+    fields = ['id', 'dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa']

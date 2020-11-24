@@ -28,6 +28,9 @@ export class InstrumentService {
   edit(id: number, data: FormData) {
     return this.http.put(`${environment.apiUrl}przyrzady/${id}/`, data);
   }
+  updateDate(id: number, data: FormData) {
+    return this.http.put(`${environment.apiUrl}przyrzady-daty/${id}/`, data);
+  }
   delete(id: number) {
     return this.http.delete(`${environment.apiUrl}przyrzady/${id}/`);
   }

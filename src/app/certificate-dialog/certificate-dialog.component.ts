@@ -103,6 +103,10 @@ export class CertificateDialogComponent implements OnInit {
         this.allInstrumentPattern = dp;
         this.instrumentDataLoaded = true;
         this.certificateForm.controls.data_nast_kontroli.setValue(DateAssistant.makeNextDate(this.instrument.idGrupa));
+        // console.log(this.instrument);
+        // let dateString = '2020-10-05';
+        // let newDate = new Date(dateString);
+        // console.log(newDate);
       });
     });
     this.certificateForm.controls.data_sprawdzenia.valueChanges.subscribe(query => {
@@ -117,6 +121,7 @@ export class CertificateDialogComponent implements OnInit {
       this.checkValid();
     });
     // console.log(this.auth.currentUserValue.first_name + this.auth.currentUserValue.last_name);
+
   }
   setValidators(){
     if (this.isInternType){
@@ -149,19 +154,22 @@ export class CertificateDialogComponent implements OnInit {
       this.instrumentPattern = this.instrumentPattern.length > 0 ? this.instrumentPattern + ', ' : '';
       const instr: InstrumentFull = this.allInstrumentPattern.find(ins => ins.id === element);
       const nrGroup = '0' + instr.idGrupa.nrGrupy;
-      const nrInstr = '00' + instr.nr;
-      this.instrumentPattern = this.instrumentPattern + 'ZPL.' + nrGroup.slice(-2) + '.' + nrInstr.slice(-3);
+      const nrInstr = '000' + instr.nr;
+      this.instrumentPattern = this.instrumentPattern + 'ZPL.' + nrGroup.slice(-2) + '.' + nrInstr.slice(-4);
     });
   }
   onSubmit(){
     this.refreshNextCertificateNr();
+    const zakres = this.instrument.zakres ? this.instrument.zakres : '-';
+    const nrfabr = this.instrument.nrFabryczny ? this.instrument.nrFabryczny : '-';
+    const typ = this.instrument.typ ? this.instrument.typ : '-';
     const nrGroup = '0' + this.instrument.idGrupa.nrGrupy;
-    const nrInstr = '00' + this.instrument.nr;
-    const przedmiot = 'Nr ewidencyjny: ZPL.' + nrGroup.slice(-2) + '.' + nrInstr.slice(-3) + '<br>' +
+    const nrInstr = '000' + this.instrument.nr;
+    const przedmiot = 'Nr ewidencyjny: ZPL.' + nrGroup.slice(-2) + '.' + nrInstr.slice(-4) + '<br>' +
                       'Nazwa: ' + this.instrument.nazwa + '<br>' +
-                      'Typ: ' + this.instrument.typ + '<br>' +
-                      'Nr fabryczny: ' + this.instrument.nrFabryczny + ', ' +
-                      'Zakres pomiarowy: ' + this.instrument.zakres;
+                      'Typ: ' + typ + '<br>' +
+                      'Nr fabryczny: ' + nrfabr + ', ' +
+                      'Zakres pomiarowy: ' + zakres;
     const warunki = 'Temperatura: ' + this.temperatura.value + '<br>' +
                     'Wilgotność: ' + this.wilgotnosc.value + '%';
     const certFormData = new FormData();
@@ -169,13 +177,14 @@ export class CertificateDialogComponent implements OnInit {
     certFormData.append('przedmiot', przedmiot);
     certFormData.append('przedmiotId', this.instrument.id.toString());
     certFormData.append('metoda', this.instrument.idGrupa.metodaKontroli);
-    certFormData.append('uzyteWzorce', this.uzyte_wzorce.value);
+    // certFormData.append('uzyteWzorce', this.uzyte_wzorce.value);
+    certFormData.append('uzyteWzorce', this.instrumentPattern);
     certFormData.append('warunkiSrodowiskowe', warunki);
     certFormData.append('dataSprawdzenia', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
     certFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
     certFormData.append('wynikSprawdzenia', this.wynik.value ? 'true' : 'false');
     certFormData.append('sprawdzenieZewnetrzne', this.isInternType ? 'false' : 'true');
-    certFormData.append('uwagi', this.uwagi.value);
+    certFormData.append('uwagi', this.uwagi.value ? this.uwagi.value : 'Brak uwag');
     certFormData.append('sprawdzajacy', this.auth.currentUserValue.first_name + ' ' + this.auth.currentUserValue.last_name);
 
     this.certificateService.add(certFormData).subscribe( data => {
@@ -186,6 +195,19 @@ export class CertificateDialogComponent implements OnInit {
           this.saveNewFile(data.id);
         }else{
           this.saveNewDocFile(data.id);
+        }
+        const nextDateNew = new Date(this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
+        const instrFormData = new FormData();
+        instrFormData.append('dataOstatniejKontroli', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
+        instrFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
+        instrFormData.append('nrAktualnegoSwiadectwa', this.certificateNr);
+        if (this.instrument.dataNastepnejKontroli != null){
+          const nextDateOld = new Date(this.instrument.dataNastepnejKontroli);
+          if (nextDateNew > nextDateOld){
+            this.instrumentService.updateDate(this.instrument.id, instrFormData).subscribe();
+          }
+        }else{
+          this.instrumentService.updateDate(this.instrument.id, instrFormData).subscribe();
         }
         console.log(data);
         this.dialogRef.close();
@@ -205,24 +227,8 @@ export class CertificateDialogComponent implements OnInit {
       let valYear = +valSplit[1];
       if (valYear === currYear){
         preNr = preNr < +valSplit[0] ? +valSplit[0] : preNr;
-        // console.log('prawda');
       }
-      // data.forEach(val => {
-      // // tslint:disable-next-line: prefer-const
-      // let valSplit = val.nrSwiadectwa.split('/');
-      // // tslint:disable-next-line: prefer-const
-      // let valYear = +valSplit[1];
-      // if (valYear === currYear){
-      //   preNr = preNr < +valSplit[0] ? +valSplit[0] : preNr;
-      //   // console.log('prawda');
-      // }
-      // // console.log('currYear: ' + currYear);
-      // // console.log('0: ' + valSplit[0]);
-      // // console.log('1: ' + valSplit[1]);
-      // // console.log('preNr1: ' + preNr);
-      // });
       preNr++;
-      // console.log('preNr2: ' + preNr);
       this.certificateNr = preNr + '/' + currYear;
     });
   }
@@ -262,11 +268,14 @@ export class CertificateDialogComponent implements OnInit {
   downloadFile(){
     const link = document.createElement('a');
     link.download = this.instrument.idGrupa.karta[0].nazwa;
-    link.href = this.instrument.idGrupa.karta[0].link;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.click();
-    console.log(this.instrument.idGrupa);
+    this.certificateService.downloadFile(this.instrument.idGrupa.karta[0].link).subscribe( blob => {
+      // link.href = this.instrument.idGrupa.karta[0].link;
+      link.href = URL.createObjectURL(blob);
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.click();
+      // console.log(this.instrument.idGrupa);
+    });
   }
   deleteFile(){
     this.fileMeasurmentCard.get('kartaPomiarowNazwa').setValue(null);

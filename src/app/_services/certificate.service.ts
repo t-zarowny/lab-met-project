@@ -3,6 +3,7 @@ import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jsPDF from 'jspdf';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,9 @@ export class CertificateService {
   deleteFile(id: number) {
     return this.http.delete(`${environment.apiUrl}${this.urlFile}/${id}/`);
   }
+  downloadFile(url): Observable<Blob> {
+    return this.http.get(url, {responseType: 'blob'});
+  }
 
   public downloadCertificatePDF(idCertificate: number){
     this.get(idCertificate).subscribe( data => {
@@ -66,7 +70,7 @@ export class CertificateService {
       doc.addFont('../assets/fonts/DejaVuSans.ttf', 'DejaVuSans', 'normal');
       doc.addFont('../assets/fonts/arial.ttf', 'arial', 'normal');
       doc.setFont('DejaVuSans-Bold');
-      doc.text('ŚWIADECTWO WZORCOWANIA', 105, 50, { align: 'center'});
+      doc.text('ŚWIADECTWO SPRAWDZENIA', 105, 50, { align: 'center'});
       doc.setFont('DejaVuSans');
       doc.setFontSize(12);
       doc.text('Nr świadectwa:', 104, 66, { align: 'right'});
@@ -77,10 +81,10 @@ export class CertificateService {
       doc.setFontSize(10);
       h = 80;
       doc.text('PRZEDMIOT', w, h, { align: 'right'});
-      doc.text('WZORCOWANIA', w, h + 5, { align: 'right'});
+      doc.text('SPRAWDZENIA', w, h + 5, { align: 'right'});
       h = 110;
       doc.text('METODA', w, h, { align: 'right'});
-      doc.text('WZORCOWANIA', w, h + 5, { align: 'right'});
+      doc.text('SPRAWDZENIA', w, h + 5, { align: 'right'});
       h = 135;
       doc.text('UŻYTE WZORCE', w, h, { align: 'right'});
       h = 155;
@@ -134,4 +138,5 @@ export class CertificateService {
     });
 
   }
+
 }

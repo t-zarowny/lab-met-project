@@ -96,6 +96,10 @@ class PrzyrzadyWzorceViewSet(viewsets.ModelViewSet):
     queryset = models.Przyrzady.objects.filter(wzorzec=True)
     serializer_class = serializers.PrzyrzadySerializerD1
 
+class PrzyrzadyDatyViewSet(viewsets.ModelViewSet):
+  queryset = models.Przyrzady.objects.all()
+  serializer_class = serializers.PrzyrzadyDatySerializer
+
 class SprawdzeniaPlanoweViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SprawdzeniaPlanowe.objects.all()
@@ -120,6 +124,14 @@ class SwiadectwoSprawdzeniaViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SwiadectwoSprawdzenia.objects.all()
     serializer_class = serializers.SwiadectwoSprawdzeniaSerializer
+    filter_fields = ('id','nrSwiadectwa','przedmiot','przedmiotId','metoda','uzyteWzorce','warunkiSrodowiskowe','dataSprawdzenia','dataNastepnejKontroli','wynikSprawdzenia','uwagi','sprawdzajacy','sprawdzenieZewnetrzne','plik')
+
+    def retrieve(self, request, *args, **kwargs):
+      instance = self.get_object()
+      print('tekst')
+      print(instance)
+      serializer = self.get_serializer(instance)
+      return Response(serializer.data)
 
 class SwiadectwoSprawdzeniaMinViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)

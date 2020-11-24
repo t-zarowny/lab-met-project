@@ -3,6 +3,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,8 @@ export class GroupService {
   deleteFile(id: number){
     return this.http.delete<MeasurementCard>(`${environment.apiUrl}karta-pomiarow/${id}/`)
       .pipe(tap(console.log));
+  }
+  downloadFile(url): Observable<Blob> {
+    return this.http.get(url, {responseType: 'blob'})
   }
 }

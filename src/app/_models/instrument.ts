@@ -16,6 +16,9 @@ export class Instrument {
   aktStatus: number;
   wzorzec: boolean;
   sprawdzeniaPlanowe?: Inspection[] | null;
+  dataOstatniejKontroli?: Date | null;
+  dataNastepnejKontroli?: Date | null;
+  nrAktualnegoSwiadectwa?: string | null;
 }
 export class InstrumentMin {
   id: number;
@@ -28,6 +31,9 @@ export class InstrumentMin {
   idLokalizacja?: number | null;
   aktStatus: number;
   wzorzec: boolean;
+  dataOstatniejKontroli?: Date | null;
+  dataNastepnejKontroli?: Date | null;
+  nrAktualnegoSwiadectwa?: string | null;
 }
 export class InstrumentFull {
   id: number | 0;
@@ -42,4 +48,7 @@ export class InstrumentFull {
   wzorzec: boolean | false;
   sprawdzeniaPlanowe?: Inspection[] | null;
   swiadectwa?: Certificate[] | null;
+  dataOstatniejKontroli?: Date | null;
+  dataNastepnejKontroli?: Date | null;
+  nrAktualnegoSwiadectwa?: string | null;
 }

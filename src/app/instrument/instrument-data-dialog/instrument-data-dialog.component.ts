@@ -52,7 +52,6 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
     this.sort.direction = sortState.direction;
     this.sort.sortChange.emit(sortState);
     this.refresh();
-    this.cetrificateService.downloadCertificatePDF(15);
   }
 
   onNoClick(){
@@ -151,8 +150,15 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
     // pdf.createTest();
   }
 
-  openMeasurementCard(){
-
+  openMeasurementCard(row: Certificate){
+    const link = document.createElement('a');
+    link.download = row.plik[0].nazwa;
+    this.cetrificateService.downloadFile(row.plik[0].link).subscribe( blob => {
+      link.href = URL.createObjectURL(blob);
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.click();
+    });
   }
 
   addCertificate(){

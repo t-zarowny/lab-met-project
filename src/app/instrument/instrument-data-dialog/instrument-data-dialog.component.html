@@ -105,18 +105,29 @@
                   (mouseenter)="$event ? selection.select(row) : null;  highlight();"
                   (mouseleave)="$event ? selection.clear() : null; highlight();"
                   [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
-                  <button mat-icon-button color="primary" aria-label="button certificate"
-                    *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz świadectwo sprawdzenia" matTooltipPosition="above"
-                    (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                    (click)="openCertificate(row.id)">
-                    <mat-icon>get_app</mat-icon>Świadectwo
-                  </button>
-                  <button mat-icon-button color="primary" aria-label="button measurement card" class="butt_downl"
-                    *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz kartę pomiarów" matTooltipPosition="above"
-                    (mouseenter)="$event ? selection.select(row) : null;  highlight();"
-                    (click)="openMeasurementCard()">
-                    <mat-icon>get_app</mat-icon>Karta
-                  </button>
+                  <div *ngIf="!row.sprawdzenieZewnetrzne">
+                    <button mat-icon-button color="primary" aria-label="button certificate"
+                      *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz świadectwo sprawdzenia" matTooltipPosition="above"
+                      (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                      (click)="openCertificate(row.id)">
+                      <mat-icon>get_app</mat-icon>Świadectwo
+                    </button>
+                    <span *ngIf="row.plik.length">
+                    <button mat-icon-button color="primary" aria-label="button measurement card" class="butt_downl"
+                      *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz kartę pomiarów" matTooltipPosition="above"
+                      (mouseenter)="$event ? selection.select(row) : null;  highlight();" type="button"
+                      (click)="openMeasurementCard(row)">
+                      <mat-icon>get_app</mat-icon>Karta
+                    </button></span>
+                  </div>
+                  <div *ngIf="row.sprawdzenieZewnetrzne">
+                    <button mat-icon-button color="primary" aria-label="button documents" class="butt_dwnl_doc"
+                      *ngIf="selectedRowIndex == row.id" matTooltip="Pobierz dokumenty zewnętrznego laboratorium" matTooltipPosition="above"
+                      (mouseenter)="$event ? selection.select(row) : null;  highlight();"
+                      (click)="openMeasurementCard(row)">
+                      <mat-icon>get_app</mat-icon>Dokumenty
+                    </button>
+                  </div>
                 </mat-cell>
               </ng-container>
               <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
@@ -129,7 +140,9 @@
       <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1 mt-2">Wykonaj sprawdzenie
         przyrządu</button>
     </mat-tab>
-    <mat-tab label="Historia"> dane </mat-tab>
+    <mat-tab label="Harmonogram"> dane
+      
+    </mat-tab>
   </mat-tab-group>
 
 </div>

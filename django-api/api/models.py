@@ -33,21 +33,23 @@ class Lokalizacje(models.Model):
 class Statusy(models.Model):
   nazwa = models.CharField(max_length=32)
 
-
 class Przyrzady(models.Model):
-    nazwa = models.CharField(max_length=32)
-    nr = models.IntegerField(default=0)
-    typ = models.CharField(max_length=32, null=True)
-    nrFabryczny = models.CharField(max_length=50, null=True)
-    zakres = models.CharField(max_length=50, null=True)
-    idGrupa = models.ForeignKey(GroupInstruments, related_name='przyrzad', on_delete=models.PROTECT, null=True)
-    idLokalizacja = models.ForeignKey(Lokalizacje, related_name='przyrzady', on_delete=models.PROTECT, null=True)
-    aktStatus = models.ForeignKey(Statusy, default=3, related_name='status', on_delete=models.PROTECT, null=False)
-    wzorzec = models.BooleanField(default=False)
+  nazwa = models.CharField(max_length=32)
+  nr = models.IntegerField(default=0)
+  typ = models.CharField(max_length=32, null=True)
+  nrFabryczny = models.CharField(max_length=50, null=True)
+  zakres = models.CharField(max_length=50, null=True)
+  idGrupa = models.ForeignKey(GroupInstruments, related_name='przyrzad', on_delete=models.PROTECT, null=True)
+  idLokalizacja = models.ForeignKey(Lokalizacje, related_name='przyrzady', on_delete=models.PROTECT, null=True)
+  aktStatus = models.ForeignKey(Statusy, default=3, related_name='status', on_delete=models.PROTECT, null=False)
+  wzorzec = models.BooleanField(default=False)
+  dataOstatniejKontroli = models.DateField(null=True)
+  dataNastepnejKontroli = models.DateField(null=True)
+  nrAktualnegoSwiadectwa = models.CharField(max_length=100, null=True)
 
 class SprawdzeniaPlanowe(models.Model):
-    idPrzyrzad = models.ForeignKey(Przyrzady, related_name='sprawdzeniaPlanowe', on_delete=models.CASCADE, null=False)
-    dataPlanowa = models.DateField(null=False, blank=False)
+  idPrzyrzad = models.ForeignKey(Przyrzady, related_name='sprawdzeniaPlanowe', on_delete=models.CASCADE, null=False)
+  dataPlanowa = models.DateField(null=False, blank=False)
 
 class SwiadectwoSprawdzenia(models.Model):
   nrSwiadectwa = models.CharField(max_length=32, null=False)
@@ -70,6 +72,8 @@ class SwiadectwoSprawdzeniaSzablon(models.Model):
 
 
 class SwiadectwoSprawdzeniaPlik(models.Model):
-    link = models.FileField(upload_to='swiadectwa-sprawdzenia/', null=False)
-    nazwa = models.CharField(max_length=50, null=True)
-    idSwiadectwoSprawdzenia = models.ForeignKey(SwiadectwoSprawdzenia, related_name='plik', on_delete=models.CASCADE, null=True)
+  link = models.FileField(upload_to='swiadectwa-sprawdzenia/', null=False)
+  nazwa = models.CharField(max_length=50, null=True)
+  idSwiadectwoSprawdzenia = models.ForeignKey(SwiadectwoSprawdzenia, related_name='plik', on_delete=models.CASCADE, null=True)
+
+
