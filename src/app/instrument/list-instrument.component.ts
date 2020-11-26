@@ -17,7 +17,7 @@ import { InstrumentDataDialogComponent } from './instrument-data-dialog/instrume
   styleUrls: ['./list-instrument.component.css']
 })
 export class ListInstrumentComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['select', 'id', 'nazwa', 'typ', 'nrFabryczny', 'zakres', 'grupa', 'miejsce', 'status'];
+  displayedColumns: string[] = ['select', 'id', 'nazwa', 'typ', 'nrFabryczny', 'dataNastepnejKontroli', 'miejsce', 'status'];
   dataSource: MatTableDataSource<InstrumentFull>;
   selection = new SelectionModel<InstrumentFull>();
   selectedRowIndex = -1;
@@ -59,6 +59,15 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  calculateDiff(data){
+    const date = new Date(data);
+    const currentDate = new Date();
+
+    const days = Math.floor((date.getTime() - currentDate.getTime()) / 1000 / 60 / 60 / 24);
+    return days + 1;
+  }
+
   refresh() {
     this.instrumentService.getAll().subscribe( data => {
       const sorted = data.sort((a, b) => a.id - b.id);

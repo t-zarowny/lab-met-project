@@ -8,7 +8,6 @@ import { InstrumentFull } from '../_models';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 

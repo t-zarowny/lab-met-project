@@ -3,6 +3,7 @@ import { AreaService, GroupService, PlaceService, InstrumentService, StateServic
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -31,9 +32,18 @@ export class AddinstrumentComponent implements OnInit {
               private groupService: GroupService,
               private instrumentService: InstrumentService,
               private areaService: AreaService,
+              private datePipe: DatePipe,
               private stateService: StateService) {}
 
   ngOnInit(){
+    if (this.data.id){
+      this.dialogRef.updateSize('630px', '700px');
+      this.dialogRef.updatePosition({top: '50px'});
+    }else{
+      this.dialogRef.updateSize('630px', '770px');
+      this.dialogRef.updatePosition({top: '50px'});
+    }
+
     if (this.data.id !== 0){
       if (this.data.idLokalizacja){
         this.selectedAreaId = this.data.idLokalizacja.id;
@@ -90,13 +100,28 @@ export class AddinstrumentComponent implements OnInit {
       zakres: new FormControl(this.data.zakres ? this.data.zakres : ''),
       aktStatus: new FormControl(this.selectedStateId),
       wzorzec: new FormControl(this.isSample),
+      data_sprawdzenia: new FormControl(null),
+      data_nast_kontroli: new FormControl(null),
       nrhidden: new FormControl(0),
       nr: new FormControl(this.data.nr ? this.data.nr : this.nrProposed, [
         Validators.required
       ])
     }, );
     console.log(this.selectedStateId);
+    this.setValidators();
   }
+  setValidators(){
+    if (!this.data.id){
+      this.data_sprawdzenia.setValidators([Validators.required]);
+      this.data_nast_kontroli.setValidators([Validators.required]);
+    }else{
+      this.data_sprawdzenia.setValidators(null);
+      this.data_nast_kontroli.setValidators(null);
+    }
+    this.data_sprawdzenia.updateValueAndValidity();
+    this.data_nast_kontroli.updateValueAndValidity();
+  }
+
   get nazwa() { return this.instrumentForm.get('nazwa'); }
   get typ() { return this.instrumentForm.get('typ'); }
   get nrFabryczny() { return this.instrumentForm.get('nrFabryczny'); }
@@ -106,6 +131,8 @@ export class AddinstrumentComponent implements OnInit {
   get aktStatus() { return this.instrumentForm.get('aktStatus'); }
   get wzorzec() { return this.instrumentForm.get('wzorzec'); }
   get nr() { return this.instrumentForm.get('nr'); }
+  get data_sprawdzenia() { return this.instrumentForm.get('data_sprawdzenia'); }
+  get data_nast_kontroli() { return this.instrumentForm.get('data_nast_kontroli'); }
 
   findProposedNumber(data: any){
     // console.log('Sprawdzam: ' + this.nrProposed);
@@ -144,6 +171,9 @@ export class AddinstrumentComponent implements OnInit {
     instrumentFormData.append('aktStatus', this.instrumentForm.value.aktStatus);
     instrumentFormData.append('wzorzec', this.instrumentForm.value.wzorzec);
     instrumentFormData.append('nr', this.instrumentForm.value.nr);
+    instrumentFormData.append('dataOstatniejKontroli', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
+    instrumentFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
+    instrumentFormData.append('nrAktualnegoSwiadectwa', '--brak--');
 
     instrumentFormData.forEach((value, key) => {
       console.log(key + ': ' + value);

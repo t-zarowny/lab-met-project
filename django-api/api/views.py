@@ -3,6 +3,7 @@ from django.utils.translation import TranslatorCommentWarning
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
+from rest_framework.pagination import PageNumberPagination
 from api import serializers
 from api import models
 
@@ -56,49 +57,63 @@ class LokalizacjeViewSet(viewsets.ModelViewSet):
     queryset = models.Lokalizacje.objects.all()
     serializer_class = serializers.LokalizacjeSerializer
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 class PrzyrzadyViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadySerializer
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyD1ViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadySerializerD1
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyD2ViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadySerializerD2
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyD3ViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadySerializerD3
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyFullViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadyFullSerializer
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyNrViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadyNrSerializer
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyPropNrViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
     serializer_class = serializers.PrzyrzadyNrSerializer
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyWzorceViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.filter(wzorzec=True)
     serializer_class = serializers.PrzyrzadySerializerD1
+    # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyDatyViewSet(viewsets.ModelViewSet):
   queryset = models.Przyrzady.objects.all()
   serializer_class = serializers.PrzyrzadyDatySerializer
+  # pagination_class = StandardResultsSetPagination
 
 class SprawdzeniaPlanoweViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)

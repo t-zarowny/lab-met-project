@@ -44,27 +44,27 @@ class PrzyrzadySerializer(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe', 'dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa']
 
 class PrzyrzadySerializerD1(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe', 'dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa']
     depth = 1
 
 class PrzyrzadySerializerD2(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres',  'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe', 'dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa']
     depth = 2
 
 class PrzyrzadySerializerD3(serializers.ModelSerializer):
   sprawdzeniaPlanowe = SprawdzeniaPlanoweMiniSerializer(many=True, read_only=True)
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe']
+    fields = ['id', 'nr', 'nazwa', 'typ', 'nrFabryczny', 'zakres', 'idGrupa', 'idLokalizacja', 'aktStatus', 'wzorzec', 'sprawdzeniaPlanowe', 'dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa']
     depth = 3
 
 

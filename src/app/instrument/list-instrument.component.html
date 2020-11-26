@@ -63,20 +63,16 @@
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrFabryczny}}
       </mat-cell>
     </ng-container>
-    <!-- zakres -->
-    <ng-container matColumnDef="zakres">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Zakres pomiarowy </mat-header-cell>
+    <!-- dataNastepnejKontroli -->
+    <ng-container matColumnDef="dataNastepnejKontroli">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Data nast.kontroli </mat-header-cell>
       <mat-cell *matCellDef="let row"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.zakres}}
-      </mat-cell>
-    </ng-container>
-    <!-- grupa -->
-    <ng-container matColumnDef="grupa">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Grupa </mat-header-cell>
-      <mat-cell *matCellDef="let row"
-        (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.idGrupa.nazwa}}
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) < 0" style="color: red;">notification_important</span>
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) <= 30" style="color: orange;">warning</span>
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green;">verified</span>
+          {{row.dataNastepnejKontroli}} za {{calculateDiff(row.dataNastepnejKontroli)}} dni
       </mat-cell>
     </ng-container>
     <!-- miejsce -->
