@@ -171,9 +171,11 @@ export class AddinstrumentComponent implements OnInit {
     instrumentFormData.append('aktStatus', this.instrumentForm.value.aktStatus);
     instrumentFormData.append('wzorzec', this.instrumentForm.value.wzorzec);
     instrumentFormData.append('nr', this.instrumentForm.value.nr);
-    instrumentFormData.append('dataOstatniejKontroli', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
-    instrumentFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
-    instrumentFormData.append('nrAktualnegoSwiadectwa', '--brak--');
+    if (!this.data.id){
+      instrumentFormData.append('dataOstatniejKontroli', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
+      instrumentFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
+      instrumentFormData.append('nrAktualnegoSwiadectwa', '--brak--');
+    }
 
     instrumentFormData.forEach((value, key) => {
       console.log(key + ': ' + value);

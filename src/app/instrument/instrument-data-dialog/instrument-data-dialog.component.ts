@@ -4,7 +4,7 @@ import { Area } from './../../_models/area';
 import { GroupInstrument } from './../../_models/group';
 import { InstrumentService } from './../../_services/instrument.service';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { from, Observable, Observer } from 'rxjs';
 import { Certificate, InstrumentFull, User } from 'src/app/_models';
@@ -16,6 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { CertificateToPdf } from 'src/app/_helpers/certificate.to.pdf';
+import { add, subtract } from 'add-subtract-date';
 
 
 
@@ -25,6 +26,7 @@ import { CertificateToPdf } from 'src/app/_helpers/certificate.to.pdf';
 })
 export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   tabs = ['Dane podstawowe', 'Sprawdzenia/Kalibracje', 'Historia'];
+  hDateForm: FormGroup;
   selected = new FormControl(0);
   instrument: InstrumentFull;
   isDataLoaded = false;
@@ -33,6 +35,8 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<Certificate>();
   selectedRowIndex = -1;
   title = 'title';
+  hDataStart: Date;
+  hDataEnd: Date;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -47,11 +51,25 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.hDataStart = new Date();
+    this.hDataEnd = new Date();
+    this.hDataStart = subtract(this.hDataStart, 6, 'months');
+    this.hDataEnd = add(this.hDataEnd, 6, 'months');
     const sortState: Sort = {active: 'nrSwiadectwa', direction: 'desc'};
     this.sort.active = sortState.active;
     this.sort.direction = sortState.direction;
     this.sort.sortChange.emit(sortState);
     this.refresh();
+    this.hDateForm = new FormGroup({
+      data_start: new FormControl(this.hDataStart),
+      data_end: new FormControl(this.hDataEnd)
+    });
+    this.hDateForm.controls.data_start.valueChanges.subscribe( query => {
+      console.log(query);
+    });
+    this.hDateForm.controls.data_end.valueChanges.subscribe( query => {
+      console.log(query);
+    });
   }
 
   onNoClick(){

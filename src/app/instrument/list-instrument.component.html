@@ -6,8 +6,8 @@
       [disabled]="!isPossibleAdd" class="m-1">Dodaj przyrząd</button>
       <button mat-raised-button (click)="openDialogAdd(selection.selected[0])"
       [disabled]="!isPossibleEdit" class="m-1">Edytuj</button>
-      <button mat-raised-button (click)="deleteSelected(selection.selected[0])"
-        [disabled]="!isPossibleDelete" class="m-1">Usuń zaznaczony przyrząd</button>
+      <!-- <button mat-raised-button (click)="deleteSelected(selection.selected[0])"
+        [disabled]="!isPossibleDelete" class="m-1">Usuń zaznaczony przyrząd</button> -->
       <button mat-raised-button (click)="openDialogInstrumentData(selection.selected[0].id)"
         [disabled]="!isPossibleDelete" class="m-1">Pokaż dane przyrządu</button>
     </mat-toolbar-row>
@@ -69,10 +69,13 @@
       <mat-cell *matCellDef="let row"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
-        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) < 0" style="color: red;">notification_important</span>
-        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) <= 30" style="color: orange;">warning</span>
-        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green;">verified</span>
-          {{row.dataNastepnejKontroli}} za {{calculateDiff(row.dataNastepnejKontroli)}} dni
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) < 0" style="color: red; margin-right: 5px;"> notification_important</span>
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) <= 30 && calculateDiff(row.dataNastepnejKontroli) >= 0"
+          style="color: orange; margin-right: 5px;"> warning</span>
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green; margin-right: 5px;"> verified</span>
+          {{row.dataNastepnejKontroli}} ({{calculateDiff(row.dataNastepnejKontroli) + ' dni'}})
+          <!-- ({{calculateDiff(row.dataNastepnejKontroli) > 0 ? ('za ' + calculateDiff(row.dataNastepnejKontroli) + ' dni') :
+           (calculateDiff(row.dataNastepnejKontroli) == 0 ? 'dziś': 'po terminie ' + calculateDiff(row.dataNastepnejKontroli) + ' dni') }}) -->
       </mat-cell>
     </ng-container>
     <!-- miejsce -->

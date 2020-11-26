@@ -90,3 +90,9 @@ mat-list-item{
 .butt_dwnl_doc{
   margin-left: 35px;
 }
+.harm-date-title{
+  padding: 4px;
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}

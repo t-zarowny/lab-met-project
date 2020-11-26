@@ -140,17 +140,37 @@
       <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1 mt-2">Wykonaj sprawdzenie
         przyrządu</button>
     </mat-tab>
-    <mat-tab label="Harmonogram"> dane
-      
+
+    <mat-tab label="Harmonogram">
+      <form [formGroup]="hDateForm" class="h-100">
+      <div class="harm-date-title ">Wyświetl harmonogram</div>
+      <mat-list style="padding: 10px 0px 10px 0px" class="ml-1 d-inline-block ">
+        <mat-list-item class="w-50 d-inline-block">
+          <mat-form-field color="accent" appearance="fill" (click)="picker2.open()">
+            <mat-label>Od daty</mat-label>
+            <input matInput [matDatepicker]="picker2" [readonly]="true" formControlName="data_start">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item class="w-50 d-inline-block">
+          <mat-form-field color="accent" appearance="fill" (click)="picker3.open()">
+            <mat-label>Do daty</mat-label>
+            <input matInput [matDatepicker]="picker3" [readonly]="true" formControlName="data_end">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3 color="primary"></mat-datepicker>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+    </form>
     </mat-tab>
   </mat-tab-group>
 
 </div>
 <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
-  <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">
-    Anuluj
-  </button>
-  <button mat-raised-button class="btn btn-success" type="submit">
-    Zapisz
+  <button mat-raised-button color="primary" class="btn btn-success" type="button" (click)="onNoClick()">
+    <span class="material-icons">
+      cancel
+      </span> Zamknij
   </button>
 </div>
