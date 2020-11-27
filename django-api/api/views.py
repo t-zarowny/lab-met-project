@@ -6,6 +6,7 @@ from rest_framework.serializers import Serializer
 from rest_framework.pagination import PageNumberPagination
 from api import serializers
 from api import models
+import django_filters
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
@@ -135,11 +136,24 @@ class JednostkiInterwalViewSet(viewsets.ModelViewSet):
     queryset = models.JednostkiInterwal.objects.all()
     serializer_class = serializers.JednostkiInterwalSerializer
 
+class SwiadectwoSprawdzeniaFilter(django_filters.FilterSet):
+    min_date = django_filters.DateFilter(field_name="dataSprawdzenia", lookup_expr="gte")
+    max_date = django_filters.DateFilter(field_name="dataSprawdzenia", lookup_expr="lte")
+
+    class Meta:
+        model = models.SwiadectwoSprawdzenia
+        fields = [
+            "min_date",
+            "max_date",
+            "wynikSprawdzenia",
+        ]
+
 class SwiadectwoSprawdzeniaViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SwiadectwoSprawdzenia.objects.all()
     serializer_class = serializers.SwiadectwoSprawdzeniaSerializer
-    filter_fields = ('id','nrSwiadectwa','przedmiot','przedmiotId','metoda','uzyteWzorce','warunkiSrodowiskowe','dataSprawdzenia','dataNastepnejKontroli','wynikSprawdzenia','uwagi','sprawdzajacy','sprawdzenieZewnetrzne','plik')
+    # filter_fields = ('id','nrSwiadectwa','przedmiot','przedmiotId','metoda','uzyteWzorce','warunkiSrodowiskowe','dataSprawdzenia','dataNastepnejKontroli','wynikSprawdzenia','uwagi','sprawdzajacy','sprawdzenieZewnetrzne','plik')
+    filterset_class = SwiadectwoSprawdzeniaFilter
 
     def retrieve(self, request, *args, **kwargs):
       instance = self.get_object()
