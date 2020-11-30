@@ -1,3 +1,4 @@
+import { DateAssistant } from './../../_helpers/dateAssistant';
 import { CertificateService } from 'src/app/_services';
 import { HttpEvent } from '@angular/common/http';
 import { Area } from './../../_models/area';
@@ -17,6 +18,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { CertificateToPdf } from 'src/app/_helpers/certificate.to.pdf';
 import { add, subtract } from 'add-subtract-date';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -37,6 +39,10 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   title = 'title';
   hDataStart: Date;
   hDataEnd: Date;
+  hListCert: Certificate[];
+  // empList: Array<Custom> = [];
+  hListProp: Array<Date> = [];
+  hCurrProp: Date;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -44,11 +50,14 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   constructor(public dialogRef: MatDialogRef<InstrumentFull>,
               public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: number,
+              private datePipe: DatePipe,
               private instrumentService: InstrumentService,
               private cetrificateService: CertificateService) {
     this.instrument = new InstrumentFull();
     this.dataSource = new MatTableDataSource(Array<Certificate>());
   }
+
+
 
   ngOnInit(): void {
     this.hDataStart = new Date();
@@ -65,10 +74,36 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
       data_end: new FormControl(this.hDataEnd)
     });
     this.hDateForm.controls.data_start.valueChanges.subscribe( query => {
-      console.log(query);
+      this.hDataStart = query;
+      this.hRefresh();
     });
     this.hDateForm.controls.data_end.valueChanges.subscribe( query => {
-      console.log(query);
+      this.hDataEnd = query;
+      this.hRefresh();
+    });
+
+  }
+
+  propDate(){
+    if (this.instrument.aktStatus.id !== 3){
+      this.hCurrProp = DateAssistant.makeNextDate(this.instrument.idGrupa, this.hCurrProp);
+      if (this.hCurrProp <= this.hDataEnd){
+        this.hListProp.push(this.hCurrProp);
+        this.propDate();
+      }
+    }
+  }
+
+  hRefresh(){
+    this.cetrificateService.getBetweenDates(this.datePipe.transform(this.hDataStart, 'yyyy-MM-dd'),
+    this.datePipe.transform(this.hDataEnd, 'yyyy-MM-dd')).subscribe( data => {
+      this.hListCert = data;
+      this.hListProp = [];
+      this.hCurrProp = new Date(this.instrument.dataNastepnejKontroli);
+      this.hListProp.push(this.hCurrProp);
+      this.propDate();
+      // console.log(this.hListProp);
+      // console.log(data);
     });
   }
 
@@ -113,6 +148,8 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
       const title1 = '0' + this.instrument.idGrupa.nrGrupy;
       const title2 = '000' + this.instrument.nr;
       this.title = 'ZPL.' + title1.slice(-2) + '.' + title2.slice(-4) + ' ' + this.instrument.nazwa;
+      this.hRefresh();
+      console.log(this.hListProp);
     });
     // this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
     // this.paginator._intl.nextPageLabel = 'Następna strona';

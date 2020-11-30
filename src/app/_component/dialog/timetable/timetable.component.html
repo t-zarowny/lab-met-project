@@ -1,0 +1,26 @@
+<div style="height: calc(100% - 60px)">
+  <h1 mat-dialog-title
+    class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow rounded">
+    Harmonogram kontroli
+  </h1>
+
+
+  <form>
+    <mat-form-field appearance="fill">
+      <mat-label>Harmonogram na rok:</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="food">
+        <mat-option *ngFor="let year of yearsList" [value]="year">
+          {{year.getFullYear()}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p> Selected: {{selectedValue.getFullYear()}} </p>
+
+  </form>
+
+</div>
+<div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
+  <button mat-raised-button class="btn btn-secondary" type="button" (click)="onNoClick()">
+    Zamknij
+  </button>
+</div>

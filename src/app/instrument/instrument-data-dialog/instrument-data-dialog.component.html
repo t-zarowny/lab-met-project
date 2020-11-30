@@ -31,15 +31,16 @@
             <mat-list-item><span class="ins-title">Lokalizacja: </span>{{instrument.idLokalizacja.idObszar.nazwa}}:
               {{instrument.idLokalizacja.nazwa}} </mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item><span class="ins-title">Grupa: </span> {{instrument.idGrupa.nazwa}}</mat-list-item>
+            <mat-list-item><span class="ins-title">Grupa: </span> ZPL.{{'0' + instrument.idGrupa.nrGrupy | slice: -2}} - {{instrument.idGrupa.nazwa}}</mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item><span class="ins-title">Metoda kontroli: </span> {{instrument.idGrupa.metodaKontroli}}
+            <mat-list-item><span class="ins-title">Metoda kontroli: </span> {{instrument.idGrupa.metodaKontroli}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item class="w-50 d-inline-block" ><span class="ins-title w-50">Status: </span>{{instrument.aktStatus.nazwa}} </mat-list-item>
+            <mat-list-item class="w-50 d-inline-block"><span class="ins-title w-50">Używany jako wzorzec?: </span>{{instrument.wzorzec? 'Tak' : 'Nie'}}
             </mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item><span class="ins-title">Status: </span>{{instrument.aktStatus.nazwa}} </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item><span class="ins-title">Używany jako wzorzec?: </span>{{instrument.wzorzec? 'Tak' : 'Nie'}}
-            </mat-list-item>
+            <mat-list-item class="w-50 d-inline-block"><span class="ins-title">Data ostatniego sprawdzenia: </span> {{instrument.dataOstatniejKontroli}}</mat-list-item>
+            <mat-list-item class="w-50 d-inline-block"><span class="ins-title">Data następnego sprawdzenia: </span> {{instrument.dataNastepnejKontroli}}</mat-list-item>
             <mat-divider></mat-divider>
           </mat-list>
         </div>
@@ -143,7 +144,7 @@
 
     <mat-tab label="Harmonogram">
       <form [formGroup]="hDateForm" class="h-100">
-      <div class="harm-date-title ">Wyświetl harmonogram</div>
+      <div class="harm-date-title ">Wyświetl terminy kontroli</div>
       <mat-list style="padding: 10px 0px 10px 0px" class="ml-1 d-inline-block ">
         <mat-list-item class="w-50 d-inline-block">
           <mat-form-field color="accent" appearance="fill" (click)="picker2.open()">
@@ -162,6 +163,21 @@
           </mat-form-field>
         </mat-list-item>
       </mat-list>
+      <div class="h-content">
+        <ul>
+          <li *ngFor="let item of hListCert">
+            <span class="material-icons" style="color: green; margin-right: 3px; position: relative; top: 6px;" *ngIf="item.wynikSprawdzenia"> verified</span>
+            <span class="material-icons" style="color: red; margin-right: 3px; position: relative; top: 6px;" *ngIf="!item.wynikSprawdzenia"> new_releases</span>
+            {{item.dataSprawdzenia}} <span style="color: gray;">({{item.nrSwiadectwa}})</span></li>
+          <li *ngFor="let item of hListProp">
+            <span *ngIf="this.instrument.aktStatus.id !== 3">
+            <span class="material-icons" style="color:darkviolet; margin-right: 3px; position: relative; top: 6px;"> local_offer</span>
+            {{item | date: 'yyy-MM-dd'}} <span style="color: gray;">(+{{instrument.idGrupa.interwalWartosc}}{{instrument.idGrupa.interwalJednostka.skrot}})</span>
+            </span>
+            <span *ngIf="this.instrument.aktStatus.id === 3"><span style="color: gray;">Przyrząd zlikwidowany</span></span>
+          </li>
+      </ul>
+      </div>
     </form>
     </mat-tab>
   </mat-tab-group>

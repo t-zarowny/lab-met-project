@@ -4,6 +4,10 @@ from api import models
 from api._serializers import sw_spr_serializers
 
 class SwiadectwoSprawdzeniaFilter(django_filters.FilterSet):
+    # gte - większe równe
+    # lte - mniejsze równe
+    # gt - większe
+    # lt - mniejsze
     min_date = django_filters.DateFilter(field_name="dataSprawdzenia", lookup_expr="gte")
     max_date = django_filters.DateFilter(field_name="dataSprawdzenia", lookup_expr="lte")
 

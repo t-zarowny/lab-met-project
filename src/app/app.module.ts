@@ -32,6 +32,7 @@ import { InstrumentDataDialogComponent } from './instrument/instrument-data-dial
 import { CertificateDialogComponent } from './certificate-dialog/certificate-dialog.component';
 import { DatePipe } from '@angular/common';
 import { CertificateToPdfComponent } from './certificate-dialog/certificate-to-pdf/certificate-to-pdf.component';
+import { TimetableComponent } from './_component/dialog/timetable/timetable.component';
 
 registerLocaleData(localePl);
 @NgModule({
@@ -55,7 +56,8 @@ registerLocaleData(localePl);
     AddAreaComponent,
     InstrumentDataDialogComponent,
     CertificateDialogComponent,
-    CertificateToPdfComponent
+    CertificateToPdfComponent,
+    TimetableComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +82,8 @@ registerLocaleData(localePl);
   bootstrap: [AppComponent],
   entryComponents: [AddGroupComponent, ConfirmDialogComponent, FormUserComponent,
                     FormUserChangePassComponent, AddPlaceComponent, AddAreaComponent,
-                    AddinstrumentComponent, InstrumentDataDialogComponent, CertificateDialogComponent],
+                    AddinstrumentComponent, InstrumentDataDialogComponent, CertificateDialogComponent,
+                    TimetableComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

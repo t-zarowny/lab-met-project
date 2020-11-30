@@ -33,7 +33,7 @@
     </ng-container>
     <!-- Nr -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader"> Numer </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader text-info"> Numer </mat-header-cell>
       <mat-cell *matCellDef="let row" class="matIdColumn"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.idGrupa.nrGrupy | number: '2.'}}.{{'000' + row.nr | slice:-4}} </mat-cell>
@@ -54,6 +54,7 @@
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.typ}}
       </mat-cell>
+
     </ng-container>
     <!-- Nr fabryczny -->
     <ng-container matColumnDef="nrFabryczny">
@@ -62,6 +63,7 @@
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrFabryczny}}
       </mat-cell>
+
     </ng-container>
     <!-- dataNastepnejKontroli -->
     <ng-container matColumnDef="dataNastepnejKontroli">
@@ -72,11 +74,14 @@
         <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) < 0" style="color: red; margin-right: 5px;"> notification_important</span>
         <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) <= 30 && calculateDiff(row.dataNastepnejKontroli) >= 0"
           style="color: orange; margin-right: 5px;"> warning</span>
-        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green; margin-right: 5px;"> verified</span>
+        <!-- <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green; margin-right: 5px;"> verified</span>
+          {{row.dataNastepnejKontroli}} ({{calculateDiff(row.dataNastepnejKontroli) + ' dni'}}) -->
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green; margin-right: 5px;"> check</span>
           {{row.dataNastepnejKontroli}} ({{calculateDiff(row.dataNastepnejKontroli) + ' dni'}})
           <!-- ({{calculateDiff(row.dataNastepnejKontroli) > 0 ? ('za ' + calculateDiff(row.dataNastepnejKontroli) + ' dni') :
            (calculateDiff(row.dataNastepnejKontroli) == 0 ? 'dziś': 'po terminie ' + calculateDiff(row.dataNastepnejKontroli) + ' dni') }}) -->
       </mat-cell>
+
     </ng-container>
     <!-- miejsce -->
     <ng-container matColumnDef="miejsce">
@@ -85,21 +90,24 @@
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.idLokalizacja.nazwa}} ({{row.idLokalizacja.idObszar.nazwa}})
       </mat-cell>
+
     </ng-container>
     <!-- status -->
     <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class="matStatusHeader"> Status </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matStatusHeader text-info"> Status </mat-header-cell>
       <mat-cell *matCellDef="let row" class="matStatusRow"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
         [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.aktStatus.nazwa}}
       </mat-cell>
+
     </ng-container>
+
 
     <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
   </mat-table>
 </div>
-  <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator>
 
+  <mat-paginator class="paginator" #MatPaginator pageSize="12" [pageSizeOptions]="[10, 12, 15, 25, 50]" [hidePageSize]="false"></mat-paginator>
 
 </div>

@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 from rest_framework.pagination import PageNumberPagination
 from api import serializers
+from api._serializers import sw_spr_serializers
+from api._views import sw_spr_views
 from api import models
 import django_filters
 
@@ -87,10 +89,25 @@ class PrzyrzadyD3ViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PrzyrzadySerializerD3
     # pagination_class = StandardResultsSetPagination
 
+class PrzyrzadyFullFilter(django_filters.FilterSet):
+  max_st = django_filters.NumberFilter(field_name="aktStatus", lookup_expr="lt")
+
+  class Meta:
+      model = models.Przyrzady
+      fields = [
+          "max_st",
+          "id",
+          "nr",
+          "aktStatus",
+          "wzorzec",
+        ]
+
 class PrzyrzadyFullViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
-    queryset = models.Przyrzady.objects.all()
+    queryset = models.Przyrzady.objects.all().order_by('dataNastepnejKontroli')
     serializer_class = serializers.PrzyrzadyFullSerializer
+    filterset_class = PrzyrzadyFullFilter
+    ordering_fields = ['dataNastepnejKontroli', 'idGrupa']
     # pagination_class = StandardResultsSetPagination
 
 class PrzyrzadyNrViewSet(viewsets.ModelViewSet):
@@ -136,29 +153,18 @@ class JednostkiInterwalViewSet(viewsets.ModelViewSet):
     queryset = models.JednostkiInterwal.objects.all()
     serializer_class = serializers.JednostkiInterwalSerializer
 
-class SwiadectwoSprawdzeniaFilter(django_filters.FilterSet):
-    min_date = django_filters.DateFilter(field_name="dataSprawdzenia", lookup_expr="gte")
-    max_date = django_filters.DateFilter(field_name="dataSprawdzenia", lookup_expr="lte")
-
-    class Meta:
-        model = models.SwiadectwoSprawdzenia
-        fields = [
-            "min_date",
-            "max_date",
-            "wynikSprawdzenia",
-        ]
 
 class SwiadectwoSprawdzeniaViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SwiadectwoSprawdzenia.objects.all()
     serializer_class = serializers.SwiadectwoSprawdzeniaSerializer
     # filter_fields = ('id','nrSwiadectwa','przedmiot','przedmiotId','metoda','uzyteWzorce','warunkiSrodowiskowe','dataSprawdzenia','dataNastepnejKontroli','wynikSprawdzenia','uwagi','sprawdzajacy','sprawdzenieZewnetrzne','plik')
-    filterset_class = SwiadectwoSprawdzeniaFilter
+    filterset_class = sw_spr_views.SwiadectwoSprawdzeniaFilter
 
     def retrieve(self, request, *args, **kwargs):
       instance = self.get_object()
-      print('tekst')
-      print(instance)
+      # print('tekst')
+      # print(instance)
       serializer = self.get_serializer(instance)
       return Response(serializer.data)
 

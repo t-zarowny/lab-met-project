@@ -5,7 +5,7 @@ import { MeasurementCard } from './measurementCard';
 
 export class GroupInstrument {
   id?: number;
-  nazwa: string;
+  nazwa?: string;
   nrGrupy?: number;
   metodaKontroli?: string;
   interwalWartosc?: number;

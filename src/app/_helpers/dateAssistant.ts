@@ -12,6 +12,9 @@ export class DateAssistant {
       case 'd':
         add(nextDate, group.interwalWartosc, 'days');
         break;
+      case 't':
+        add(nextDate, group.interwalWartosc, 'weeks');
+        break;
       case 'm':
         add(nextDate, group.interwalWartosc, 'month');
         break;

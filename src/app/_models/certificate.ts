@@ -3,7 +3,7 @@ import { InstrumentFull } from 'src/app/_models';
 export class Certificate {
   id?: number;
   nrSwiadectwa: string;
-  przedmiot: string;
+  przedmiot?: string;
   przedmiotId: InstrumentFull;
   metoda?: string;
   uzyteWzorce?: string;

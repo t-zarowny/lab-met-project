@@ -311,41 +311,4 @@ export class CertificateDialogComponent implements OnInit {
     }
   }
 
-  // add(event: MatChipInputEvent): void {
-  //   const input = event.input;
-  //   const value = event.value;
-
-  //   // Add our fruit
-  //   if ((value || '').trim()) {
-  //     this.instrumentPattern.push(value.trim());
-  //   }
-
-  //   // Reset the input value
-  //   if (input) {
-  //     input.value = '';
-  //   }
-
-  //   this.InstrumentPatternCtrl.setValue(null);
-  // }
-
-  // remove(fruit: string): void {
-  //   const index = this.instrumentPattern.indexOf(fruit);
-
-  //   if (index >= 0) {
-  //     this.instrumentPattern.splice(index, 1);
-  //   }
-  // }
-
-  // selected(event: MatAutocompleteSelectedEvent): void {
-  //   this.instrumentPattern.push(event.option.viewValue);
-  //   this.fruitInput.nativeElement.value = '';
-  //   this.InstrumentPatternCtrl.setValue(null);
-  // }
-
-  // private _filter(value: string): string[] {
-  //   const filterValue = value.toLowerCase();
-
-  //   return this.allInstrumentPattern.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
-  // }
-
 }

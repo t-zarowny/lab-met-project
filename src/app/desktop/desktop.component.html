@@ -1,3 +1,110 @@
-<p>
-desktop works!
-</p>
+<div class="nag_comp d-inline-block w-100">
+  <mat-toolbar class="p-1 d-flex justify-content-between">
+    <mat-toolbar-row>
+      <h4 class="text-capitalize ">Przyrządy</h4>
+      <button mat-raised-button (click)="openDialogTimetable()"
+       class="m-1">Hamonogram kontroli</button>
+    </mat-toolbar-row>
+    <mat-form-field style="margin-bottom: -10px;">
+      <mat-label>Wyszukaj</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Wpisz czego szukasz?">
+    </mat-form-field>
+  </mat-toolbar>
+</div>
+<div class="mat-elevation-z8 mr-2 ml-2 mb-2" style="height: calc(100% - 100px);">
+<div class="table-container">
+  <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort" matSortActive="dataNastepnejKontroli" matSortDirection="asc" matSortDisableClear>
+    <!-- Nr -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matHeader1 text-info"> Numer </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matColumn1"
+        (mouseenter)="$event ? selection.select(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        (mouseleave)="$event ? selection.clear() : null; highlight(-1);"
+        (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrString}} </mat-cell>
+      <!-- <mat-cell *matCellDef="let row" class="matIdColumn" [ngClass]="{'matSelectRow': expandedElement == row}">
+               {{row.id}} </mat-cell> -->
+    </ng-container>
+    <!-- nazwa -->
+    <ng-container matColumnDef="nazwa">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matHeader2 text-info"> Nazwa </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matColumn2"
+        (mouseenter)="$event ? selection.select(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        (mouseleave)="$event ? selection.clear() : null; highlight(-1);"
+        (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nazwa}} </mat-cell>
+    </ng-container>
+    <!-- typ -->
+    <ng-container matColumnDef="typ">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matHeader3 text-info"> Typ </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matColumn3"
+        (mouseenter)="$event ? selection.select(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        (mouseleave)="$event ? selection.clear() : null; highlight(-1);"
+        (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.typ}}
+      </mat-cell>
+
+    </ng-container>
+    <!-- Nr fabryczny -->
+    <ng-container matColumnDef="nrFabryczny">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matHeader4 text-info"> Nr fabryczny </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matColumn4"
+        (mouseenter)="$event ? selection.select(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        (mouseleave)="$event ? selection.clear() : null; highlight(-1);"
+        (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.nrFabryczny}}
+      </mat-cell>
+
+    </ng-container>
+    <!-- dataNastepnejKontroli -->
+    <ng-container matColumnDef="dataNastepnejKontroli">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matHeader5 text-info"> Data nast.kontroli </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matColumn5"
+        (mouseenter)="$event ? selection.select(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        (mouseleave)="$event ? selection.clear() : null; highlight(-1);"
+        (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) < 0" style="color: red; margin-right: 5px;"> notification_important</span>
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) <= 30 && calculateDiff(row.dataNastepnejKontroli) >= 0"
+          style="color: orange; margin-right: 5px;"> warning</span>
+        <!-- <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green; margin-right: 5px;"> verified</span>
+          {{row.dataNastepnejKontroli}} ({{calculateDiff(row.dataNastepnejKontroli) + ' dni'}}) -->
+        <span class="material-icons" *ngIf="calculateDiff(row.dataNastepnejKontroli) > 30" style="color: green; margin-right: 5px;"> check</span>
+          {{row.dataNastepnejKontroli}} ({{calculateDiff(row.dataNastepnejKontroli) + ' dni'}})
+          <!-- ({{calculateDiff(row.dataNastepnejKontroli) > 0 ? ('za ' + calculateDiff(row.dataNastepnejKontroli) + ' dni') :
+           (calculateDiff(row.dataNastepnejKontroli) == 0 ? 'dziś': 'po terminie ' + calculateDiff(row.dataNastepnejKontroli) + ' dni') }}) -->
+      </mat-cell>
+
+    </ng-container>
+    <!-- miejsce -->
+    <ng-container matColumnDef="miejsce">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matHeader6 text-info"> Lokalizacja </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matColumn6"
+        (mouseenter)="$event ? selection.select(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        (mouseleave)="$event ? selection.clear() : null; highlight(-1);"
+        (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.idLokalizacjaString}}
+      </mat-cell>
+
+    </ng-container>
+    <!-- status -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="matHeader7 text-info"> Status </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="matColumn7"
+        (mouseenter)="$event ? selection.select(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
+        (mouseleave)="$event ? selection.clear() : null; highlight(-1);"
+        (click)="openDialogInstrumentData(selection.selected[0].id)"
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.aktStatusString}}
+      </mat-cell>
+
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
+  </mat-table>
+</div>
+
+  <mat-paginator class="paginator" #MatPaginator pageSize="20" [pageSizeOptions]="[10, 20, 50, 100]" [hidePageSize]="false"></mat-paginator>
+
+</div>

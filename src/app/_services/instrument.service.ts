@@ -16,8 +16,8 @@ export class InstrumentService {
   getAllPattern(){
     return this.http.get<InstrumentFull[]>(`${environment.apiUrl}przyrzady-wzorce/`);
   }
-  getAll() {
-    return this.http.get<InstrumentFull[]>(`${environment.apiUrl}przyrzady-full/`);
+  getAll(param: string = '') {
+    return this.http.get<InstrumentFull[]>(`${environment.apiUrl}przyrzady-full/${param}`);
   }
   getAllNr() {
     return this.http.get<any[]>(`${environment.apiUrl}przyrzady-nr/`);

@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from api import views
+from api._views import sw_spr_views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -28,6 +29,7 @@ router.register(r'statusy', views.StatusViewSet)
 router.register(r'JednostkiBadane', views.JednostkiBadaneViewSet)
 router.register(r'JednostkiInterwal', views.JednostkiInterwalViewSet)
 router.register(r'swiadectwo-sprawdzenia', views.SwiadectwoSprawdzeniaViewSet)
+router.register(r'swiadectwo-sprawdzenia-harmonogram', sw_spr_views.SwiadectwoSprawdzeniaHarmonogramViewSet)
 router.register(r'swiadectwo-sprawdzenia-min', views.SwiadectwoSprawdzeniaMinViewSet, basename='swiadectwo-sprawdzenia-min')
 router.register(r'swiadectwo-sprawdzenia-szablon', views.SwiadectwoSprawdzeniaSzablonViewSet)
 router.register(r'swiadectwo-sprawdzenia-plik', views.SwiadectwoSprawdzeniaPlikViewSet)

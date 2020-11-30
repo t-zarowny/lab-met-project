@@ -72,7 +72,7 @@
     <mat-form-field  class="w-50 p-1">
       <mat-label>Status</mat-label>
       <mat-select  formControlName="aktStatus" [(value)]="selectedStateId" >
-        <mat-option *ngFor="let item of listState" [value]="item.id">{{item.nazwa}}</mat-option>
+        <mat-option *ngFor="let item of listState" [value]="item.id" [class.hidden]="item.id === 3">{{item.nazwa}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-slide-toggle formControlName="wzorzec" class="slide-wzorzec"> Przyrząd jest wzorcem: <b>{{wzorzec.value ? 'TAK' : 'NIE'}}</b></mat-slide-toggle>

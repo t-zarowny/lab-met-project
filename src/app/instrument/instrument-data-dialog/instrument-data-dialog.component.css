@@ -96,3 +96,15 @@ mat-list-item{
   position: relative;
   top: -5px;
 }
+ul {
+  list-style-type: none;
+  column-count: 3;
+}
+
+li:before {
+content: "• ";
+}
+.h-content{
+  height: 375px;
+  overflow-y: auto;
+}

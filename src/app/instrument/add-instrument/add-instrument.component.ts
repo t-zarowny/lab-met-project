@@ -20,7 +20,7 @@ export class AddinstrumentComponent implements OnInit {
   selectedAreaId = 0;
   selectedAreaName = '';
   listState: State[];
-  selectedStateId = 3;
+  selectedStateId = 0;
   isSample = false;
   currentNrList: any[];
   currentNrListOk = false;

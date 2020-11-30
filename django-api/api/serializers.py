@@ -20,6 +20,8 @@ class SwiadectwoSprawdzeniaSerializer(serializers.ModelSerializer):
     model = models.SwiadectwoSprawdzenia
     fields = ['id','nrSwiadectwa','przedmiot','przedmiotId','metoda','uzyteWzorce','warunkiSrodowiskowe','dataSprawdzenia','dataNastepnejKontroli','wynikSprawdzenia','uwagi','sprawdzajacy','sprawdzenieZewnetrzne','plik']
 
+
+
 class SwiadectwoSprawdzeniaMinSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.SwiadectwoSprawdzenia

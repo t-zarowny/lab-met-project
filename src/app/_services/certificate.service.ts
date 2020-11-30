@@ -14,6 +14,7 @@ export class CertificateService {
   urlNr = 'swiadectwo-sprawdzenia-min';
   urlFile = 'swiadectwo-sprawdzenia-plik';
   urlTemplate = 'swiadectwo-sprawdzenia-szablon';
+  urlTimetable = 'swiadectwo-sprawdzenia-harmonogram';
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +26,11 @@ export class CertificateService {
   }
   getAll() {
     return this.http.get<Certificate[]>(`${environment.apiUrl}${this.url}/`);
+  }
+  getBetweenDates(startDate: string, endDate: string, id?: number) {
+    let param = '?min_date=' + startDate + '&max_date=' + endDate;
+    param = id ? param + '&przedmiotId=' + id : param;
+    return this.http.get<Certificate[]>(`${environment.apiUrl}${this.urlTimetable}/${param}`);
   }
   add(data: FormData) {
     return this.http.post<Certificate>(`${environment.apiUrl}${this.url}/`, data);
