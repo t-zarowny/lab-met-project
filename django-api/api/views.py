@@ -133,6 +133,13 @@ class PrzyrzadyDatyViewSet(viewsets.ModelViewSet):
   serializer_class = serializers.PrzyrzadyDatySerializer
   # pagination_class = StandardResultsSetPagination
 
+class PrzyrzadyHarmonogramViewSet(viewsets.ModelViewSet):
+  queryset = models.Przyrzady.objects.all()
+  serializer_class = serializers.PrzyrzadyHarmonogramSerializer
+  # pagination_class = StandardResultsSetPagination
+  filterset_class = PrzyrzadyFullFilter
+  ordering_fields = ['dataNastepnejKontroli', 'idGrupa']
+
 class SprawdzeniaPlanoweViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.SprawdzeniaPlanowe.objects.all()

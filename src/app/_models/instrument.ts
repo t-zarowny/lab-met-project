@@ -17,11 +17,11 @@ export class Instrument {
   idLokalizacjaString?: string | null;
   aktStatus: number;
   aktStatusString?: string | null;
-  wzorzec: boolean;
-  sprawdzeniaPlanowe?: Inspection[] | null;
+  wzorzec?: boolean;
   dataOstatniejKontroli?: Date | null;
   dataNastepnejKontroli?: Date | null;
   nrAktualnegoSwiadectwa?: string | null;
+  sprawdzeniaPlanowe?: Inspection[];
 }
 export class InstrumentMin {
   id: number;

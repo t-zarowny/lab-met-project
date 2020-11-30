@@ -1,6 +1,7 @@
 export class Inspection {
-  id: number;
-  idPrzyrzad: number;
-  dataPlanowa?: Date;
+  id?: number | null;
+  idPrzyrzad?: number | null;
+  dataPlanowa?: Date | null;
+  nrSwiadectwa?: string | null;
 }
 
