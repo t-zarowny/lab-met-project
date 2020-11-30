@@ -17,6 +17,38 @@
       <mat-divider></mat-divider>
     </form>
   </div>
+  <div class="dataTable ">
+    <mat-spinner *ngIf="!readyToView"></mat-spinner>
+    <div class="mat-elevation-z8 h-100 overflow-auto" *ngIf="readyToView">
+      <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
+        <!-- Nr Column -->
+        <ng-container matColumnDef="nrString">
+          <mat-header-cell *matHeaderCellDef> Numer </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nrString}} </mat-cell>
+        </ng-container>
+
+        <!-- nazwa Column -->
+        <ng-container matColumnDef="nazwa">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nazwa}} </mat-cell>
+        </ng-container>
+
+        <!-- nrFabryczny Column -->
+        <ng-container matColumnDef="nrFabryczny">
+          <mat-header-cell *matHeaderCellDef> Nr fabryczny </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nrFabryczny}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
+
+      </mat-table>
+
+      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+
+    </div>
+      <mat-paginator class="paginator" #MatPaginator pageSize="12" [pageSizeOptions]="[10, 12, 15, 25, 50]" [hidePageSize]="false" showFirstLastButtons></mat-paginator>
+  </div>
 
 </div>
 <div mat-dialog-actions class="p-2 border-top d-flex justify-content-end">
