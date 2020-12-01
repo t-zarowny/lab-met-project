@@ -1,7 +1,7 @@
 <div style="height: calc(100% - 60px)">
   <h1 mat-dialog-title
     class="p-1 w-100 text-center text-capitalize border-bottom bg-secondary text-white shadow rounded">
-    Harmonogram kontroli
+    Roczny harmonogram kontroli
   </h1>
 
   <div class="select-data">
@@ -19,35 +19,74 @@
   </div>
   <div class="dataTable ">
     <mat-spinner *ngIf="!readyToView"></mat-spinner>
-    <div class="mat-elevation-z8 h-100 overflow-auto" *ngIf="readyToView">
-      <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort="matSort">
-        <!-- Nr Column -->
-        <ng-container matColumnDef="nrString">
-          <mat-header-cell *matHeaderCellDef> Numer </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nrString}} </mat-cell>
-        </ng-container>
+    <div class=" h-100 overflow-auto" *ngIf="readyToView">
+      <table class="timetab">
+        <tr>
+          <th rowspan="2">Numer</th>
+          <th rowspan="2">Nazwa przyrządu</th>
+          <th colspan="12">Harmonogram sprawdzeń na rok {{startDate.getFullYear()}}</th>
+        </tr>
+        <tr>
+          <th class="col-month">I</th>
+          <th class="col-month">II</th>
+          <th class="col-month">III</th>
+          <th class="col-month">IV</th>
+          <th class="col-month">V</th>
+          <th class="col-month">VI</th>
+          <th class="col-month">VII</th>
+          <th class="col-month">VIII</th>
+          <th class="col-month">IX</th>
+          <th class="col-month">X</th>
+          <th class="col-month">XI</th>
+          <th class="col-month">XII</th>
+        </tr>
+        <tr *ngFor="let row of instrumentList;">
+          <td>{{row.nrString}}</td>
+          <td>{{row.nazwa}} ({{row.nrFabryczny}})</td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 0) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 1) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 2) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 3) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 4) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 5) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 6) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 7) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 8) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 9) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 10) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+          <td>
+            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 11) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+          </td>
+        </tr>
 
-        <!-- nazwa Column -->
-        <ng-container matColumnDef="nazwa">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nazwa}} </mat-cell>
-        </ng-container>
+      </table>
 
-        <!-- nrFabryczny Column -->
-        <ng-container matColumnDef="nrFabryczny">
-          <mat-header-cell *matHeaderCellDef> Nr fabryczny </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nrFabryczny}} </mat-cell>
-        </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"></mat-row>
-
-      </mat-table>
-
-      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
 
     </div>
-      <mat-paginator class="paginator" #MatPaginator pageSize="12" [pageSizeOptions]="[10, 12, 15, 25, 50]" [hidePageSize]="false" showFirstLastButtons></mat-paginator>
+
   </div>
 
 </div>

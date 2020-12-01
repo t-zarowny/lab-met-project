@@ -99,6 +99,7 @@ export class DesktopComponent implements OnInit, AfterViewInit {
     };
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.openDialogTimetable();
   }
   checkboxLabel(row?: InstrumentFull): string {
     if (!row) {

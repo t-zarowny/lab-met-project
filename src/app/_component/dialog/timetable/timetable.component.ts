@@ -86,7 +86,8 @@ export class TimetableComponent implements OnInit, AfterViewInit {
           const certFilter = cert.filter(x => x.przedmiotId.id === instrElement.id);
 
           certFilter.forEach( certElement => {
-            instrElement.sprawdzeniaPlanowe.push({dataPlanowa: certElement.dataSprawdzenia, nrSwiadectwa: certElement.nrSwiadectwa});
+            instrElement.sprawdzeniaPlanowe
+            .push({dataPlanowa: new Date(certElement.dataSprawdzenia), nrSwiadectwa: certElement.nrSwiadectwa});
           });
 
           if (instrElement.dataNastepnejKontroli){

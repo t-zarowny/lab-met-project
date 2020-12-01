@@ -2,7 +2,22 @@
   padding: 0px;
   text-align: center;
   width: 100%;
+  font-size: small;
 }
 .dataTable{
   height: 500px;
+  overflow: hidden;
+}
+.timetab{
+  width: 100%;
+  overflow: hidden;
+}
+.timetab, th, td
+{
+  border: 1px solid black;
+  text-align: center;
+  font-size: small;
+}
+.col-month{
+  width: 40px;
 }
