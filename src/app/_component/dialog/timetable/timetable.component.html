@@ -6,6 +6,8 @@
 
   <div class="select-data">
     <form [formGroup]="yearForm">
+      <mat-toolbar class="p-1 d-flex justify-content-between">
+        <mat-toolbar-row>
       <mat-form-field appearance="fill">
         <mat-label>Harmonogram na rok:</mat-label>
         <mat-select name="year" [(ngModel)]="selectedValue" formControlName="year">
@@ -14,16 +16,20 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button (click)="buttClick()">Click</button>
+          <button mat-raised-button color="primary" ng-reflect-color="warn" type="button" class="ml-2" style="position: relative; top: -5px;">
+            Pobierz harmonogram w formacie PDF
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
     </form>
   </div>
   <div class="dataTable ">
 
 
-      <table class="timetab" style="width: calc(100% - 15px);">
+      <table class="timetab1">
         <tr>
-          <th rowspan="2">Numer</th>
-          <th rowspan="2">Nazwa przyrządu</th>
+          <th rowspan="2" class="col-nr">Numer</th>
+          <th rowspan="2" class="col-name">Nazwa przyrządu</th>
           <th colspan="12">Harmonogram sprawdzeń na rok {{startDate.getFullYear()}}</th>
         </tr>
         <tr>
@@ -42,46 +48,58 @@
         </tr>
       </table>
       <mat-spinner *ngIf="!readyToView" style="margin-left: 400px; margin-top: 130px;"></mat-spinner>
-      <div class=" h-100" style="overflow-y: scroll;" *ngIf="readyToView">
+      <div style="overflow-y: scroll; height: calc(100% - 50px);" *ngIf="readyToView">
       <table class="timetab">
         <tr *ngFor="let row of instrumentList;">
-          <td>{{row.nrString}}</td>
-          <td>{{row.nazwa}} ({{row.nrFabryczny}})</td>
+          <td  class="col-nr">{{row.nrString}}</td>
+          <td class="col-name">{{row.nazwa}} ({{row.nrFabryczny}})</td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 0) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 0) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweSty}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 1) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 1) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweLut}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 2) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 2) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweMar}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 3) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 3) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweKwi}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 4) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 4) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweMaj}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 5) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 5) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweCze}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 6) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 6) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweLip}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 7) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 7) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweSie}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 8) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 8) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweWrz}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 9) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 9) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanowePaz}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 10) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 10) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweLis}}
           </td>
           <td class="col-month">
-            <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 11) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span>
+            <!-- <span *ngFor="let term of row.sprawdzeniaPlanowe">{{((term.dataPlanowa.getMonth()) === 11) ? (term.dataPlanowa | date: 'dd' + ',') : ''}} </span> -->
+            {{row.sprawdzeniaPlanoweGru}}
           </td>
         </tr>
 

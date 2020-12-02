@@ -22,6 +22,18 @@ export class Instrument {
   dataNastepnejKontroli?: Date | null;
   nrAktualnegoSwiadectwa?: string | null;
   sprawdzeniaPlanowe?: Inspection[];
+  sprawdzeniaPlanoweSty?: string | null;
+  sprawdzeniaPlanoweLut?: string | null;
+  sprawdzeniaPlanoweMar?: string | null;
+  sprawdzeniaPlanoweKwi?: string | null;
+  sprawdzeniaPlanoweMaj?: string | null;
+  sprawdzeniaPlanoweCze?: string | null;
+  sprawdzeniaPlanoweLip?: string | null;
+  sprawdzeniaPlanoweSie?: string | null;
+  sprawdzeniaPlanoweWrz?: string | null;
+  sprawdzeniaPlanowePaz?: string | null;
+  sprawdzeniaPlanoweLis?: string | null;
+  sprawdzeniaPlanoweGru?: string | null;
 }
 export class InstrumentMin {
   id: number;

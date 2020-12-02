@@ -5,19 +5,29 @@
   font-size: small;
 }
 .dataTable{
-  height: 500px;
+  height: 560px;
   overflow: hidden;
 }
 .timetab{
-  width: 100%;
   overflow: hidden;
 }
-.timetab, th, td
+.timetab, .timetab1, th, td
 {
   border: 1px solid black;
   text-align: center;
   font-size: small;
 }
+.timetab1{
+  margin-right: 10px;
+}
 .col-month{
   width: 40px;
+}
+.col-nr{
+  width: 100px;
+}
+.col-name{
+  width: 330px;
+  text-align: left;
+  padding-left: 7px;
 }

@@ -51,14 +51,14 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
   ngAfterViewInit(): void {
     // this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
     this.dataSource.paginator = this.paginator;
-    console.log('AfterViewInit');
+    // console.log('AfterViewInit');
   }
   ngAfterViewChecked() {
     // console.log('ngAfterViewChecked');
   }
 
   ngDoCheck(): void{
-    console.log('ngDoCheck');
+    // console.log('ngDoCheck');
   }
 
   get year() { return this.yearForm.get('year'); }
@@ -87,14 +87,15 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
       this.yearForm.controls.year.valueChanges.subscribe( val => {
         this.readyToView = false;
         console.log('była zmiana1');
-        console.log(this.selectedValue);
-        setTimeout(() => {
-          this.refresh();
-        }, 1000);
-        // this.refresh();
+        console.log(val);
+        this.selectedValue = val;
+        // setTimeout(() => {
+        //   this.refresh();
+        // }, 100);
+        this.refresh();
       });
       this.year.setValue(this.selectedValue);
-      console.log(this.selectedValue);
+      // console.log(this.selectedValue);
     });
 
   }
@@ -119,69 +120,30 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
         this.instrumentList.forEach( instrElement => {
           const grupa = this.groupList.filter(x => x.id === instrElement.idGrupa);
           instrElement.sprawdzeniaPlanowe = new Array<Inspection>();
+          instrElement.sprawdzeniaPlanoweSty = '';
+          instrElement.sprawdzeniaPlanoweLut = '';
+          instrElement.sprawdzeniaPlanoweMar = '';
+          instrElement.sprawdzeniaPlanoweKwi = '';
+          instrElement.sprawdzeniaPlanoweMaj = '';
+          instrElement.sprawdzeniaPlanoweCze = '';
+          instrElement.sprawdzeniaPlanoweLip = '';
+          instrElement.sprawdzeniaPlanoweSie = '';
+          instrElement.sprawdzeniaPlanoweWrz = '';
+          instrElement.sprawdzeniaPlanowePaz = '';
+          instrElement.sprawdzeniaPlanoweLis = '';
+          instrElement.sprawdzeniaPlanoweGru = '';
           const certFilter = cert.filter(x => x.przedmiotId.id === instrElement.id);
 
           certFilter.forEach( certElement => {
-            let insp = new Inspection();
-            let d = new Date(certElement.dataSprawdzenia);
-            switch (d.getMonth()){
-              case 0: {
-                        insp.dataPlanowa0 = d;
-                        break;
-                      }
-              case 1: {
-                        insp.dataPlanowa1 = d;
-                        break;
-                      }
-              case 2: {
-                        insp.dataPlanowa2 = d;
-                        break;
-                      }
-              case 3: {
-                        insp.dataPlanowa3 = d;
-                        break;
-                      }
-              case 4: {
-                        insp.dataPlanowa4 = d;
-                        break;
-                      }
-              case 5: {
-                        insp.dataPlanowa5 = d;
-                        break;
-                      }
-              case 6: {
-                        insp.dataPlanowa6 = d;
-                        break;
-                      }
-              case 7: {
-                        insp.dataPlanowa7 = d;
-                        break;
-                      }
-              case 8: {
-                        insp.dataPlanowa8 = d;
-                        break;
-                      }
-              case 9: {
-                        insp.dataPlanowa9 = d;
-                        break;
-                      }
-              case 10: {
-                        insp.dataPlanowa10 = d;
-                        break;
-                      }
-              case 11: {
-                        insp.dataPlanowa11 = d;
-                        break;
-                      }
-            }
-            insp.nrSwiadectwa = certElement.nrSwiadectwa;
-            instrElement.sprawdzeniaPlanowe
-            .push(insp);
+            const d = new Date(certElement.dataSprawdzenia);
+            const day = this.datePipe.transform(d, 'dd')  + ', ';
+            this.pushDateToInstrument(d, instrElement);
           });
 
           if (instrElement.dataNastepnejKontroli){
             this.propDate(grupa[0], this.startDate, new Date(instrElement.dataNastepnejKontroli), this.endDate).forEach( el => {
-              instrElement.sprawdzeniaPlanowe.push(el);
+              // instrElement.sprawdzeniaPlanowe.push(el);
+              this.pushDateToInstrument(el.dataPlanowa, instrElement, true);
             });
           }
           const nrGrupy = '0' + grupa[0].nrGrupy;
@@ -189,26 +151,72 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
           instrElement.nrString = 'ZPL.' + nrGrupy.slice(-2) + '.' + nrPrzyrz.slice(-4);
         });
         console.log(this.instrumentList);
-        // console.log(cert);
+        console.log(cert);
         this.dataSource.data = this.instrumentList;
         this.readyToView = true;
 
       });
     });
-    // this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
-    // this.paginator._intl.nextPageLabel = 'Następna strona';
-    // this.paginator._intl.previousPageLabel = 'Poprzednia strona';
-    // this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-    //   if (length === 0 || pageSize === 0) { return `0 z ${length}`; }
-    //   length = Math.max(length, 0);
-    //   const startIndex = page * pageSize;
-    //   const endIndex = startIndex < length ?
-    //       Math.min(startIndex + pageSize, length) :
-    //       startIndex + pageSize;
+  }
 
-    //   return `${startIndex + 1} – ${endIndex} z ${length}`;
-    // };
-
+  pushDateToInstrument(date: Date, instr: Instrument, prop = false){
+    const d = new Date(date);
+    let day = '';
+    if (prop){
+      day = '(' + this.datePipe.transform(d, 'dd')  + '), ';
+    }else{
+      day = this.datePipe.transform(d, 'dd')  + ', ';
+    }
+    switch (d.getMonth()){
+      case 0: {
+        instr.sprawdzeniaPlanoweSty = instr.sprawdzeniaPlanoweSty + day;
+        break;
+              }
+      case 1: {
+        instr.sprawdzeniaPlanoweLut = instr.sprawdzeniaPlanoweLut + day;
+        break;
+              }
+      case 2: {
+        instr.sprawdzeniaPlanoweMar = instr.sprawdzeniaPlanoweMar + day;
+        break;
+              }
+      case 3: {
+        instr.sprawdzeniaPlanoweKwi = instr.sprawdzeniaPlanoweKwi + day;
+        break;
+              }
+      case 4: {
+        instr.sprawdzeniaPlanoweMaj = instr.sprawdzeniaPlanoweMaj + day;
+        break;
+              }
+      case 5: {
+        instr.sprawdzeniaPlanoweCze = instr.sprawdzeniaPlanoweCze + day;
+        break;
+              }
+      case 6: {
+        instr.sprawdzeniaPlanoweLip = instr.sprawdzeniaPlanoweLip + day;
+        break;
+              }
+      case 7: {
+        instr.sprawdzeniaPlanoweSie = instr.sprawdzeniaPlanoweSie + day;
+        break;
+              }
+      case 8: {
+        instr.sprawdzeniaPlanoweWrz = instr.sprawdzeniaPlanoweWrz + day;
+        break;
+              }
+      case 9: {
+        instr.sprawdzeniaPlanowePaz = instr.sprawdzeniaPlanowePaz + day;
+        break;
+              }
+      case 10: {
+        instr.sprawdzeniaPlanoweLis = instr.sprawdzeniaPlanoweLis + day;
+        break;
+              }
+      case 11: {
+        instr.sprawdzeniaPlanoweGru = instr.sprawdzeniaPlanoweGru + day;
+        break;
+              }
+    }
   }
 
   propDate(grupa: GroupInstrument, firstDate: Date, dataStart: Date, dataEnd: Date): Inspection[]{
