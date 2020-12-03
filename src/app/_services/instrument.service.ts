@@ -38,22 +38,6 @@ export class InstrumentService {
   delete(id: number) {
     return this.http.delete(`${environment.apiUrl}przyrzady/${id}/`);
   }
-createHeaders(keys) {
-  let result = [];
-  // tslint:disable-next-line: prefer-for-of
-  for (let i = 0; i < keys.length; i += 1) {
-    result.push({
-      id: keys[i],
-      name: keys[i],
-      prompt: keys[i],
-      width: 65,
-      align: 'center',
-      padding: 0
-    });
-  }
-  return result;
-  }
-
 
 downloadTimetable(ins: Instrument[], year: string): void{
     const doc = new jsPDF({
@@ -76,18 +60,46 @@ downloadTimetable(ins: Instrument[], year: string): void{
     doc.text('Data wydruku: ' + new Date().toLocaleDateString() + 'r.', 277, 25, { align: 'right'});
     doc.setLineWidth(0.25);
     doc.line(20, 27, 277, 27);
-    doc.cell(20, 30, 40, 10, 'Numer', 1, 'center');
-    doc.cell(60, 30, 60, 10, 'Nazwa', 1, 'right');
-    const headers = this.createHeaders([
-      'nrString',
-      'nazwa',
-      'sprawdzeniaPlanoweGru',
-      'sprawdzeniaPlanoweLis',
-      'sprawdzeniaPlanoweMar',
-      'sprawdzeniaPlanoweKwi',
-      'sprawdzeniaPlanoweMaj'
-    ]);
-    doc.table(20, 40, ins, headers, { autoSize: true });
+    doc.cellInitialize();
+
+    let d = doc.getTextDimensions('dsasadsad');
+    console.log('dim:');
+    console.log(d);
+    doc.cell(20, 30, 40, 10, 'Numer', 0, 'center');
+    doc.cell(60, 30, 60, 10, 'Nazwa1', 1, 'right');
+    doc.cell(60, 30, 60, 10, '', 2, 'right');
+    const html = `<table class="timetab1" id="elementH">
+                  <tr>
+                    <th rowspan="2">Numer</th>
+                    <th rowspan="2">Nazwa przyrządu</th>
+                    <th colspan="12">Harmonogram sprawdzeń na rok 2020</th>
+                  </tr>
+                  <tr>
+                    <th class="col-month">I</th>
+                    <th class="col-month">II</th>
+                    <th class="col-month">III</th>
+                    <th class="col-month">IV</th>
+                    <th class="col-month">V</th>
+                    <th class="col-month">VI</th>
+                    <th class="col-month">VII</th>
+                    <th class="col-month">VIII</th>
+                    <th class="col-month">IX</th>
+                    <th class="col-month">X</th>
+                    <th class="col-month">XI</th>
+                    <th class="col-month">XII</th>
+                  </tr>
+                </table>`;
+    var specialElementHandlers = {
+      '#elementH': function (element, renderer) {
+        return true;
+      }
+    };
+    // doc.fromHTML(html, 10, 10);
+    doc.fromHTML(html, 15, 15, {
+      'width': 170,
+      'elementHandlers': specialElementHandlers
+  });
+
 
 
     doc.save('Harmonogram_roczny_' + year + '.pdf');

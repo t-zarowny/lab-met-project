@@ -90,17 +90,17 @@ export class TimetableComponent implements OnInit {
   }
 
   getPDF(){
-    // this.instrumentService.downloadTimetable(this.instrumentList, this.selectedValue.getFullYear().toString());
-    var data = document.getElementById('contentToConvert');
-    html2canvas(data).then(canvas => {
-      var imgWidth = 208;
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      const contentDataURL = canvas.toDataURL('image/png');
-      let pdf = new jsPDF('l', 'mm', 'a4');
-      var position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save('newPDF.pdf');
-    });
+    this.instrumentService.downloadTimetable(this.instrumentList, this.selectedValue.getFullYear().toString());
+    // var data = document.getElementById('contentToConvert');
+    // html2canvas(data).then(canvas => {
+    //   var imgWidth = 208;
+    //   var imgHeight = canvas.height * imgWidth / canvas.width;
+    //   const contentDataURL = canvas.toDataURL('image/png');
+    //   let pdf = new jsPDF('l', 'mm', 'a4');
+    //   var position = 0;
+    //   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+    //   pdf.save('newPDF.pdf');
+    // });
   }
 
   public refresh(){
