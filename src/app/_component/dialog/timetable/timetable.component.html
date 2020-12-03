@@ -10,20 +10,21 @@
         <mat-toolbar-row>
       <mat-form-field appearance="fill">
         <mat-label>Harmonogram na rok:</mat-label>
-        <mat-select name="year" [(ngModel)]="selectedValue" formControlName="year">
+        <mat-select name="year" formControlName="year">
           <mat-option *ngFor="let year of yearsList" [value]="year">
             {{year.getFullYear()}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-          <button mat-raised-button color="primary" ng-reflect-color="warn" type="button" class="ml-2" style="position: relative; top: -5px;">
+          <button mat-raised-button color="primary" ng-reflect-color="warn" type="button"
+                  [disabled]="!readyToView" (click)="getPDF()" class="ml-2" style="position: relative; top: -5px;">
             Pobierz harmonogram w formacie PDF
           </button>
         </mat-toolbar-row>
       </mat-toolbar>
     </form>
   </div>
-  <div class="dataTable ">
+  <div class="dataTable" id="contentToConvert">
 
 
       <table class="timetab1">
@@ -49,7 +50,7 @@
       </table>
       <mat-spinner *ngIf="!readyToView" style="margin-left: 400px; margin-top: 130px;"></mat-spinner>
       <div style="overflow-y: scroll; height: calc(100% - 50px);" *ngIf="readyToView">
-      <table class="timetab">
+      <table class="timetab" >
         <tr *ngFor="let row of instrumentList;">
           <td  class="col-nr">{{row.nrString}}</td>
           <td class="col-name">{{row.nazwa}} ({{row.nrFabryczny}})</td>

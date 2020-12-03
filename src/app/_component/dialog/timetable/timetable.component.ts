@@ -7,7 +7,7 @@ import { Inspection } from './../../../_models/inspection';
 import { Instrument } from './../../../_models/instrument';
 import { InstrumentService } from 'src/app/_services';
 import { CertificateService } from './../../../_services/certificate.service';
-import { Component, Inject, OnInit, ViewChild, AfterViewInit, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, AfterViewInit, OnChanges, SimpleChanges, DoCheck, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { add, subtract } from 'add-subtract-date';
 import { DatePipe } from '@angular/common';
@@ -16,12 +16,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AfterViewChecked } from '@angular/core';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   templateUrl: './timetable.component.html',
   styleUrls: ['./timetable.component.css']
 })
-export class TimetableComponent implements OnInit, AfterViewInit, AfterViewChecked, DoCheck {
+export class TimetableComponent implements OnInit {
 
   startDate: Date;
   endDate: Date;
@@ -36,7 +38,6 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
   dataSource: MatTableDataSource<Instrument>;
   readyToView = false;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: number,
@@ -48,18 +49,6 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.dataSource = new MatTableDataSource(Array<Instrument>());
   }
 
-  ngAfterViewInit(): void {
-    // this.paginator._intl.itemsPerPageLabel = 'Wyników na stronie:';
-    this.dataSource.paginator = this.paginator;
-    // console.log('AfterViewInit');
-  }
-  ngAfterViewChecked() {
-    // console.log('ngAfterViewChecked');
-  }
-
-  ngDoCheck(): void{
-    // console.log('ngDoCheck');
-  }
 
   get year() { return this.yearForm.get('year'); }
 
@@ -83,11 +72,11 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
     // console.log(this.yearsList);
     this.groupService.getList().subscribe( group => {
       this.groupList = group;
-      console.log('załadowałem grupy');
+      // console.log('załadowałem grupy');
       this.yearForm.controls.year.valueChanges.subscribe( val => {
         this.readyToView = false;
-        console.log('była zmiana1');
-        console.log(val);
+        // console.log('była zmiana1');
+        // console.log(val);
         this.selectedValue = val;
         // setTimeout(() => {
         //   this.refresh();
@@ -99,16 +88,24 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
     });
 
   }
-  buttClick(){
-    // this.year.setValue(new Date('2021-01-01'));
-    // this.readyToView = !this.readyToView;
-    this.readyToView = false;
-    this.refresh();
+
+  getPDF(){
+    // this.instrumentService.downloadTimetable(this.instrumentList, this.selectedValue.getFullYear().toString());
+    var data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+      var imgWidth = 208;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jsPDF('l', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('newPDF.pdf');
+    });
   }
 
   public refresh(){
     // console.log('refresh:');
-    console.log(this.selectedValue);
+    // console.log(this.selectedValue);
     this.startDate = this.selectedValue;
     this.endDate = new Date(this.selectedValue.getFullYear() + '-12-31');
     const param = '?max_st=3';
@@ -151,7 +148,7 @@ export class TimetableComponent implements OnInit, AfterViewInit, AfterViewCheck
           instrElement.nrString = 'ZPL.' + nrGrupy.slice(-2) + '.' + nrPrzyrz.slice(-4);
         });
         console.log(this.instrumentList);
-        console.log(cert);
+        // console.log(cert);
         this.dataSource.data = this.instrumentList;
         this.readyToView = true;
 
