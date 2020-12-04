@@ -16,8 +16,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AfterViewChecked } from '@angular/core';
-import * as jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+// declare var jsPDF: any;
+// import * from 'jspdf';
+// import 'jspdf-autotable';
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 @Component({
   templateUrl: './timetable.component.html',
@@ -91,6 +95,24 @@ export class TimetableComponent implements OnInit {
 
   getPDF(){
     this.instrumentService.downloadTimetable(this.instrumentList, this.selectedValue.getFullYear().toString());
+
+
+    // It can parse html:
+    // <table id="my-table"><!-- ... --></table>
+    // // doc.autoTable({ html: '#contentToConvert' });
+    // let doc = new jsPDF('l', 'pt');
+    // // doc.autoTable({ html: '#contentToConvert' });
+    // let columns = ["ID", "Name", "Country"];
+    // let rows = [
+    //     [1, "Shaw", "Tanzania"],
+    //     [2, "Nelson", "Kazakhstan"],
+    //     [3, "Garcia", "Madagascar"],
+    // ];
+
+
+    // doc.autoTable(columns, rows); // typescript compile time error
+    // doc.save('table.pdf');
+
     // var data = document.getElementById('contentToConvert');
     // html2canvas(data).then(canvas => {
     //   var imgWidth = 208;
