@@ -134,7 +134,7 @@ downloadTimetable(ins: Instrument[], year: string): void{
               { header: 13, dataKey: 'sprawdzeniaPlanoweGru' },
             ],
       body: ins,
-      didDrawPage: (data) => {
+      didDrawPage: data => {
               doc.addImage(CustomFonts.logoZehnderPng, 'PNG', 14, 10, 23, 14);
               // console.log(doc.getFontList());
               doc.setFont('DejaVuSans', 'Bold');
@@ -148,6 +148,14 @@ downloadTimetable(ins: Instrument[], year: string): void{
               doc.line(14, 190, 283, 190);
       }
     });
+    const totalPages = doc.internal.getNumberOfPages();
+    doc.setFont('DejaVuSans', 'normal');
+    doc.setFontSize(10);
+    for (let i = 1; i <= totalPages; i++){
+      doc.setPage(i);
+      const footerStr = 'Strona ' + i + ' z ' + totalPages;
+      doc.text(footerStr, 283, 195, { align: 'right'});
+    }
 
 
 
