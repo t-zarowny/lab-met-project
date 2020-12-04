@@ -110,6 +110,21 @@ class PrzyrzadyFullViewSet(viewsets.ModelViewSet):
     ordering_fields = ['dataNastepnejKontroli', 'idGrupa']
     # pagination_class = StandardResultsSetPagination
 
+    def list(self, request):
+      user = self.request.user
+      if user.is_staff:
+        queryset = models.Przyrzady.objects.all().order_by('dataNastepnejKontroli')
+      else:
+        queryset = models.Przyrzady.objects.filter(idLokalizacja__idObszar__idUser__exact=user.id).order_by('dataNastepnejKontroli')
+      # queryset = models.Przyrzady.objects.filter(idLokalizacja_idObszar_idUser_id__exact=user.id)
+
+      serializer = serializers.PrzyrzadyFullSerializer(queryset, many=True)
+
+      # if pk == "current":
+      # print(user.__getstate__())
+      # queryset = Model.objects.filter(engine_capacity__exact=5)
+      return Response(serializer.data)
+
 class PrzyrzadyNrViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = models.Przyrzady.objects.all()
