@@ -152,10 +152,9 @@ export class TimetableComponent implements OnInit {
           instrElement.sprawdzeniaPlanoweLis = '';
           instrElement.sprawdzeniaPlanoweGru = '';
           const certFilter = cert.filter(x => x.przedmiotId.id === instrElement.id);
-
           certFilter.forEach( certElement => {
             const d = new Date(certElement.dataSprawdzenia);
-            const day = this.datePipe.transform(d, 'dd')  + ', ';
+            // const day = this.datePipe.transform(d, 'dd')  + ',';
             this.pushDateToInstrument(d, instrElement);
           });
 
@@ -182,57 +181,69 @@ export class TimetableComponent implements OnInit {
     const d = new Date(date);
     let day = '';
     if (prop){
-      day = '(' + this.datePipe.transform(d, 'dd')  + '), ';
+      day = '(' + this.datePipe.transform(d, 'dd')  + '),';
     }else{
-      day = this.datePipe.transform(d, 'dd')  + ', ';
+      day = this.datePipe.transform(d, 'dd')  + ',';
     }
     switch (d.getMonth()){
       case 0: {
-        instr.sprawdzeniaPlanoweSty = instr.sprawdzeniaPlanoweSty + day;
+        instr.sprawdzeniaPlanoweSty = instr.sprawdzeniaPlanoweSty.length > 2 ?
+          instr.sprawdzeniaPlanoweSty + ' ' + day : instr.sprawdzeniaPlanoweSty + day;
         break;
               }
       case 1: {
-        instr.sprawdzeniaPlanoweLut = instr.sprawdzeniaPlanoweLut + day;
+        instr.sprawdzeniaPlanoweLut = instr.sprawdzeniaPlanoweLut.length > 2 ?
+          instr.sprawdzeniaPlanoweLut + ' ' + day : instr.sprawdzeniaPlanoweLut + day;
         break;
               }
       case 2: {
-        instr.sprawdzeniaPlanoweMar = instr.sprawdzeniaPlanoweMar + day;
+        instr.sprawdzeniaPlanoweMar = instr.sprawdzeniaPlanoweMar.length > 2 ?
+          instr.sprawdzeniaPlanoweMar + ' ' + day : instr.sprawdzeniaPlanoweMar + day;
         break;
               }
       case 3: {
-        instr.sprawdzeniaPlanoweKwi = instr.sprawdzeniaPlanoweKwi + day;
+        instr.sprawdzeniaPlanoweKwi = instr.sprawdzeniaPlanoweKwi.length > 2 ?
+          instr.sprawdzeniaPlanoweKwi + ' ' + day : instr.sprawdzeniaPlanoweKwi + day;
         break;
               }
       case 4: {
-        instr.sprawdzeniaPlanoweMaj = instr.sprawdzeniaPlanoweMaj + day;
+        instr.sprawdzeniaPlanoweMaj = instr.sprawdzeniaPlanoweMaj.length > 2 ?
+          instr.sprawdzeniaPlanoweMaj + ' ' + day : instr.sprawdzeniaPlanoweMaj + day;
         break;
               }
       case 5: {
-        instr.sprawdzeniaPlanoweCze = instr.sprawdzeniaPlanoweCze + day;
+        instr.sprawdzeniaPlanoweCze = instr.sprawdzeniaPlanoweCze.length > 2 ?
+          instr.sprawdzeniaPlanoweCze + ' ' + day : instr.sprawdzeniaPlanoweCze + day;
         break;
               }
       case 6: {
-        instr.sprawdzeniaPlanoweLip = instr.sprawdzeniaPlanoweLip + day;
+        instr.sprawdzeniaPlanoweLip = instr.sprawdzeniaPlanoweLip.length > 2 ?
+          instr.sprawdzeniaPlanoweLip + ' ' + day : instr.sprawdzeniaPlanoweLip + day;
         break;
               }
       case 7: {
-        instr.sprawdzeniaPlanoweSie = instr.sprawdzeniaPlanoweSie + day;
+        instr.sprawdzeniaPlanoweSie = instr.sprawdzeniaPlanoweSie.length > 2 ?
+          instr.sprawdzeniaPlanoweSie + ' ' + day : instr.sprawdzeniaPlanoweSie + day;
         break;
               }
       case 8: {
-        instr.sprawdzeniaPlanoweWrz = instr.sprawdzeniaPlanoweWrz + day;
+        instr.sprawdzeniaPlanoweWrz = instr.sprawdzeniaPlanoweWrz.length > 2 ?
+          instr.sprawdzeniaPlanoweWrz + ' ' + day : instr.sprawdzeniaPlanoweWrz + day;
         break;
               }
       case 9: {
-        instr.sprawdzeniaPlanowePaz = instr.sprawdzeniaPlanowePaz + day;
+        instr.sprawdzeniaPlanowePaz = instr.sprawdzeniaPlanowePaz.length > 2 ?
+          instr.sprawdzeniaPlanowePaz + ' ' + day : instr.sprawdzeniaPlanowePaz + day;
         break;
               }
       case 10: {
-        instr.sprawdzeniaPlanoweLis = instr.sprawdzeniaPlanoweLis + day;
+        instr.sprawdzeniaPlanoweLis = instr.sprawdzeniaPlanoweLis.length > 2 ?
+          instr.sprawdzeniaPlanoweLis + ' ' + day : instr.sprawdzeniaPlanoweLis + day;
         break;
               }
       case 11: {
-        instr.sprawdzeniaPlanoweGru = instr.sprawdzeniaPlanoweGru + day;
+        instr.sprawdzeniaPlanoweGru = instr.sprawdzeniaPlanoweGru.length > 2 ?
+          instr.sprawdzeniaPlanoweGru + ' ' + day : instr.sprawdzeniaPlanoweGru + day;
         break;
               }
     }
