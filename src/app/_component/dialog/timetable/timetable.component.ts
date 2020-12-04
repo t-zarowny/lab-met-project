@@ -1,24 +1,16 @@
 import { FormGroup, FormControl } from '@angular/forms';
-import { HttpEvent } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 import { GroupInstrument } from './../../../_models/group';
 import { GroupService } from './../../../_services/group.service';
 import { Inspection } from './../../../_models/inspection';
 import { Instrument } from './../../../_models/instrument';
 import { InstrumentService } from 'src/app/_services';
 import { CertificateService } from './../../../_services/certificate.service';
-import { Component, Inject, OnInit, ViewChild, AfterViewInit, OnChanges, SimpleChanges, DoCheck, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { add, subtract } from 'add-subtract-date';
+import { add } from 'add-subtract-date';
 import { DatePipe } from '@angular/common';
 import { DateAssistant } from 'src/app/_helpers';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { AfterViewChecked } from '@angular/core';
-// declare var jsPDF: any;
-// import * from 'jspdf';
-// import 'jspdf-autotable';
+
 declare const require: any;
 const jsPDF = require('jspdf');
 require('jspdf-autotable');
@@ -33,13 +25,11 @@ export class TimetableComponent implements OnInit {
   endDate: Date;
   yearForm: FormGroup;
   selectedValue: Date;
+  selectedGroup: GroupInstrument;
   yearsList: Array<Date> = [];
   instrumentList: Instrument[];
   groupList: GroupInstrument[];
-  // displayedColumns: string[] = ['nrString', 'nazwa', 'nrFabryczny', 'styczen', 'luty', 'marzec',
-  // 'kwiecien', 'maj', 'czerwiec', 'lipiec', 'sierpien', 'wrzesien', 'pazdziernik', 'listopad', 'grudzien'];
   displayedColumns: string[] = ['nrString', 'nazwa', 'nrFabryczny'];
-  dataSource: MatTableDataSource<Instrument>;
   readyToView = false;
 
 
@@ -49,10 +39,7 @@ export class TimetableComponent implements OnInit {
               private instrumentService: InstrumentService,
               private groupService: GroupService,
               private datePipe: DatePipe) {
-    // this.dataSource = new MatTableDataSource<Instrument>(this.instrumentList);
-    this.dataSource = new MatTableDataSource(Array<Instrument>());
   }
-
 
   get year() { return this.yearForm.get('year'); }
 
@@ -73,14 +60,10 @@ export class TimetableComponent implements OnInit {
       d = new Date(d.getTime());
       add(d, 1, 'year');
     }
-    // console.log(this.yearsList);
     this.groupService.getList().subscribe( group => {
       this.groupList = group;
-      // console.log('załadowałem grupy');
       this.yearForm.controls.year.valueChanges.subscribe( val => {
         this.readyToView = false;
-        // console.log('była zmiana1');
-        // console.log(val);
         this.selectedValue = val;
         // setTimeout(() => {
         //   this.refresh();
@@ -95,39 +78,9 @@ export class TimetableComponent implements OnInit {
 
   getPDF(){
     this.instrumentService.downloadTimetable(this.instrumentList, this.selectedValue.getFullYear().toString());
-
-
-    // It can parse html:
-    // <table id="my-table"><!-- ... --></table>
-    // // doc.autoTable({ html: '#contentToConvert' });
-    // let doc = new jsPDF('l', 'pt');
-    // // doc.autoTable({ html: '#contentToConvert' });
-    // let columns = ["ID", "Name", "Country"];
-    // let rows = [
-    //     [1, "Shaw", "Tanzania"],
-    //     [2, "Nelson", "Kazakhstan"],
-    //     [3, "Garcia", "Madagascar"],
-    // ];
-
-
-    // doc.autoTable(columns, rows); // typescript compile time error
-    // doc.save('table.pdf');
-
-    // var data = document.getElementById('contentToConvert');
-    // html2canvas(data).then(canvas => {
-    //   var imgWidth = 208;
-    //   var imgHeight = canvas.height * imgWidth / canvas.width;
-    //   const contentDataURL = canvas.toDataURL('image/png');
-    //   let pdf = new jsPDF('l', 'mm', 'a4');
-    //   var position = 0;
-    //   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-    //   pdf.save('newPDF.pdf');
-    // });
   }
 
   public refresh(){
-    // console.log('refresh:');
-    // console.log(this.selectedValue);
     this.startDate = this.selectedValue;
     this.endDate = new Date(this.selectedValue.getFullYear() + '-12-31');
     const param = '?max_st=3';
@@ -154,13 +107,11 @@ export class TimetableComponent implements OnInit {
           const certFilter = cert.filter(x => x.przedmiotId.id === instrElement.id);
           certFilter.forEach( certElement => {
             const d = new Date(certElement.dataSprawdzenia);
-            // const day = this.datePipe.transform(d, 'dd')  + ',';
             this.pushDateToInstrument(d, instrElement);
           });
 
           if (instrElement.dataNastepnejKontroli){
             this.propDate(grupa[0], this.startDate, new Date(instrElement.dataNastepnejKontroli), this.endDate).forEach( el => {
-              // instrElement.sprawdzeniaPlanowe.push(el);
               this.pushDateToInstrument(el.dataPlanowa, instrElement, true);
             });
           }
@@ -168,11 +119,8 @@ export class TimetableComponent implements OnInit {
           const nrPrzyrz = '000' + instrElement.nr;
           instrElement.nrString = 'ZPL.' + nrGrupy.slice(-2) + '.' + nrPrzyrz.slice(-4);
         });
-        console.log(this.instrumentList);
-        // console.log(cert);
-        this.dataSource.data = this.instrumentList;
+        // console.log(this.instrumentList);
         this.readyToView = true;
-
       });
     });
   }

@@ -47,6 +47,9 @@ export class InstrumentService {
   }
 
 downloadTimetable(ins: Instrument[], year: string): void{
+    ins.forEach( element => {
+      element.nazwa = element.nrFabryczny ? element.nazwa + ' (Nr fabr. ' + element.nrFabryczny + ')' : element.nazwa;
+    });
     const doc = new jsPDF({
       orientation: 'landscape',
       format: 'a4',
@@ -97,7 +100,6 @@ downloadTimetable(ins: Instrument[], year: string): void{
                           overflow: 'linebreak', lineColor: [170, 170, 170], lineWidth: 0.05 },
                     },
       head: [ [
-                // tslint:disable-next-line: max-line-length
                 { content: 'Numer', colSpan: 1, rowSpan: 2 },
                 { content: 'Nazwa', colSpan: 1, rowSpan: 2},
                 { content: 'Miesiące w roku ' + year, colSpan: 12, rowSpan: 1}
@@ -119,7 +121,7 @@ downloadTimetable(ins: Instrument[], year: string): void{
             ],
       columns: [
               { header: 0, dataKey: 'nrString' },
-              { header: 1, dataKey: 'nazwa' },
+              { header: 1, dataKey: 'nazwa'},
               { header: 2, dataKey: 'sprawdzeniaPlanoweSty' },
               { header: 3, dataKey: 'sprawdzeniaPlanoweLut' },
               { header: 4, dataKey: 'sprawdzeniaPlanoweMar' },
@@ -134,7 +136,7 @@ downloadTimetable(ins: Instrument[], year: string): void{
               { header: 13, dataKey: 'sprawdzeniaPlanoweGru' },
             ],
       body: ins,
-      didDrawPage: data => {
+      didDrawPage: () => {
               doc.addImage(CustomFonts.logoZehnderPng, 'PNG', 14, 10, 23, 14);
               // console.log(doc.getFontList());
               doc.setFont('DejaVuSans', 'Bold');
@@ -142,7 +144,7 @@ downloadTimetable(ins: Instrument[], year: string): void{
               doc.text('HARMONOGRAM KONTROLI NA ROK ' + year, 125, 25, { align: 'center'});
               doc.setFont('DejaVuSans', 'normal');
               doc.setFontSize(10);
-              doc.text('Data wydruku: ' + new Date().toLocaleDateString() + 'r.', 283, 25, { align: 'right'});
+              doc.text('Stan na dzień: ' + new Date().toLocaleDateString() + 'r.', 283, 25, { align: 'right'});
               doc.setLineWidth(0.25);
               doc.line(14, 27, 283, 27);
               doc.line(14, 190, 283, 190);
@@ -150,16 +152,15 @@ downloadTimetable(ins: Instrument[], year: string): void{
     });
     const totalPages = doc.internal.getNumberOfPages();
     doc.setFont('DejaVuSans', 'normal');
-    doc.setFontSize(10);
     for (let i = 1; i <= totalPages; i++){
+      doc.setFontSize(10);
       doc.setPage(i);
       const footerStr = 'Strona ' + i + ' z ' + totalPages;
       doc.text(footerStr, 283, 195, { align: 'right'});
+      doc.setFontSize(8);
+      doc.text('* 10 - data wykonanej kontroli, (10) - data planowanej kontroli', 20, 194, { align: 'left'});
+      // doc.text(' (10) - data planowanej kontroli', 20, 197, { align: 'left'});
     }
-
-
-
-
     doc.save('Harmonogram_roczny_' + year + '.pdf');
   }
 }

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import { Observable } from 'rxjs';
+import { CustomFonts } from '../_helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -71,19 +72,26 @@ export class CertificateService {
       let h = 80;
       let w = 70;
       doc.rect(15, 15, 180, 267);
-      doc.addImage('../assets/zehnder_logo.png', 'PNG', 20, 20, 31, 19);
-      doc.addFont('../assets/fonts/DejaVuSans-Bold.ttf', 'DejaVuSans-Bold', 'normal');
-      doc.addFont('../assets/fonts/DejaVuSans.ttf', 'DejaVuSans', 'normal');
-      doc.addFont('../assets/fonts/arial.ttf', 'arial', 'normal');
-      doc.setFont('DejaVuSans-Bold');
+      // doc.addImage('../assets/zehnder_logo.png', 'PNG', 20, 20, 31, 19);
+      doc.addImage(CustomFonts.logoZehnderPng, 'PNG', 20, 20, 31, 19);
+      // doc.addFont('../assets/fonts/DejaVuSans-Bold.ttf', 'DejaVuSans-Bold', 'normal');
+      // doc.addFont('../assets/fonts/DejaVuSans.ttf', 'DejaVuSans', 'normal');
+      // doc.addFont('../assets/fonts/arial.ttf', 'arial', 'normal');
+      doc.addFileToVFS('arial-normal.ttf', CustomFonts.arialNormal);
+      doc.addFont('arial-normal.ttf', 'arial', 'normal');
+      doc.addFileToVFS('DejaVuSans-Bold-normal.ttf', CustomFonts.dejaVuSansBoldNormal);
+      doc.addFont('DejaVuSans-Bold-normal.ttf', 'DejaVuSans', 'Bold');
+      doc.addFileToVFS('DejaVuSans-normal.ttf', CustomFonts.dejaVuSansNormal);
+      doc.addFont('DejaVuSans-normal.ttf', 'DejaVuSans', 'normal');
+      doc.setFont('DejaVuSans', 'Bold');
       doc.text('ŚWIADECTWO SPRAWDZENIA', 105, 50, { align: 'center'});
-      doc.setFont('DejaVuSans');
+      doc.setFont('DejaVuSans', 'normal');
       doc.setFontSize(12);
       doc.text('Nr świadectwa:', 104, 66, { align: 'right'});
       doc.setFontSize(14);
       doc.text(data.nrSwiadectwa, 106, 66, { align: 'left'});
       doc.line(20, 68, 190, 68);
-      doc.setFont('DejaVuSans-Bold');
+      doc.setFont('DejaVuSans', 'Bold');
       doc.setFontSize(10);
       h = 80;
       doc.text('PRZEDMIOT', w, h, { align: 'right'});
@@ -108,7 +116,7 @@ export class CertificateService {
       doc.text('UWAGI', w, h, { align: 'right'});
 
       w = 75;
-      doc.setFont('DejaVuSans');
+      doc.setFont('DejaVuSans', 'normal');
       doc.setFontSize(10);
       let valSplit = data.przedmiot.split('<br>');
       h = 80;

@@ -109,6 +109,9 @@ export class AddinstrumentComponent implements OnInit {
     }, );
     console.log(this.selectedStateId);
     this.setValidators();
+    if (this.data.aktStatus.id === 3){
+      this.instrumentForm.controls.aktStatus.disable();
+    }
   }
   setValidators(){
     if (!this.data.id){

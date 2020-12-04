@@ -81,13 +81,13 @@
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
           </mat-form-field>
         </mat-list-item>
-        <mat-list-item class="w-50 d-inline-block">
+        <mat-list-item class="w-50 d-inline-block" >
           <span class="ins-title">6. Data następnej kontroli
             (+{{instrument.idGrupa.interwalWartosc}}{{instrument.idGrupa.interwalJednostka.skrot}}): </span>
-          <mat-form-field color="accent" appearance="fill">
+          <mat-form-field color="accent" appearance="fill" >
             <mat-label>Wybierz datę</mat-label>
-            <input matInput [matDatepicker]="picker3" formControlName="data_nast_kontroli" >
-            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="picker3" formControlName="data_nast_kontroli">
+            <mat-datepicker-toggle matSuffix [for]="picker3" ></mat-datepicker-toggle>
             <mat-datepicker #picker3 color="primary"></mat-datepicker>
           </mat-form-field>
         </mat-list-item>
@@ -101,7 +101,7 @@
               <section class="example-section">
                 <mat-radio-group formControlName="wynik">
                   <mat-radio-button class="radio-margin" value="ok">Pozytywny</mat-radio-button>
-                  <mat-radio-button class="radio-margin" value="nok">Negatywny</mat-radio-button>
+                  <mat-radio-button class="radio-margin" value="nok">Negatywny (likwidacja przyrządu)</mat-radio-button>
                 </mat-radio-group>
               </section>
             </mat-card-content>
@@ -198,7 +198,7 @@
               <section class="example-section">
                 <mat-radio-group formControlName="wynik">
                   <mat-radio-button class="radio-margin" value="ok">Pozytywny</mat-radio-button>
-                  <mat-radio-button class="radio-margin" value="nok">Negatywny</mat-radio-button>
+                  <mat-radio-button class="radio-margin" value="nok">Negatywny (likwidacja przyrządu)</mat-radio-button>
                 </mat-radio-group>
               </section>
             </mat-card-content>

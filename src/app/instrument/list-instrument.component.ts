@@ -17,7 +17,7 @@ import { InstrumentDataDialogComponent } from './instrument-data-dialog/instrume
   styleUrls: ['./list-instrument.component.css']
 })
 export class ListInstrumentComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['select', 'id', 'nazwa', 'typ', 'nrFabryczny', 'dataNastepnejKontroli', 'miejsce', 'status'];
+  displayedColumns: string[] = ['select', 'nrString', 'nazwa', 'typ', 'nrFabryczny', 'dataNastepnejKontroli', 'idLokalizacjaString', 'aktStatusString'];
   dataSource: MatTableDataSource<InstrumentFull>;
   selection = new SelectionModel<InstrumentFull>();
   selectedRowIndex = -1;
@@ -70,6 +70,13 @@ export class ListInstrumentComponent implements OnInit, AfterViewInit {
 
   refresh() {
     this.instrumentService.getAll().subscribe( data => {
+      data.forEach( element => {
+        element.aktStatusString = element.aktStatus.nazwa;
+        element.idLokalizacjaString = element.idLokalizacja.nazwa + '(' + element.idLokalizacja.idObszar.nazwa + ')';
+        const g = '0' + element.idGrupa.nrGrupy;
+        const nr = '000' + element.nr;
+        element.nrString = 'ZPL.' + g.slice(-2) + '.' + nr.slice(-4);
+      });
       const sorted = data.sort((a, b) => a.id - b.id);
       this.dataSource.data = sorted;
       console.log(data);

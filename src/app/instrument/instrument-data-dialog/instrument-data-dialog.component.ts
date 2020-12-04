@@ -40,6 +40,7 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
   hDataStart: Date;
   hDataEnd: Date;
   hListCert: Certificate[];
+  dataNastKontr: Date;
   // empList: Array<Custom> = [];
   hListProp: Array<Date> = [];
   hCurrProp: Date;
@@ -96,10 +97,10 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
 
   hRefresh(){
     this.cetrificateService.getBetweenDates(this.datePipe.transform(this.hDataStart, 'yyyy-MM-dd'),
-    this.datePipe.transform(this.hDataEnd, 'yyyy-MM-dd')).subscribe( data => {
+    this.datePipe.transform(this.hDataEnd, 'yyyy-MM-dd'), this.instrument.id).subscribe( data => {
       this.hListCert = data;
       this.hListProp = [];
-      this.hCurrProp = new Date(this.instrument.dataNastepnejKontroli);
+      this.hCurrProp = this.instrument.dataNastepnejKontroli ? new Date(this.instrument.dataNastepnejKontroli) : this.hDataStart;
       this.hListProp.push(this.hCurrProp);
       this.propDate();
       // console.log(this.hListProp);
@@ -141,6 +142,7 @@ export class InstrumentDataDialogComponent implements OnInit, AfterViewInit {
     this.isDataLoaded = false;
     this.instrumentService.get(this.data).subscribe( data => {
       this.instrument = data;
+      this.dataNastKontr = new Date(data.dataNastepnejKontroli);
       this.isDataLoaded = true;
       const sorted = data.swiadectwa.sort((a, b) => a.id - b.id);
       this.dataSource.data = sorted;

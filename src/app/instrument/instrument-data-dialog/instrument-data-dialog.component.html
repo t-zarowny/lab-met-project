@@ -138,7 +138,7 @@
           <!-- <mat-paginator class="paginator" #MatPaginator pageSize="10" [hidePageSize]="true"></mat-paginator> -->
         </div>
       </div>
-      <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1 mt-2">Wykonaj sprawdzenie
+      <button mat-raised-button mat-button color="primary" (click)="addCertificate()" class="m-1 mt-2" *ngIf="isDataLoaded" [disabled]="instrument.aktStatus.id === 3">Wykonaj sprawdzenie
         przyrządu</button>
     </mat-tab>
 
@@ -169,10 +169,13 @@
             <span class="material-icons" style="color: green; margin-right: 3px; position: relative; top: 6px;" *ngIf="item.wynikSprawdzenia"> verified</span>
             <span class="material-icons" style="color: red; margin-right: 3px; position: relative; top: 6px;" *ngIf="!item.wynikSprawdzenia"> new_releases</span>
             {{item.dataSprawdzenia}} <span style="color: gray;">({{item.nrSwiadectwa}})</span></li>
-          <li *ngFor="let item of hListProp">
+          <li *ngFor="let item of hListProp; index as i">
             <span *ngIf="this.instrument.aktStatus.id !== 3">
-            <span class="material-icons" style="color:darkviolet; margin-right: 3px; position: relative; top: 6px;"> local_offer</span>
-            {{item | date: 'yyy-MM-dd'}} <span style="color: gray;">(+{{instrument.idGrupa.interwalWartosc}}{{instrument.idGrupa.interwalJednostka.skrot}})</span>
+            <span class="material-icons" style="color:rgb(221, 126, 17); margin-right: 3px; position: relative; top: 6px;" *ngIf="i === 0"> schedule</span>
+            <span class="material-icons" style="color:darkviolet; margin-right: 3px; position: relative; top: 6px;" *ngIf="i !== 0"> local_offer</span>
+            {{item | date: 'yyy-MM-dd'}}
+            <span style="color: gray;" *ngIf="i === 0">(Term.ważn.)</span>
+            <span style="color: gray;" *ngIf="i !== 0">(+{{instrument.idGrupa.interwalWartosc}}{{instrument.idGrupa.interwalJednostka.skrot}})</span>
             </span>
             <span *ngIf="this.instrument.aktStatus.id === 3"><span style="color: gray;">Przyrząd zlikwidowany</span></span>
           </li>

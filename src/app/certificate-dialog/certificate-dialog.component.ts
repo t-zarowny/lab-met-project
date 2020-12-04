@@ -99,7 +99,13 @@ export class CertificateDialogComponent implements OnInit {
     this.instrumentService.get(this.data).subscribe( d => {
       this.instrument = d;
       this.instrumentService.getAllPattern().subscribe( dp => {
-        this.allInstrumentPattern = dp;
+        this.allInstrumentPattern = new Array<InstrumentFull>();
+        dp.forEach( element => {
+          if (element.aktStatus.id !== 3){
+            this.allInstrumentPattern.push(element);
+          }
+        });
+        // this.allInstrumentPattern = dp;
         this.instrumentDataLoaded = true;
         this.certificateForm.controls.data_nast_kontroli.setValue(DateAssistant.makeNextDate(this.instrument.idGrupa));
         // console.log(this.instrument);
@@ -116,10 +122,18 @@ export class CertificateDialogComponent implements OnInit {
       this.isInternType = query === 'intern' ? true : false;
       this.setValidators();
     });
+    this.certificateForm.controls.wynik.valueChanges.subscribe(query => {
+      if (query === 'nok'){
+        this.data_nast_kontroli.disable();
+      }else{
+        this.data_nast_kontroli.enable();
+      }
+    });
     this.certificateForm.valueChanges.subscribe(query => {
       this.checkValid();
     });
     // console.log(this.auth.currentUserValue.first_name + this.auth.currentUserValue.last_name);
+    console.log(this.instrument);
 
   }
   setValidators(){
@@ -181,25 +195,31 @@ export class CertificateDialogComponent implements OnInit {
     certFormData.append('warunkiSrodowiskowe', warunki);
     certFormData.append('dataSprawdzenia', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
     certFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
-    certFormData.append('wynikSprawdzenia', this.wynik.value ? 'true' : 'false');
+    certFormData.append('wynikSprawdzenia', this.wynik.value === 'ok' ? 'true' : 'false');
     certFormData.append('sprawdzenieZewnetrzne', this.isInternType ? 'false' : 'true');
     certFormData.append('uwagi', this.uwagi.value ? this.uwagi.value : 'Brak uwag');
     certFormData.append('sprawdzajacy', this.auth.currentUserValue.first_name + ' ' + this.auth.currentUserValue.last_name);
 
+
     this.certificateService.add(certFormData).subscribe( data => {
-        this.snackBar.open('Zapisano świadectwo nr ' + data.nrSwiadectwa, 'Zamknij', {
-          duration: 5000
-        });
-        if (this.isInternType){
-          this.saveNewFile(data.id);
-        }else{
-          this.saveNewDocFile(data.id);
-        }
-        const nextDateNew = new Date(this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
-        const instrFormData = new FormData();
+      if (this.isInternType){
+        this.saveNewFile(data.id);
+      }else{
+        this.saveNewDocFile(data.id);
+      }
+      const nextDateNew = new Date(this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
+      const instrFormData = new FormData();
+      if (this.wynik.value === 'nok'){
+        instrFormData.append('dataOstatniejKontroli', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
+        instrFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
+        instrFormData.append('nrAktualnegoSwiadectwa', null);
+        instrFormData.append('aktStatus', '3');
+        this.instrumentService.updateDate(this.instrument.id, instrFormData).subscribe();
+      }else{
         instrFormData.append('dataOstatniejKontroli', this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy-MM-dd'));
         instrFormData.append('dataNastepnejKontroli', this.datePipe.transform(this.data_nast_kontroli.value, 'yyyy-MM-dd'));
         instrFormData.append('nrAktualnegoSwiadectwa', this.certificateNr);
+        instrFormData.append('aktStatus', this.instrument.aktStatus.id.toString());
         if (this.instrument.dataNastepnejKontroli != null){
           const nextDateOld = new Date(this.instrument.dataNastepnejKontroli);
           if (nextDateNew > nextDateOld){
@@ -208,8 +228,12 @@ export class CertificateDialogComponent implements OnInit {
         }else{
           this.instrumentService.updateDate(this.instrument.id, instrFormData).subscribe();
         }
-        console.log(data);
-        this.dialogRef.close();
+      }
+      this.snackBar.open('Zapisano świadectwo nr ' + data.nrSwiadectwa, 'Zamknij', {
+        duration: 5000
+      });
+      console.log(data);
+      this.dialogRef.close();
     });
 
     // console.log(this.datePipe.transform(this.data_sprawdzenia.value, 'yyyy/MM/dd'));

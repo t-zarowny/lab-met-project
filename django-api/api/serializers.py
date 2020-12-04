@@ -200,7 +200,7 @@ class PrzyrzadyNrSerializer(serializers.ModelSerializer):
 class PrzyrzadyDatySerializer(serializers.ModelSerializer):
   class Meta:
     model = models.Przyrzady
-    fields = ['id', 'dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa']
+    fields = ['id', 'dataOstatniejKontroli', 'dataNastepnejKontroli', 'nrAktualnegoSwiadectwa', 'aktStatus']
 
 class PrzyrzadyHarmonogramSerializer(serializers.ModelSerializer):
   class Meta:

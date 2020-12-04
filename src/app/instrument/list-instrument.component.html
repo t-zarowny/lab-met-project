@@ -32,11 +32,11 @@
       </mat-cell>
     </ng-container>
     <!-- Nr -->
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="nrString">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="matIdHeader text-info"> Numer </mat-header-cell>
       <mat-cell *matCellDef="let row" class="matIdColumn"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> ZPL.{{row.idGrupa.nrGrupy | number: '2.'}}.{{'000' + row.nr | slice:-4}} </mat-cell>
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}"> {{row.nrString}} </mat-cell>
       <!-- <mat-cell *matCellDef="let row" class="matIdColumn" [ngClass]="{'matSelectRow': expandedElement == row}">
                {{row.id}} </mat-cell> -->
     </ng-container>
@@ -84,20 +84,20 @@
 
     </ng-container>
     <!-- miejsce -->
-    <ng-container matColumnDef="miejsce">
+    <ng-container matColumnDef="idLokalizacjaString">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="text-info"> Lokalizacja </mat-header-cell>
       <mat-cell *matCellDef="let row"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.idLokalizacja.nazwa}} ({{row.idLokalizacja.idObszar.nazwa}})
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.idLokalizacjaString}}
       </mat-cell>
 
     </ng-container>
     <!-- status -->
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="aktStatusString">
       <mat-header-cell *matHeaderCellDef mat-sort-header class="matStatusHeader text-info"> Status </mat-header-cell>
       <mat-cell *matCellDef="let row" class="matStatusRow"
         (click)="$event ? selection.toggle(row) : null; selection.isSelected(row) ? highlight(row) : highlight(-1);"
-        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.aktStatus.nazwa}}
+        [ngClass]="{'matSelectRow': selectedRowIndex == row.id}">{{row.aktStatusString}}
       </mat-cell>
 
     </ng-container>
