@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from api import views
+from api import cron
 from api._views import sw_spr_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -34,6 +35,7 @@ router.register(r'swiadectwo-sprawdzenia-harmonogram', sw_spr_views.SwiadectwoSp
 router.register(r'swiadectwo-sprawdzenia-min', views.SwiadectwoSprawdzeniaMinViewSet, basename='swiadectwo-sprawdzenia-min')
 router.register(r'swiadectwo-sprawdzenia-szablon', views.SwiadectwoSprawdzeniaSzablonViewSet)
 router.register(r'swiadectwo-sprawdzenia-plik', views.SwiadectwoSprawdzeniaPlikViewSet)
+router.register(r'weryfikacja', cron.Weryfikacja)
 
 urlpatterns = [
     path('', include(router.urls)),
