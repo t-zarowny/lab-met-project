@@ -35,7 +35,7 @@ router.register(r'swiadectwo-sprawdzenia-harmonogram', sw_spr_views.SwiadectwoSp
 router.register(r'swiadectwo-sprawdzenia-min', views.SwiadectwoSprawdzeniaMinViewSet, basename='swiadectwo-sprawdzenia-min')
 router.register(r'swiadectwo-sprawdzenia-szablon', views.SwiadectwoSprawdzeniaSzablonViewSet)
 router.register(r'swiadectwo-sprawdzenia-plik', views.SwiadectwoSprawdzeniaPlikViewSet)
-router.register(r'weryfikacja', cron.Weryfikacja)
+# router.register(r'weryfikacja', cron.Weryfikacja)
 
 urlpatterns = [
     path('', include(router.urls)),
